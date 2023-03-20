@@ -1,12 +1,10 @@
 import {TEACHERCOURSES,STUDENTLIST ,CLEAR_STUDENTLIST,STUDENTATTENDANCE} from "../types";
+import { RepositoryFactory } from "../../repository/RepositoryFactory";
+var attendance = RepositoryFactory.get("attendance");
 export const getTeacherCourses = (username) => async (dispatch) => {
     try {
-      const response = await fetch(`https://localhost:44374/api/Teacher/GetCourses?username=${username}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await attendance.getTeacherCourses(username)
+      if (data) {
         dispatch({ type: TEACHERCOURSES, payload: { teachercourses: data } });
       } else {
         alert("Timetable load failed")
@@ -18,15 +16,11 @@ export const getTeacherCourses = (username) => async (dispatch) => {
   };
   export const getStudentsList = (id,section) => async (dispatch) => {
     try {
-      const response = await fetch(`https://localhost:44374/api/Teacher/GetStudents?id=${id}&section=${section}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await attendance.getStudentsList(id,section)
+      if (data) {
         dispatch({ type: STUDENTLIST, payload: { studentLists: data } });
       } else {
-        alert("Timetable load failed")
+        alert("list load failed")
         throw new Error(data.error);
       }
     } catch (error) {
@@ -35,13 +29,8 @@ export const getTeacherCourses = (username) => async (dispatch) => {
   };
   export const markAttendance = (list,history) => async (dispatch) => {
     try {
-      const response = await fetch('https://localhost:44374/api/Teacher/MarkAttendence', {
-        method:"POST",
-        headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify(list),
-      })
-     const data=response.json();
-      if (response.ok) {
+      const {data} = await attendance.markAttendance(list)
+      if (data =="Attendzance Mark") {
         alert("Attendance Marked Successfully")
         dispatch(ClearStudentList())
         history.push("/teacher/dashboard")
@@ -57,12 +46,8 @@ export const getTeacherCourses = (username) => async (dispatch) => {
   };
   export const getStudentAttendaceList = (regno) => async (dispatch) => {
     try {
-      const response = await fetch(`https://localhost:44374/api/Student/GetAttendance?reg_no=${regno}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await attendance.getStudentAttendaceList(regno)
+      if (data) {
         dispatch({ type: STUDENTATTENDANCE, payload: { studentattendance: data } });
       } else {
         alert("Timetable load failed")

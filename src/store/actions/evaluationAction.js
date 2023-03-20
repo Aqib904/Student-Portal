@@ -1,13 +1,10 @@
 import { EVALUATIONGENERAL, EVALUATIONEXAM,SESSION,EXAMMARKS } from "../types";
+import { RepositoryFactory } from "../../repository/RepositoryFactory";
+var evaluation = RepositoryFactory.get("evaluation")
 export const markGeneralExam = (list) => async (dispatch) => {
     try {
-      const response = await fetch('https://localhost:44374/api/Teacher/MarkAssignmentQuiz', {
-        method:"POST",
-        headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify(list),
-      })
-     const data=response.json();
-      if (response.ok) {
+      const {data} = await evaluation.markGeneralExam(list)
+      if (data == "success") {
         alert(" Marked Successfully")
       } else {
         alert(" Marked  failed")
@@ -18,13 +15,8 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const markMidFinal = (list) => async (dispatch) => {
     try {
-      const response = await fetch('https://localhost:44374/api/Teacher/MarkMidFinal', {
-        method:"POST",
-        headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify(list),
-      })
-     const data=response.json();
-      if (response.ok) {
+      const {data} = await evaluation.markMidFinal(list)
+      if (data =="success") {
         alert("Marked Successfully")
       } else {
         alert("Marked failed")
@@ -35,15 +27,8 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const AssignmentQuizEvaluation = (regno) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Student/GetAssignmentQuizMarks?reg_no=${regno}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await evaluation.AssignmentQuizEvaluation(regno)
+      if (data) {
         dispatch({ type: EVALUATIONGENERAL, payload: { general: data } });
       } else {
         alert("DateSheet load failed");
@@ -55,15 +40,8 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const ExamMarksEvaluation = (regno) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Student/GetExamsMarks?reg_no=${regno}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await evaluation.ExamMarksEvaluation(regno) 
+      if (data) {
         dispatch({ type: EVALUATIONEXAM, payload: { exam: data } });
       } else {
         alert("DateSheet load failed");
@@ -75,15 +53,8 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const getSession = (regno) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Student/GetMySessions?reg_no=${regno}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await evaluation.getSession(regno)
+      if (data) {
         dispatch({ type: SESSION, payload: { session: data } });
       } else {
         alert("Session load failed");
@@ -95,15 +66,8 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const getExamMarks = (regno,session) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Student/GetMidFinalMarks?reg_no=${regno}&session=${session}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await evaluation.getExamMarks(regno,session)
+      if (data) {
         dispatch({ type: EXAMMARKS, payload: { examData: data } });
       } else {
         alert("Marks loaded failed");

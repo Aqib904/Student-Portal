@@ -1,13 +1,10 @@
 import {CONTESTLIST} from "../types";
+import { RepositoryFactory } from "../../repository/RepositoryFactory";
+var contest = RepositoryFactory.get("contest");
 export const markContest = (list) => async (dispatch) => {
     try {
-      const response = await fetch('https://localhost:44374/api/Student/ContestAttendance', {
-        method:"POST",
-        headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify(list),
-      })
-     const data=response.json();
-      if (response.ok) {
+      const { data } = await contest.markContest(list)
+      if (data =="success") {
         alert("Contest Marked Successfully")
       } else {
         alert("Contest Marked  failed")
@@ -18,12 +15,8 @@ export const markContest = (list) => async (dispatch) => {
   };
   export const getContestList = (username) => async (dispatch) => {
     try {
-      const response = await fetch(`https://localhost:44374/api/Teacher/GetContests?username=${username}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await response.json();
-      if (response.ok) {
+      const { data } = await contest.getContestList(username)
+      if (data) {
         dispatch({ type: CONTESTLIST, payload: { contestList: data } });
       } else {
         alert("Contest load failed")
@@ -35,30 +28,26 @@ export const markContest = (list) => async (dispatch) => {
   };
   export const contestAcceptAction = (aid) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Teacher/AcceptContest?aid=${aid}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      
-      alert("You Accepted the student Request");
+      const { data } = await contest.contestAccept(aid)
+      if (data =="success") {
+        alert("You Accepted the student Request");
+      } else {
+        alert("Accept failed")
+        throw new Error(data.error);
+      }
     } catch (error) {
       alert(error.message);
     }
   };
   export const contestRejectAction = (aid) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Teacher/RejectContest?aid=${aid}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-     
-      alert("You Rejected the student Request");
+      const { data } = await contest.contestReject(aid)
+      if (data =="success") {
+        alert("You Rejected the student Request");
+      } else {
+        alert("Rejected failed")
+        throw new Error(data.error);
+      }
     } catch (error) {
       alert(error.message);
     }

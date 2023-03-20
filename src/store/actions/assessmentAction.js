@@ -1,15 +1,10 @@
 import {TEACHERCOURSE,ASSESSMENTQUESTION,ALLTEACHERCOURSES,FEEDBACKTEACHER} from "../types";
+import { RepositoryFactory } from "../../repository/RepositoryFactory";
+var assessment = RepositoryFactory.get("assessment");
 export const getCourseTeacher = (regno) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Student/GetCourseAndTeachers?reg_no=${regno}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await assessment.getCourseTeacher(regno)
+      if (data) {
         dispatch({ type: TEACHERCOURSE, payload: { teacherdata: data } });
       } else {
         alert("DateSheet load failed");
@@ -21,15 +16,8 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
   };
   export const getAssessmentQuestions = () => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Student/GetTeacherEvaluationQuestions`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await assessment.getAssessmentQuestions()
+      if (data) {
         dispatch({ type: ASSESSMENTQUESTION, payload: { question: data } });
       } else {
         alert("Question load failed");
@@ -41,15 +29,10 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
   };
   export const markEvaluation = (list,history) => async (dispatch) => {
     try {
-      const response = await fetch('https://localhost:44374/api/Student/FeedbackTeacher', {
-        method:"POST",
-        headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify(list),
-      })
-     const data=response.json();
-      if (response.ok) {
+      const {data} = await assessment.markEvaluation(list)
+      if (data == "success") {
         alert("Feedback added Successfully");
-        history.push("/student/assessment")
+        history.push("/student/evaluation")
       } else {
         alert("Feedback added  failed")
       }
@@ -59,15 +42,8 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
   };
   export const getTeachersCourses = (session) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Admin/GetAllTeachersAndCourses?session=${session}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await assessment.getTeachersCourses(session)
+      if (data) {
         dispatch({ type: ALLTEACHERCOURSES, payload: { teacher: data } });
       } else {
         alert("DateSheet load failed");
@@ -79,15 +55,8 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
   };
   export const getTeachersFeedback = (teacherId,courseCode,session) => async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://localhost:44374/api/Admin/GetTeacherFeedback?teacherId=${teacherId}&courseCode=${courseCode}&session=${session}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
+      const {data} = await assessment.getTeachersFeedback(teacherId,courseCode,session)
+      if (data) {
         dispatch({ type: FEEDBACKTEACHER, payload: { feedback: data } });
       } else {
         alert("Feedback load failed");

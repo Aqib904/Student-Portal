@@ -1,15 +1,13 @@
 import { toastSuccess, toastWarning } from "../../components/global/Toast";
+import { RepositoryFactory } from "../../repository/RepositoryFactory";
 import { LOGIN, LOGOUT,LOGIN_FAILURE,LOGIN_LOADING ,ENROLLMENTSTATUS,USER} from "../types";
-
+var auth = RepositoryFactory.get("auth");
 export const login = (username, password) => async (dispatch) => {
+  console.log(username,password,'data')
   try {
     dispatch(loginLoading(true));
-    const response = await fetch(`https://localhost:44374/api/Login/LoginUser/?username=${username}&password=${password}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const data = await response.json();
-    if (response.ok) {
+    const { data } = await auth.login(username, password)
+    if (data) {
       dispatch(loginLoading(false));
       dispatch({ type: LOGIN, payload: { token: data } });
     } else {
@@ -30,7 +28,7 @@ export const getEnrollmentStatus = (reg_no) => async (dispatch) => {
     if (response.ok) {
       dispatch({ type: ENROLLMENTSTATUS, payload: { statuss: data } });
     } else {
-      alert("Contest load failed")
+      alert("Enrollment load failed")
       throw new Error(data.error);
     }
   } catch (error) {
@@ -39,12 +37,8 @@ export const getEnrollmentStatus = (reg_no) => async (dispatch) => {
 };
 export const GetUser = (username, role) => async (dispatch) => {
   try {
-    const response = await fetch(`https://localhost:44374/api/Login/GetUser/?username=${username}&role=${role}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const data = await response.json();
-    if (response.ok) {
+    const { data } = await auth.GetUser(username, role)
+    if (data) {
       dispatch({ type: USER, payload: { user: data } });
     } else {
       toastWarning("User Loaded Failed")
