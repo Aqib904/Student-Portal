@@ -45,9 +45,14 @@ export default function TeacherDashboard() {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [attendanceModal, setAttendanceModal] = useState(false);
-  const attendancetoggle = () => setAttendanceModal(!attendanceModal);
+  const attendancetoggle = () => {
+    clearSelect();
+    setAttendanceModal(!attendanceModal)};
   const [evaluationModal, setEvaluationModal] = useState(false);
-  const evaluationtoggle = () => setEvaluationModal(!evaluationModal);
+  const evaluationtoggle = () => {
+    setEvaluationModal(!evaluationModal)
+    clearSelect()
+  };
   const [allocate, setAllocate] = useState([{}]);
   const [program, setProgram] = useState([
     { course_code: "", course_name: "" },
@@ -77,6 +82,13 @@ export default function TeacherDashboard() {
       alert("Please select the required Fields");
     }
   };
+  const clearSelect =()=>{
+    setSelect({
+      section: "",
+      id: "",
+      discipline: "",
+    })
+  }
   const manageEvaluations = () => {
     if (
       select.id != "" &&
@@ -438,6 +450,7 @@ export default function TeacherDashboard() {
             toggle={() => {
               attendancetoggle();
               clearFields();
+              clearSelect();
             }}
           >
             Manage Attendance
@@ -513,6 +526,7 @@ export default function TeacherDashboard() {
             toggle={() => {
               evaluationtoggle();
               clearFields();
+              clearSelect();
             }}
           >
             Manage Assessment
