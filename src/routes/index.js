@@ -1,5 +1,5 @@
 import AuthView from "../views/auth/AuthView";
-import MainView from "../views/PersonalInformation";
+import MainView from "../views/Teacher Views/PersonalInformation";
 import Dasboard from "../views/Student Views/Dashboard";
 import Splach from "../components/Splach";
 import Timetable from "../views/Student Views/Timetable"
@@ -21,13 +21,15 @@ import AssistantRequest from "../views/Admin Views/AssistantRequest";
 import ManageDatesheet from "../views/Admin Views/ManageDatesheet";
 import ManageNoticeboard from "../views/Admin Views/ManageNoticeboard";
 import ManageTimetable from "../views/Admin Views/ManageTimetable";
-import PersonalInformation from "../views/PersonalInformation";
+import PersonalInformation from "../views/Teacher Views/PersonalInformation";
 import ManageStudentEvaluation from "../views/Student Views/ManageStudentEvaluation";
 import CheckEvaluation from "../views/Admin Views/CheckEvaluation";
 import EvaluationPercentage from "../views/Admin Views/EvaluationPercentage";
 import Enrollment from "../views/Student Views/Enrollment";
 import ExamResult from "../views/Student Views/ExamResult";
 import CourseAllocation from "../views/Admin Views/CourseAllocation";
+import StudentSetting from "../views/Student Views/StudentSetting";
+import AdminSetting from "../views/Admin Views/AdminSetting"
 let routes = [
   {
     path: "/auth_login",
@@ -172,14 +174,14 @@ let routes = [
     name: "Dashboard",
     role: "teacher",
   },
-  {
-    path: "/teacher/timetable",
-    component: TeacherTimetable,
-    layout: "teacher",
-    icon:"fas fa-calendar-alt ",
-    name: "Timetable",
-    role: "teacher",
-  },
+  // {
+  //   path: "/teacher/timetable",
+  //   component: TeacherTimetable,
+  //   layout: "teacher",
+  //   icon:"fas fa-calendar-alt ",
+  //   name: "Timetable",
+  //   role: "teacher",
+  // },
   {
     path: "/teacher/attendance/:id",
     component: ManageAttendance,
@@ -261,9 +263,28 @@ let routes = [
     role: "admin",
   },
   {
-    path: "/student/personalinformation",
+    path: "/teacher/setting",
     component: PersonalInformation,
+    layout: "teacher",
+    name: "Setting",
+    icon:"fas fa-user-cog ",
+    role: "teacher",
+  },
+  {
+    path: "/student/setting",
+    component: StudentSetting,
     layout: "student",
+    name: "Setting",
+    icon:"fas fa-user-cog ",
+    role: "student",
+  },
+  {
+    path: "/admin/setting",
+    component: AdminSetting,
+    layout: "admin",
+    name: "Setting",
+    icon:"fas fa-user-cog ",
+    role: "admin",
   },
 ];
 export default routes;

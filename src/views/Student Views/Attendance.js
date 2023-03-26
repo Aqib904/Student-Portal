@@ -136,6 +136,21 @@ export default function Attendance() {
       field: "date",
       headerName: " Date",
       width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const dateOnly = dateTimeString.split(",")[0];
+        return dateOnly;
+      },
+    },
+    {
+      field: "time",
+      headerName: " Time",
+      width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const timeOnly = dateTimeString.split(",")[1];
+        return timeOnly;
+      },
     },
     {
       field: "status",
@@ -149,6 +164,21 @@ export default function Attendance() {
       field: "date",
       headerName: " Date",
       width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const dateOnly = dateTimeString.split(",")[0];
+        return dateOnly;
+      },
+    },
+    {
+      field: "time",
+      headerName: " Time",
+      width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const timeOnly = dateTimeString.split(",")[1];
+        return timeOnly;
+      },
     },
     {
       field: "status",

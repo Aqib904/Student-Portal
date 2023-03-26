@@ -12,6 +12,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import user from "../../assets/img/user.png"
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
@@ -58,6 +59,18 @@ export default function ManageEvaluation() {
 };
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
+    {
+      field: "profile_photo",
+      headerName: "Profile Photo",
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <>
+           <img className="rounded" height={50} width={50} src={params.row.profile_photo?params.row.profile_photo:user}/>
+          </>
+        );
+      },
+    },
     { field: "reg_no", headerName: "Reg No", width: 170 },
     { field: "name", headerName: "Name", width: 170 },
     { field: "totalMarks", headerName: "Total Marks", width: 170 },

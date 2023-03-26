@@ -40,6 +40,7 @@ export default function TeacherDashboard() {
   const { teacherCourses, attendanceList } = useSelector(
     (state) => state.attendance
   );
+  console.log(teacherCourses,'attendaceList');
   const { token } = useSelector((state) => state.authUser);
   const { contestList } = useSelector((state) => state.contest);
   const [modal, setModal] = useState(false);
@@ -71,12 +72,15 @@ export default function TeacherDashboard() {
   const [contestData, setContestData] = useState([]);
   const [type, setType] = useState("");
   const [totalMarks, setTotalMarks] = useState("");
+  const[allocationId,setAllocationId] = useState("")
   const [evaluationList, setEvaluationList] = useState([]);
+  const[studentAttendanceList,setStudentAttendanceList] = useState([])
   const manageAttendance = () => {
     if (select.id != "" && select.section != "") {
       history.push({
         pathname: `/teacher/attendance/${id}`,
-        state: attendanceList,
+        state: studentAttendanceList,
+        allocateId:allocationId
       });
     } else {
       alert("Please select the required Fields");
@@ -108,7 +112,9 @@ export default function TeacherDashboard() {
   const clearFields = () => {
     setDecipline([{ id: "", program: "", semester: "", section: "" }]);
   };
-  const handleProgramChange = (event) => {
+  const handleProgramChange = (event,allocationIds) => {
+    console.log(allocationIds,'allocationId');
+    setAllocationId(allocationIds)
     attendancetoggle();
     const course_code = event;
     const course = program.find((item) => item.course_code === course_code);
@@ -306,6 +312,7 @@ export default function TeacherDashboard() {
           course_name: item.course_name,
           semester: item.semester,
           section: item.section,
+          allocation_id:item.allocation_id
         }),
         programData.push({
           course_name: item.course_name,
@@ -336,6 +343,7 @@ export default function TeacherDashboard() {
         id: item.id,
         name: item.name,
         reg_no: item.reg_no,
+        profile_photo:item.profile_photo,
         totalMarks: totalMarks,
         obtained_marks: 0,
         type: type,
@@ -343,6 +351,20 @@ export default function TeacherDashboard() {
     });
     setEvaluationList(tempdata);
   }, [attendanceList, totalMarks, type]);
+  useEffect(() => {
+    let tempdata = [];
+    attendanceList.map((item) => {
+      return tempdata.push({
+        id: item.id,
+        name: item.name,
+        reg_no: item.reg_no,
+        status:item.status,
+        profile_photo:item.profile_photo,
+        allocateId:allocationId
+      });
+    });
+    setStudentAttendanceList(tempdata);
+  }, [attendanceList,allocationId]);
   useEffect(() => {
     let programData = [];
     teacherCourses?.map((item) => {
@@ -397,7 +419,7 @@ export default function TeacherDashboard() {
                       <Button
                         className="bg-site-primary mx-1"
                         onClick={() => {
-                          handleProgramChange(data?.course_code);
+                          handleProgramChange(data?.course_code,data?.allocation_id);
                         }}
                       >
                         Attendance

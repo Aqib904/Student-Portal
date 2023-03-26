@@ -6,8 +6,12 @@ export const login = (username, password) => async (dispatch) => {
   console.log(username,password,'data')
   try {
     dispatch(loginLoading(true));
-    const { data } = await auth.login(username, password)
-    if (data) {
+    const response = await fetch(`https://localhost:44374/api/Login/LoginUser/?username=${username}&password=${password}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await response.json();
+    if (response.ok) {
       dispatch(loginLoading(false));
       dispatch({ type: LOGIN, payload: { token: data } });
     } else {

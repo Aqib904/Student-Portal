@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachersCourses } from "../../store/actions/assessmentAction";
 import { styled } from "@mui/material/styles";
-import { gridClasses } from "@mui/x-data-grid";
+import { gridClasses, GRID_CHECKBOX_SELECTION_COL_DEF } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, Card, CardBody, CardFooter, CardHeader, Col, Container, Row } from "reactstrap";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
@@ -25,6 +25,7 @@ export default function CheckEvaluation() {
       field: "teacherName",
       headerName: "Teacher Name",
       width: 240,
+      fixed: true
     }, 
     {
       field: "course_name",
@@ -131,6 +132,11 @@ export default function CheckEvaluation() {
               autoWidth
               columns={columns}
               rows={rows}
+              initialState={{
+                pinnedColumns: {
+                  left: [GRID_CHECKBOX_SELECTION_COL_DEF.field],
+                },
+              }}
               disableSelectionOnClick={false}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"

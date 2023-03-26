@@ -1,10 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { logout } from "../../store/actions/authAction";
 
 const HeaderDropdown = () => {
   const dispatch = useDispatch();
+  const { token,user } = useSelector((state) => state.authUser);
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -17,7 +18,7 @@ const HeaderDropdown = () => {
         <p className=" cursor-pointer px-4">
           <Link
             className="top-nav__dropdown-links__item"
-            to={`/student/personalinformation`}
+            to={`/${token?.role}/setting`}
           >
             Personal Information
           </Link>{" "}

@@ -8,6 +8,11 @@ import {
   Container,
   Row,
 } from "reactstrap";
+import {
+  Typography,
+} from "@mui/material";
+import user from "../../assets/img/user.png"
+import { Stack } from "@mui/system";
 import { toastSuccess, toastWarning } from "../../components/global/Toast";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -31,6 +36,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import { useHistory, useLocation } from "react-router-dom";
+import PictureWall from "../../components/global/PictureWall";
 export default function ManageAttendance() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -38,13 +44,18 @@ export default function ManageAttendance() {
   const { teacherCourses } = useSelector((state) => state.attendance);
   const { token } = useSelector((state) => state.authUser);
   const attendanceList = location.state;
+  const allocationId = location.allocateId
+  const [allocate,setAllocate] = useState("")
   const [program, setProgram] = useState([
     { course_code: "", course_name: "" },
   ]);
+console.log(attendanceList,'location');
   // const [decipline, setDecipline] = useState([
   //   { id: "", program: "", semester: "", section: "" },
   // ]);
   const [rows, setRows] = useState([]);
+  const [fileList, setFileList] = useState([]);
+  const [flagSubmit, setFlagSubmit] = useState(false);
   const [type, setType] = useState("lab");
   // const [courseTitle, setCourseTitle] = useState([
   //   { course_code: "", course_name: "" },
@@ -60,17 +71,22 @@ export default function ManageAttendance() {
   //   section: "",
   //   id: "",
   // });
-  const dateFormat = (Date) => {
-    if (Date !== "") {
-      let { day, month, year } = Date;
-      let formatedDate = [
-        day <= 9 ? "0" + day : day,
-        month <= 9 ? "0" + month : month,
-        year,
-      ].join("/");
-      return formatedDate;
+  const dateFormat = (dateString) => {
+    if (dateString !== "") {
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+      const formattedDate = `${day}/${month}/${year},${hours}:${minutes}:${seconds}`;
+      return formattedDate;
     }
   };
+  let date = new Date()
+  const formattedDate = dateFormat(date);
+   console.log(formattedDate);
   const submitAttendanceList = () => {
     let list = [];
 
@@ -78,12 +94,11 @@ export default function ManageAttendance() {
       return list.push({
         enrollmeent_id: item.id,
         status: item.status,
-        date: dateFormat(selectedDay),
         type: type,
       });
     });
     
-    dispatch(markAttendance(list,history));
+    dispatch(markAttendance(list,allocate,fileList,formattedDate,history));
   };
   const handleTypeChange = (event) => {
     setType(event.target.value);
@@ -157,7 +172,8 @@ export default function ManageAttendance() {
     },
   }));
 
-  const handleClick = (id) => {
+  const handleClick = (id,event) => {
+    event.stopPropagation(); 
     setRows((prevState) =>
       prevState.map((row) =>
         row.id === id ? { ...row, status: row.status === "P" ? "A" : "P" } : row
@@ -166,6 +182,18 @@ export default function ManageAttendance() {
   };
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
+    {
+      field: "profile_photo",
+      headerName: "Profile Photo",
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <>
+           <img className="rounded" height={50} width={50} src={params.row.profile_photo?params.row.profile_photo:user}/>
+          </>
+        );
+      },
+    },
     { field: "regno", headerName: "Reg No", width: 170 },
     { field: "name", headerName: "Name", width: 170 },
     {
@@ -179,7 +207,7 @@ export default function ManageAttendance() {
             {params.row.status ? (
               <Button
                 className="bg-site-success text-white border-0"
-                onClick={() => handleClick(params.row.id)}
+                onClick={(event) => handleClick(params.row.id,event)}
               >
                 {params.row.status}
               </Button>
@@ -215,6 +243,15 @@ export default function ManageAttendance() {
   useEffect(() => {
     dispatch(getTeacherCourses(token?.username));
   }, [token?.username]);
+  useEffect(()=>{
+    let id = 0;
+    attendanceList.map((item)=>{
+      return(
+        id=item.allocateId
+      )
+    })
+    setAllocate(id)
+  },[attendanceList])
   // useEffect(() => {
   //   let programData = [];
   //   teacherCourses?.map((item) => {
@@ -316,6 +353,36 @@ export default function ManageAttendance() {
         </Col>
       </Row>
       <Row>
+        <Col>
+        <Stack spacing={1} ml={2}>
+                      <h5>Upload Attendance Photos</h5>
+                      <Typography
+                        variant="p"
+                        mr={2}
+                        fontWeight={500}
+                        fontSize={12}
+                      >
+                        (Upload a minimum of 7 photos of your Attendance)
+                      </Typography>
+                      <PictureWall
+                        fileList={fileList}
+                        setFileList={setFileList}
+                      />
+                    </Stack>
+                    {flagSubmit && fileList.length < 6 ? (
+                      <Typography
+                        variant="p"
+                        mr={2}
+                        fontWeight={500}
+                        fontSize={12}
+                        sx={{ color: "red" }}
+                      >
+                        Upload minimum 7 photos of your property*
+                      </Typography>
+                    ) : null}
+        </Col>
+      </Row>
+      <Row>
         <Col md={12}>
           <Card className="shadow my-3 ">
             <CardHeader>
@@ -341,7 +408,7 @@ export default function ManageAttendance() {
               >
                 Mark Absent
               </Button>
-              <div className="px-4 datePicker-Card   border-0  d-inline-block  ">
+              {/* <div className="px-4 datePicker-Card   border-0  d-inline-block  ">
                 <DatePicker
                   value={selectedDay}
                   onChange={setSelectedDay}
@@ -369,7 +436,7 @@ export default function ManageAttendance() {
                     }
                   }}
                 />
-              </div>
+              </div> */}
             </CardHeader>
             <CardBody>
               <div className="w-100">
