@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PlusOutlined, CameraOutlined  } from "@ant-design/icons";
 import { Modal, Radio, Upload } from "antd";
 import { useDispatch } from "react-redux";
-import { Button } from "reactstrap";
+import { Button, Col, Container, Row } from "reactstrap";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -172,7 +172,10 @@ const PictureWall = ({ fileList, setFileList }) => {
   console.log(fileList,'file')
   return (
     <>
-      <Upload
+    <Container>
+      <Row>
+        <Col>
+        <Upload
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
         fileList={fileList}
@@ -183,7 +186,16 @@ const PictureWall = ({ fileList, setFileList }) => {
       >
         {uploadButton}
       </Upload>
-      <Button className="bg-site-primary w-25"  onClick={handleTakePicture}>{cameraButton}</Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+        <Button className="bg-site-primary camera-button"  onClick={handleTakePicture}>{cameraButton}</Button>
+        </Col>
+      </Row>
+    </Container>
+      
+     
       <Modal
         open={previewOpen}
         title={previewTitle}
