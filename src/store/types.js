@@ -21,6 +21,7 @@ export const SESSION="SESSION";
 export const EXAMMARKS ="EXAMMARKS";
 export const USER = "USER";
 export const ENROLLMENT = "ENROLLMENT";
+export const CONTESTDAYS ="CONTESTDAYS";
 export const AUTH_SET_LOADING = "AUTH_SET_LOADING";
 export const AUTH_NOTIFICATION = "AUTH_NOTIFICATION";
 

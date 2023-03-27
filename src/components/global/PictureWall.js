@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PlusOutlined, CameraOutlined  } from "@ant-design/icons";
-import { Modal, Upload } from "antd";
+import { Modal, Radio, Upload } from "antd";
 import { useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 const getBase64 = (file) =>
@@ -11,6 +11,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 const PictureWall = ({ fileList, setFileList }) => {
+  const [updateState, setUpdateState] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -64,10 +65,27 @@ const PictureWall = ({ fileList, setFileList }) => {
       </div>
     </div> 
   );
+ 
   const handleTakePicture = async () => {
     try {
+      let facingMode = "user"; // default to front camera
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+      let hasBackCamera = false;
+      let hasCamera = false;
+  
+      // Check if there is a camera available
+      if (videoDevices.length > 0) {
+        hasCamera = true;
+        // Check if there is a back camera available
+        if (videoDevices.length > 1) {
+          hasBackCamera = true;
+          facingMode = { exact: "environment" };
+        }
+      }
+  
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" },
+        video: { facingMode },
         audio: false,
       });
   
@@ -76,26 +94,50 @@ const PictureWall = ({ fileList, setFileList }) => {
       video.play();
   
       const captureImage = async () => {
-        const track = stream.getTracks()[0];
-        const imageCapture = new ImageCapture(track);
-        const photoBlob = await imageCapture.takePhoto();
-        const fileName = `photo-${Date.now()}.jpg`;
-        
-        const blob = new Blob([photoBlob.blob], { type: photoBlob.type });
-        const file = new File([blob], fileName, {
-          lastModified: new Date(),
-        });
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL("image/jpeg");
+        const blob = await fetch(dataUrl).then((res) => res.blob());
+        const fileName = `photo-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
   
         const newFile = {
-          uid: Math.random(),
+          uid: Date.now(),
           name: fileName,
           status: "done",
-          url: await getBase64(photoBlob),
-          originFileObj: file
+          url: dataUrl,
+          originFileObj: new File([blob], fileName, {
+            type: "image/jpeg",
+            lastModified: new Date(),
+          }),
         };
+  
+        // Add the new file to the fileList state
         setFileList([...fileList, newFile]);
-        track.stop();
+  
+        // Force a re-render of the component by updating its state
+        setUpdateState(updateState + 1);
+  
+        stream.getTracks()[0].stop();
         modal.destroy();
+      };
+  
+      const switchCamera = async () => {
+        if (!hasCamera) {
+          // Show a message to the user indicating that there is no camera available
+          alert("No camera available");
+          return;
+        }
+  
+        if (facingMode === "user") {
+          facingMode = { exact: "environment" };
+        } else {
+          facingMode = "user";
+        }
+        stream.getTracks()[0].stop();
+        handleTakePicture();
       };
   
       const modal = Modal.info({
@@ -110,11 +152,11 @@ const PictureWall = ({ fileList, setFileList }) => {
               ></video>
             </div>
             <div style={{ textAlign: "center" }}>
-              <Button
-                className="bg-site-primary"
-                onClick={captureImage}
-              >
+              <Button className=" mx-1 bg-site-primary" onClick={captureImage}>
                 Take Picture
+              </Button>
+              <Button className=" mx-1 bg-site-primary" onClick={switchCamera} disabled={!hasBackCamera}>
+                Switch Camera
               </Button>
             </div>
           </div>
@@ -125,8 +167,6 @@ const PictureWall = ({ fileList, setFileList }) => {
       console.log("Error accessing camera", error);
     }
   };
-  
-  
   
   
   console.log(fileList,'file')

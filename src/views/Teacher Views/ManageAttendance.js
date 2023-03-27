@@ -7,6 +7,10 @@ import {
   Col,
   Container,
   Row,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import {
   Typography,
@@ -180,6 +184,39 @@ console.log(attendanceList,'location');
       )
     );
   };
+  const ImageCell = (props) => {
+    const [showModal, setShowModal] = useState(false);
+  
+    const handleImageClick = () => {
+      setShowModal(!showModal);
+    };
+  
+    return (
+      <>
+        <div onClick={handleImageClick}>
+          <img
+            className="rounded-circle"
+            height={50}
+            width={50}
+            src={props.row.profile_photo?`https://localhost:44374/AttendanceImages/${props.row.profile_photo}`:user}
+            alt={props.row.profile_photo}
+          />
+        </div>
+        <Modal isOpen={showModal} toggle={handleImageClick}>
+          <ModalHeader toggle={handleImageClick}>Image Preview</ModalHeader>
+          <ModalBody>
+            <img
+              className=""
+              height={200}
+              width={200}
+              src={props.row.profile_photo?`https://localhost:44374/AttendanceImages/${props.row.profile_photo}`:user}
+              alt={props.row.profile_photo}
+            />
+          </ModalBody>
+        </Modal>
+      </>
+    );
+  };
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
@@ -187,11 +224,7 @@ console.log(attendanceList,'location');
       headerName: "Profile Photo",
       width: 100,
       renderCell: (params) => {
-        return (
-          <>
-           <img className="rounded" height={50} width={50} src={params.row.profile_photo?params.row.profile_photo:user}/>
-          </>
-        );
+        return <ImageCell row={params.row} />;
       },
     },
     { field: "regno", headerName: "Reg No", width: 170 },
@@ -236,6 +269,7 @@ console.log(attendanceList,'location');
         regno: data.reg_no,
         name: data.name,
         status: data.status,
+        profile_photo:data.profile_photo
       });
     });
     setRows(tempdata);
@@ -362,7 +396,7 @@ console.log(attendanceList,'location');
                         fontWeight={500}
                         fontSize={12}
                       >
-                        (Upload a minimum of 7 photos of your Attendance)
+                        {/* (Upload a minimum of 7 photos of your Attendance) */}
                       </Typography>
                       <PictureWall
                         fileList={fileList}

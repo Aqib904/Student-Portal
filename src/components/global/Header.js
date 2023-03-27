@@ -56,7 +56,7 @@ const Header = (props) => {
                 <img src={ArrowDown} alt="drop-down" className="ml-3" />
               </div>
               <img
-              src={users}
+              src={user?.profile_photo?`https://localhost:44374/AttendanceImages/${user?.profile_photo}`:users}
               alt="profile"
               className="position-absolute headerProfileImg "
             />
@@ -76,7 +76,7 @@ const Header = (props) => {
           <i class="fas fa-bell"></i>
           <div className="d-flex position-relative  ml-auto header__dropDown-bg">
             <img
-              src={users}
+              src={user?.profile_photo?`https://localhost:44374/AttendanceImages/${user?.profile_photo}`:users}
               alt="profile"
               className="position-absolute headerProfileImg "
             />

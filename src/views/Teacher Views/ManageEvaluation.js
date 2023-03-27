@@ -10,6 +10,9 @@ import {
   Container,
   Input,
   Label,
+  Modal,
+  ModalBody,
+  ModalHeader,
   Row,
 } from "reactstrap";
 import user from "../../assets/img/user.png"
@@ -57,6 +60,39 @@ export default function ManageEvaluation() {
         return updatedState;
     });
 };
+const ImageCell = (props) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleImageClick = () => {
+    setShowModal(!showModal);
+  };
+
+  return (
+    <>
+      <div onClick={handleImageClick}>
+        <img
+          className="rounded-circle"
+          height={50}
+          width={50}
+          src={props.row.profile_photo?`https://localhost:44374/AttendanceImages/${props.row.profile_photo}`:user}
+          alt={props.row.profile_photo}
+        />
+      </div>
+      <Modal isOpen={showModal} toggle={handleImageClick}>
+        <ModalHeader toggle={handleImageClick}>Image Preview</ModalHeader>
+        <ModalBody>
+          <img
+            className=""
+            height={200}
+            width={200}
+            src={props.row.profile_photo?`https://localhost:44374/AttendanceImages/${props.row.profile_photo}`:user}
+            alt={props.row.profile_photo}
+          />
+        </ModalBody>
+      </Modal>
+    </>
+  );
+};
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
@@ -64,11 +100,7 @@ export default function ManageEvaluation() {
       headerName: "Profile Photo",
       width: 100,
       renderCell: (params) => {
-        return (
-          <>
-           <img className="rounded" height={50} width={50} src={params.row.profile_photo?params.row.profile_photo:user}/>
-          </>
-        );
+        return <ImageCell row={params.row} />;
       },
     },
     { field: "reg_no", headerName: "Reg No", width: 170 },

@@ -118,13 +118,12 @@ export default function AttendancePercentage() {
           const total = currentData.detail.length;
           const percentage =
             total === 0
-              ? 0
-              : Math.round((parseInt(currentData.totalPresent) / total) * 100);
+              ? -1
+              : Math.round((parseInt(currentData.totalPresent) * 100) / total);
           const present = currentData.totalPresent.toString();
           const absent = (
             total - parseInt(currentData.totalPresent)
           ).toString();
-
           accumulator.push({
             name: [currentData.courseName],
             courseCode: currentData.courseCode,
@@ -134,17 +133,15 @@ export default function AttendancePercentage() {
             absent: absent,
             enrollmentId: currentData.enrollmentId,
           });
-
           return accumulator;
         },
         []
       );
-
       const full = 100;
       const newAttendance = {
         name: finalAttendance.map((data) => data.name[0]),
         percentage: finalAttendance.map((data) =>
-          data.percentage == 0 ? full : data.percentage
+          data.percentage == -1 ? full : data.percentage
         ),
         detail: finalAttendance.map((data) => data.detail),
         present: finalAttendance.map((data) => data.present),
@@ -152,7 +149,6 @@ export default function AttendancePercentage() {
         enrollmentId: finalAttendance.map((data) => data.enrollmentId),
         courseCode: finalAttendance.map((data) => data.courseCode),
       };
-
       const result = [];
       for (let i = 0; i < newAttendance.name.length; i++) {
         result.push({
@@ -172,68 +168,67 @@ export default function AttendancePercentage() {
     dispatch(getStudentAttendaceList(token?.username));
   }, []);
   return (
-<>
-        <Col sm={12} md={12} lg={12} className="attendance">
-          <Card className="shadow my-4 w-100 d-inline-block">
-            <CardHeader>Attendance & Marks</CardHeader>
-            {finalattendance?.map((item) => {
-              return (
-                <div className="d-inline-block my-2 position-relative">
-                  <Chart
-                    className="chart mx-4"
-                    type="radialBar"
-                    width="220"
-                    series={item.percentage}
-                    options={myoption}
-                  />
-                  <div
-                    style={{
-                      height: "10px",
-                      width: "10px",
-                      marginLeft: "80px",
-                    }}
-                    className="bg-site-primary text-center d-inline-block rounded-circle position-absolute  my-2"
-                  ></div>
-                  <div
-                    style={{
-                      height: "10px",
-                      width: "10px",
-                      marginLeft: "80px",
-                      marginTop: "33px",
-                    }}
-                    className="bg-site-grey text-center d-inline-block rounded-circle position-absolute  "
-                  ></div>
-                  <p style={{marginLeft:"30px"}} className="text-center">
-                    Present:&nbsp;{item.present}
-                    <br />
-                    Absent:&nbsp;{item.absent}
-                  </p>
-                  <button
-                    className="attendance-btn btn mx-5 w-75 py-2"
-                    id={`course_${item.courseCode}`}
-                    onClick={() => {
-                      handleCourseInformationClick(
-                        item.enrollmentId,
-                        item,
-                        item.courseCode
-                      );
-                    }}
-                  >
-                    {item.name[0].substr(0, 17)}...
-                  </button>
-                  <UncontrolledTooltip
-                                placement="below"
-                                target={`#course_${item.courseCode}`}
-                                autohide={false}
-                              >
-                                {item.name}
-                              </UncontrolledTooltip>
-                </div>
-              );
-            })}
-          </Card>
-        </Col>
-
+    <>
+      <Col sm={12} md={12} lg={12} className="attendance">
+        <Card className="shadow my-4 w-100 d-inline-block">
+          <CardHeader>Attendance & Marks</CardHeader>
+          {finalattendance?.map((item) => {
+            return (
+              <div className="d-inline-block my-2 position-relative">
+                <Chart
+                  className="chart mx-4"
+                  type="radialBar"
+                  width="220"
+                  series={item.percentage}
+                  options={myoption}
+                />
+                <div
+                  style={{
+                    height: "10px",
+                    width: "10px",
+                    marginLeft: "80px",
+                  }}
+                  className="bg-site-primary text-center d-inline-block rounded-circle position-absolute  my-2"
+                ></div>
+                <div
+                  style={{
+                    height: "10px",
+                    width: "10px",
+                    marginLeft: "80px",
+                    marginTop: "33px",
+                  }}
+                  className="bg-site-grey text-center d-inline-block rounded-circle position-absolute  "
+                ></div>
+                <p style={{ marginLeft: "30px" }} className="text-center">
+                  Present:&nbsp;{item.present}
+                  <br />
+                  Absent:&nbsp;{item.absent}
+                </p>
+                <button
+                  className="attendance-btn btn mx-5 w-75 py-2"
+                  id={`course_${item.courseCode}`}
+                  onClick={() => {
+                    handleCourseInformationClick(
+                      item.enrollmentId,
+                      item,
+                      item.courseCode
+                    );
+                  }}
+                >
+                  {item.name[0].substr(0, 17)}...
+                </button>
+                <UncontrolledTooltip
+                  placement="below"
+                  target={`#course_${item.courseCode}`}
+                  autohide={false}
+                >
+                  {item.name}
+                </UncontrolledTooltip>
+              </div>
+            );
+          })}
+        </Card>
+      </Col>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Course Information</ModalHeader>
         <ModalBody>
@@ -266,6 +261,6 @@ export default function AttendancePercentage() {
         </ModalBody>
         <ModalFooter></ModalFooter>
       </Modal>
-      </>
+    </>
   );
 }

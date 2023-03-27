@@ -205,17 +205,32 @@ export default function TeacherDashboard() {
     {
       field: "reg_no",
       headerName: "Status",
-      width: 100,
+      width: 200,
     },
     {
       field: "course_name",
       headerName: "Course name",
-      width: 100,
+      width: 200,
     },
     {
       field: "date",
-      headerName: "Date",
-      width: 100,
+      headerName: " Date",
+      width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.dateTime;
+        const dateOnly = dateTimeString.split(",")[0];
+        return dateOnly;
+      },
+    },
+    {
+      field: "time",
+      headerName: " Time",
+      width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.dateTime;
+        const timeOnly = dateTimeString.split(",")[1];
+        return timeOnly;
+      },
     },
     {
       field: "decipline",
@@ -235,6 +250,11 @@ export default function TeacherDashboard() {
     {
       field: "status",
       headerName: "Status",
+      width: 100,
+    },
+    {
+      field: "type",
+      headerName: "Type",
       width: 100,
     },
     {
@@ -279,6 +299,7 @@ export default function TeacherDashboard() {
     let tempdata = [];
     let index = 0;
     contestList.map((item) => {
+      console.log(item,'item')
       index++;
       return tempdata.push({
         attendance_id: item.attendance_id,
@@ -287,10 +308,11 @@ export default function TeacherDashboard() {
         course_name: item.course_name,
         course_code: item.course_code,
         status: item.status,
-        date: item.date,
+        dateTime: item.dateTime,
         section: item.section,
         program: item.program,
         semester: item.semester,
+        type:item.type,
         id: index,
       });
     });

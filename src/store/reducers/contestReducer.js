@@ -1,6 +1,7 @@
-import { CONTESTLIST } from "../types";
+import { CONTESTLIST,CONTESTDAYS } from "../types";
 const initialState = {
-    contestList:[]
+    contestList:[],
+    contestDay:null
   };
   const contestReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -8,6 +9,11 @@ const initialState = {
         return {
           ...state,
           contestList: action.payload.contestList,
+        };
+      case CONTESTDAYS :
+        return {
+          ...state,
+          contestDay: action.payload.contestDays,
         };
       default:
         return state;

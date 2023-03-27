@@ -249,13 +249,13 @@ const Sidebar = (props) => {
 
           <div className=" sidebar-logo d-none d-lg-flex justify-content-center align-items-center flex-column mt-3  ">
             <Image
-              src={users}
+              src={user?.profile_photo?`https://localhost:44374/AttendanceImages/${user?.profile_photo}`:users}
               alt="Batch"
               height={80}
               width={80}
-              className="img-fluid logo "
+              className="img-fluid rounded-circle logo "
             />
-            <h5 className="text-light">{user?.first_name}</h5>
+            <h5 className="text-light my-1">{user?.first_name}</h5>
             {/* <h5 className="text-light">Aqib Siddique</h5> */}
           </div>
           <hr />
