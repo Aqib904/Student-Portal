@@ -40,6 +40,18 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
       alert(error.message);
     }
   };
+  export const startNewEvaluation = (list) => async (dispatch) => {
+    try {
+      const {data} = await assessment.startNewEvaluation(list)
+      if (data == "success") {
+        alert("Evaluation Started Successfully");
+      } else {
+        alert("Evaluation Start  failed")
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   export const getTeachersCourses = (session) => async (dispatch) => {
     try {
       const {data} = await assessment.getTeachersCourses(session)

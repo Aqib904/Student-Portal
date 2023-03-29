@@ -16,6 +16,7 @@ import {
   Container,
   Row,
 } from "reactstrap";
+import ReactApexChart from "react-apexcharts";
 export default function EvaluationPercentage() {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -27,52 +28,69 @@ export default function EvaluationPercentage() {
     },
   }));
   const [rows, setRows] = useState([]);
-
-  const [individual,setIndividual] = useState({
-    options: {
-      chart: {
-        id: "basic-bar"
-      },
-      xaxis: {
-        categories: ["Excellent", "Good", "Average", "Poor"]
-      },
-      plotOptions: {
-        bar: {
-          colors: {
-            ranges: [
-              {
-                from: 0,
-                to: 30,
-                color: '#F44336'
-              },
-              {
-                from: 31,
-                to: 50,
-                color: '#FFC107'
-              },
-              {
-                from: 51,
-                to: 75,
-                color: '#4CAF50'
-              },
-              {
-                from: 76,
-                to: 100,
-                color: '#03A9F4'
-              }
-            ]
-          }
-        }
-      },
-      toolbar: false,
+  let [series,setSeries] = useState([1,2,3,4])
+  let [options, setOptions] = useState({
+    labels: ["Exelent", "good", "average", "poor"],
+    chart: {
+      type: "donut",
     },
-    series: [
+    responsive: [
       {
-        name: "series-1",
-        data: [30, 40, 52, 100]
-      }
-    ]
+        breakpoint: 480,
+        options: {
+          // chart: {
+          //   width: 200
+          // },
+        },
+      },
+    ],
   });
+
+  // const [individual,setIndividual] = useState({
+  //   options: {
+  //     chart: {
+  //       id: "basic-bar"
+  //     },
+  //     xaxis: {
+  //       categories: ["Excellent", "Good", "Average", "Poor"]
+  //     },
+  //     plotOptions: {
+  //       bar: {
+  //         colors: {
+  //           ranges: [
+  //             {
+  //               from: 0,
+  //               to: 30,
+  //               color: '#F44336'
+  //             },
+  //             {
+  //               from: 31,
+  //               to: 50,
+  //               color: '#FFC107'
+  //             },
+  //             {
+  //               from: 51,
+  //               to: 75,
+  //               color: '#4CAF50'
+  //             },
+  //             {
+  //               from: 76,
+  //               to: 100,
+  //               color: '#03A9F4'
+  //             }
+  //           ]
+  //         }
+  //       }
+  //     },
+  //     toolbar: false,
+  //   },
+  //   series: [
+  //     {
+  //       name: "series-1",
+  //       data: [30, 40, 52, 100]
+  //     }
+  //   ]
+  // });
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
@@ -114,75 +132,84 @@ export default function EvaluationPercentage() {
         </Col>
       </Row>
       <Row>
-        <Col lg={6} md="6" sm="12">
-          <Card className="shadow mx-3 my-2">
-            <CardHeader>Merged</CardHeader>
-        <Chart
-              options={individual.options}
-              series={individual.series}
-              type="bar"
-              width="100%"
-              
-            />
-            </Card>
-        </Col>
-        <Col lg={6} md="6" sm="12">
+        <Col lg={6} md={6} sm={12} sx={12}>
           <Card className="shadow mx-3 my-2">
             <CardHeader>Individual</CardHeader>
-        <Chart
+            {/* <Chart
               options={individual.options}
               series={individual.series}
               type="bar"
               width="100%"
               
+            /> */}
+            <ReactApexChart
+              options={options}
+              series={series}
+              type="donut"
             />
-            </Card>
+          </Card>
+        </Col>
+        <Col lg={6} md={6} sm={12} sx={12}>
+          <Card className="shadow mx-3 my-2">
+            <CardHeader>Merged</CardHeader>
+            {/* <Chart
+              options={individual.options}
+              series={individual.series}
+              type="bar"
+              width="100%"
+              
+            /> */}
+            <ReactApexChart
+              options={options}
+              series={series}
+              type="donut"
+            />
+          </Card>
         </Col>
       </Row>
-      {rows.length==0?(
+      {rows.length == 0 ? (
         <Container>
-        <Row>
-          <Col>
-            <Card className="shadow my-4">
-                <CardHeader>
-                    Evaluation of&nbsp;{data.teacherName}
-                </CardHeader>
-              <CardBody>
-                 <p className="text-center text-danger">Evaluation pending from student!</p>
-              </CardBody>
-              <CardFooter></CardFooter>
-            </Card>
-          </Col>
-        </Row>
+          <Row>
+            <Col>
+              <Card className="shadow my-4">
+                <CardHeader>Evaluation of&nbsp;{data.teacherName}</CardHeader>
+                <CardBody>
+                  <p className="text-center text-danger">
+                    Evaluation pending from student!
+                  </p>
+                </CardBody>
+                <CardFooter></CardFooter>
+              </Card>
+            </Col>
+          </Row>
         </Container>
-      ):(
-<Container>
-<Row>
-  <Col>
-    <Card className="shadow my-4">
-        <CardHeader>
-            Evaluation of&nbsp;{data.teacherName}
-        </CardHeader>
-      <CardBody>
-        <StripedDataGrid
-          autoHeight
-          autoWidth
-          columns={columns}
-          rows={rows}
-          disableSelectionOnClick={false}
-          getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
-          }
-          hideFooterPagination={true}
-        />
-      </CardBody>
-      <CardFooter></CardFooter>
-    </Card>
-  </Col>
-</Row>
-</Container>
+      ) : (
+        <Container>
+          <Row>
+            <Col>
+              <Card className="shadow my-4">
+                <CardHeader>Evaluation of&nbsp;{data.teacherName}</CardHeader>
+                <CardBody>
+                  <StripedDataGrid
+                    autoHeight
+                    autoWidth
+                    columns={columns}
+                    rows={rows}
+                    disableSelectionOnClick={false}
+                    getRowClassName={(params) =>
+                      params.indexRelativeToCurrentPage % 2 === 0
+                        ? "odd"
+                        : "even"
+                    }
+                    hideFooterPagination={true}
+                  />
+                </CardBody>
+                <CardFooter></CardFooter>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       )}
-      
     </>
   );
 }
