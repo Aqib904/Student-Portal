@@ -14,9 +14,9 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
       alert(error.message);
     }
   };
-  export const getAssessmentQuestions = () => async (dispatch) => {
+  export const getAssessmentQuestions = (id) => async (dispatch) => {
     try {
-      const {data} = await assessment.getAssessmentQuestions()
+      const {data} = await assessment.getAssessmentQuestions(id)
       if (data) {
         dispatch({ type: ASSESSMENTQUESTION, payload: { question: data } });
       } else {

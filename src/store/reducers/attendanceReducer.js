@@ -1,8 +1,9 @@
-import { TEACHERCOURSES,STUDENTLIST ,CLEAR_STUDENTLIST,STUDENTATTENDANCE} from "../types";
+import { TEACHERCOURSES,STUDENTLIST ,CLEAR_STUDENTLIST,STUDENTATTENDANCE,ABSENTSLIST} from "../types";
 const initialState = {
     teacherCourses:[],
     attendanceList:[],
     attendancelist:[],
+    absentslist:[],
   };
   const attendanceReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -26,6 +27,12 @@ const initialState = {
             ...state,
           attendancelist: action.payload.studentattendance,
         };
+        //ABSENTSLIST
+        case ABSENTSLIST:
+          return {
+              ...state,
+            absentslist: action.payload.absentLists,
+          };
       default:
         return state;
     }

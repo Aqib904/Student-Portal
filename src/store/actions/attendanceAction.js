@@ -3,6 +3,7 @@ import {
   STUDENTLIST,
   CLEAR_STUDENTLIST,
   STUDENTATTENDANCE,
+  ABSENTSLIST,
 } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var attendance = RepositoryFactory.get("attendance");
@@ -32,15 +33,30 @@ export const getStudentsList = (id, section) => async (dispatch) => {
     alert(error.message);
   }
 };
+export const getAbsentsList = (enrollmentId) => async (dispatch) => {
+  console.log(enrollmentId,'enrollmentIdAction');
+  try {
+    const response = await fetch(`https://localhost:44374/api/Student/GetAbsentList?eid=${enrollmentId}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      dispatch({ type: ABSENTSLIST, payload: { absentLists: data } });
+    } else {
+      alert("list load failed");
+      throw new Error(data.error);
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
 export const markAttendance =
-  (list, allocationId, fileList, dateTime, history) => async (dispatch) => {
-    console.log(fileList, "filelIST");
+  (list, allocationId, fileList, history) => async (dispatch) => {
     try {
       const formData = new FormData();
       formData.append("attendances", JSON.stringify(list));
       formData.append("allocationId", allocationId);
-      formData.append("dateTime", dateTime);
-      const uniqueItems = new Set();
       fileList.forEach((item) => {       
           formData.append(`${item.name}`, item.originFileObj);
       });

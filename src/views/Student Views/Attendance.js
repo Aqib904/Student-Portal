@@ -26,9 +26,12 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { markContest } from "../../store/actions/contestAction";
+import { getAbsentsList } from "../../store/actions/attendanceAction";
 export default function Attendance() {
+  const { absentslist } = useSelector((state) => state.attendance);
+  console.log(absentslist,'absentslist')
   const dispatch = useDispatch();
   const location = useLocation();
   const rowData = location.state;
@@ -47,6 +50,7 @@ export default function Attendance() {
   const [labData, setLabData] = useState([]);
   const [modalClass, setModalClass] = useState([]);
   const [modalLab, setModalLab] = useState([]);
+  console.log(modalLab,'modalLab')
   const handleTypeChange = (event) => {
     setType(event.target.value);
   };
@@ -239,22 +243,22 @@ export default function Attendance() {
     let tempclass = [];
     let templab = [];
     let index = 0;
-    rowData?.detail?.map((item) => {
+    absentslist?.map((item) => {
       index++;
       return item.type === "class" && item.status === "A"
         ? tempclass.push({
-            date: item.date,
+            date: item.dateTime,
             status: item.status,
-            attendance_id: item.aid,
+            attendance_id: item.id,
             enrollment_id: rowData.enrollmentId,
             course_code: rowData.courseCode,
             id: index,
           })
         : item.type === "lab" && item.status === "A"
         ? templab.push({
-            date: item.date,
+            date: item.dateTime,
             status: item.status,
-            attendance_id: item.aid,
+            attendance_id: item.id,
             enrollment_id: rowData.enrollmentId,
             course_code: rowData.courseCode,
             id: index,
@@ -263,7 +267,10 @@ export default function Attendance() {
     });
     setModalClass(tempclass);
     setModalLab(templab);
-  }, [rowData.detail]);
+  }, [absentslist]);
+  useEffect(()=>{
+    dispatch(getAbsentsList(rowData?.enrollmentId))
+  },[])
   return (
     <>
       <h4 className="d-none d-md-block m-0 font-weight-bold mx-2">

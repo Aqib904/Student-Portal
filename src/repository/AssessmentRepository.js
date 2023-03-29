@@ -8,8 +8,8 @@ export default {
     getCourseTeacher(regno) {
       return Repository.get(`${GETCOURSETEACHER}?reg_no=${regno}`);
     },
-    getAssessmentQuestions() {
-        return Repository.get(`${GETASSESSMENTQUESTIONS}`);
+    getAssessmentQuestions(id) {
+        return Repository.get(`${GETASSESSMENTQUESTIONS}?allocationId=${id}`);
       },
       markEvaluation(list) {
         return Repository.post(`${MARKEVALUATION}`, list);

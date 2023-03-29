@@ -75,22 +75,22 @@ console.log(attendanceList,'location');
   //   section: "",
   //   id: "",
   // });
-  const dateFormat = (dateString) => {
-    if (dateString !== "") {
-      const date = new Date(dateString);
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const seconds = date.getSeconds();
-      const formattedDate = `${day}/${month}/${year},${hours}:${minutes}:${seconds}`;
-      return formattedDate;
-    }
-  };
-  let date = new Date()
-  const formattedDate = dateFormat(date);
-   console.log(formattedDate);
+  // const dateFormat = (dateString) => {
+  //   if (dateString !== "") {
+  //     const date = new Date(dateString);
+  //     const day = date.getDate();
+  //     const month = date.getMonth() + 1;
+  //     const year = date.getFullYear();
+  //     const hours = date.getHours();
+  //     const minutes = date.getMinutes();
+  //     const seconds = date.getSeconds();
+  //     const formattedDate = `${day}/${month}/${year},${hours}:${minutes}:${seconds}`;
+  //     return formattedDate;
+  //   }
+  // };
+  // let date = new Date()
+  // const formattedDate = dateFormat(date);
+  //  console.log(formattedDate);
   const submitAttendanceList = () => {
     let list = [];
 
@@ -102,7 +102,7 @@ console.log(attendanceList,'location');
       });
     });
     
-    dispatch(markAttendance(list,allocate,fileList,formattedDate,history));
+    dispatch(markAttendance(list,allocate,fileList,history));
   };
   const handleTypeChange = (event) => {
     setType(event.target.value);

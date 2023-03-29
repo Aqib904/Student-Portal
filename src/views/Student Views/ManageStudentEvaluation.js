@@ -23,6 +23,7 @@ export default function ManageAssessment() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { questions } = useSelector((state) => state.assessment);
+  console.log(questions,'questions')
   const [questionss, setQuestionss] = useState([]);
   const options = ["Excellent", "Good", "Average", "Poor"];
   const [currentPage, setCurrentPage] = useState(0);
@@ -148,8 +149,8 @@ export default function ManageAssessment() {
     setQuestionss(questions);
   }, [questions]);
   useEffect(() => {
-    dispatch(getAssessmentQuestions());
-  }, []);
+    dispatch(getAssessmentQuestions(data?.id));
+  }, [data]);
   return (
     <>
       <Container fluid>
