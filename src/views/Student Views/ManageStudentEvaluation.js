@@ -135,13 +135,14 @@ export default function ManageAssessment() {
     );
   };
   useEffect(() => {
-    if (answers.length != questionss.length) {
+    if (answers.length == questionss.length) {
       let tempdata = {};
       tempdata = {
         allocationId: data.id,
         reg_no: token?.username,
         evaluationAnswers: answers,
       };
+      console.log(answers,'answers')
       setSubmit(tempdata);
     }
   }, [answers]);

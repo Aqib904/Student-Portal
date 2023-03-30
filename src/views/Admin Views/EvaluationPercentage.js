@@ -21,6 +21,7 @@ export default function EvaluationPercentage() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { feedback } = useSelector((state) => state.assessment);
+  console.log(feedback,'feedback')
   const data = location.state;
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
@@ -28,9 +29,10 @@ export default function EvaluationPercentage() {
     },
   }));
   const [rows, setRows] = useState([]);
-  let [series,setSeries] = useState([1,2,3,4])
+  let [seriesMerge,setSeriesMerge] = useState([]);
+  let [seriesIndividual,setSeriesIndividual] = useState([3,2,3,1])
   let [options, setOptions] = useState({
-    labels: ["Exelent", "good", "average", "poor"],
+    labels: ["Excellent", "Good", "Average", "Poor"],
     chart: {
       type: "donut",
     },
@@ -107,7 +109,7 @@ export default function EvaluationPercentage() {
   useEffect(() => {
     let tempdata = [];
     let index = 0;
-    feedback?.map((item) => {
+    feedback?.data?.map((item) => {
       index++;
       return tempdata.push({
         id: index,
@@ -122,6 +124,12 @@ export default function EvaluationPercentage() {
       getTeachersFeedback(data?.teacher_id, data?.course_code, data?.session)
     );
   }, []);
+ useEffect(() => {
+  if (feedback && feedback.data2) {
+    const { excellent, good, average, poor } = feedback.data2;
+    setSeriesMerge([excellent, good, average, poor]);
+  }
+}, [feedback]);
   return (
     <>
       <Row>
@@ -144,7 +152,7 @@ export default function EvaluationPercentage() {
             /> */}
             <ReactApexChart
               options={options}
-              series={series}
+              series={seriesIndividual}
               type="donut"
             />
           </Card>
@@ -161,7 +169,7 @@ export default function EvaluationPercentage() {
             /> */}
             <ReactApexChart
               options={options}
-              series={series}
+              series={seriesMerge}
               type="donut"
             />
           </Card>

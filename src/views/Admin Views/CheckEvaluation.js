@@ -39,20 +39,6 @@ export default function CheckEvaluation() {
     setModal(!modal);
     clearDate();
   };
-  // const defaultFrom = {
-  //   year: 0,
-  //   month: 0,
-  //   day: 0,
-  // };
-  // const defaultTo = {
-  //   year: 0,
-  //   month: 0,
-  //   day: 0,
-  // };
-  // const defaultValue = {
-  //   from: "",
-  //   to: "",
-  // };
   const [selectedDayRange, setSelectedDayRange] = useState({
     from: "",
     to: "",
@@ -60,7 +46,6 @@ export default function CheckEvaluation() {
   console.log(selectedDayRange, "selectDay");
   const [select, setSelect] = useState("FALL2022");
   const [date, setDate] = useState({ start_date: "", end_date: "" });
-  console.log(date, "date");
   let sessionData = ["FALL2021", "SPRING2021", "FALL2022", "SPRING2022"];
   const [rows, setRows] = useState([]);
   const clearDate = () => {
@@ -130,7 +115,6 @@ export default function CheckEvaluation() {
     });
     setRows(tempdata);
   }, [allTeachers]);
-  console.log(selectedDayRange,'select')
   useEffect(() => {
     if(selectedDayRange.from!=''&&selectedDayRange.to!=''){
     const { from, to } = selectedDayRange;
@@ -214,7 +198,7 @@ export default function CheckEvaluation() {
                 dispatch(startNewEvaluation(date));
                 toggle();
               } else {
-                alert("Please select the valid date");
+                alert("Please select the starting & ending date");
               }
             }}
           >
@@ -224,8 +208,8 @@ export default function CheckEvaluation() {
                   value={selectedDayRange}
                   onChange={setSelectedDayRange}
                   calendarClassName="responsive-calendar"
-                  colorPrimary="#0fbcf9"
-                  colorPrimaryLight="rgba(75, 207, 250, 0.4)"
+                  colorPrimary="#099d78"
+                  colorPrimaryLight="#58ffc5"
                   shouldHighlightWeekends
                 />
               </div>
