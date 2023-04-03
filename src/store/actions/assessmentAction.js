@@ -1,11 +1,13 @@
-import {TEACHERCOURSE,ASSESSMENTQUESTION,ALLTEACHERCOURSES,FEEDBACKTEACHER} from "../types";
+import {TEACHERCOURSE,ASSESSMENTQUESTION,ALLTEACHERCOURSES,FEEDBACKTEACHER,TEACHER_LOADING} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var assessment = RepositoryFactory.get("assessment");
 export const getCourseTeacher = (regno) => async (dispatch) => {
     try {
+      dispatch(teacherLoading(true))
       const {data} = await assessment.getCourseTeacher(regno)
       if (data) {
         dispatch({ type: TEACHERCOURSE, payload: { teacherdata: data } });
+        dispatch(teacherLoading(false))
       } else {
         alert("DateSheet load failed");
         throw new Error(data.error);
@@ -77,4 +79,7 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
     } catch (error) {
       alert(error.message);
     }
+  };
+  export const teacherLoading = (val) => async (dispatch) => {
+    dispatch({ type: TEACHER_LOADING, payload: val });
   };

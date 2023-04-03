@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Card, Container, Row, Col, UncontrolledTooltip } from "reactstrap";
 import { getWeeklyTimetable } from "../../store/actions/timetableAction";
+import LoadingOverlay from "react-loading-overlay";
 function Timetable() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { token, status } = useSelector((state) => state.authUser);
-  const { timetable } = useSelector((state) => state.timetable);
+  const { timetable,loading } = useSelector((state) => state.timetable);
   const [weeklytime, setWeeklyTime] = useState([]);
   const [day, setDay] = useState([]);
   const weekday = [
@@ -87,6 +88,7 @@ function Timetable() {
         {day.map((dayname) => {
           return (
             <Col sm={12} md={8} lg={6}>
+              <LoadingOverlay active={loading} spinner text="Timetable Loading....">
               <Card
                 className={`shadow my-3 w-100 z-index-n1 my-2 ${
                   days == dayname ? "bg-site-table" : "bg-site-table-none"
@@ -131,6 +133,7 @@ function Timetable() {
                   </tbody>
                 </table>
               </Card>
+              </LoadingOverlay>
             </Col>
           );
         })}

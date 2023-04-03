@@ -13,6 +13,7 @@ import {
   ModalFooter,
   FormGroup,
   Input,
+  Spinner,
 } from "reactstrap";
 import Chart from "react-apexcharts";
 import { useLocation } from "react-router-dom";
@@ -31,10 +32,11 @@ import { markContest } from "../../store/actions/contestAction";
 import { getAbsentsList } from "../../store/actions/attendanceAction";
 export default function Attendance() {
   const { absentslist } = useSelector((state) => state.attendance);
-  console.log(absentslist,'absentslist')
+  const { loading } = useSelector((state) => state.contest);
   const dispatch = useDispatch();
   const location = useLocation();
   const rowData = location.state;
+  console.log(rowData,'rowData')
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -50,7 +52,10 @@ export default function Attendance() {
   const [labData, setLabData] = useState([]);
   const [modalClass, setModalClass] = useState([]);
   const [modalLab, setModalLab] = useState([]);
-  console.log(modalLab,'modalLab')
+  const toggleContest = ()=>{
+    toggle()
+    dispatch(getAbsentsList(rowData?.enrollmentId))
+  }
   const handleTypeChange = (event) => {
     setType(event.target.value);
   };
@@ -239,6 +244,7 @@ export default function Attendance() {
     setClassData(tempclass);
     setLabData(templab);
   }, [rowData.detail]);
+  console.log(absentslist,'absentsList')
   useEffect(() => {
     let tempclass = [];
     let templab = [];
@@ -268,9 +274,9 @@ export default function Attendance() {
     setModalClass(tempclass);
     setModalLab(templab);
   }, [absentslist]);
-  useEffect(()=>{
-    dispatch(getAbsentsList(rowData?.enrollmentId))
-  },[])
+  // useEffect(()=>{
+  //   dispatch(getAbsentsList(rowData?.enrollmentId))
+  // },[rowData?.enrollmentId])
   return (
     <>
       <h4 className="d-none d-md-block m-0 font-weight-bold mx-2">
@@ -350,7 +356,7 @@ export default function Attendance() {
                 <Button
                   variant="contained"
                   className="bg-site-primary float-right d-inline-block"
-                  onClick={toggle}
+                  onClick={toggleContest}
                 >
                   Contest
                 </Button>
@@ -432,8 +438,9 @@ export default function Attendance() {
               <Button
                 className="bg-site-primary w-25 mx-2"
                 onClick={handleSubmitContest}
+                disabled={loading}
               >
-                Yes
+                 {loading ? <Spinner size="sm" /> : "Yes"}
               </Button>
               <Button className="bg-danger w-25" onClick={confirmtoggle}>
                 No

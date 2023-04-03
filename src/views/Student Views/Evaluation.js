@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import LoadingOverlay from "react-loading-overlay";
 import {
   Button,
   Card,
@@ -20,7 +21,7 @@ import { getCourseTeacher } from "../../store/actions/assessmentAction";
 export default function Assessment() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { teachersData } = useSelector((state) => state.assessment);
+  const { teachersData ,loading} = useSelector((state) => state.assessment);
   const { token,status } = useSelector((state) => state.authUser);
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
@@ -80,6 +81,7 @@ export default function Assessment() {
           <Card className="my-2 ">
             <CardHeader></CardHeader>
             <CardBody>
+            <LoadingOverlay active={loading} spinner text="Teachers Data Loading...."> 
             <StripedDataGrid
               autoHeight
               autoWidth
@@ -91,6 +93,7 @@ export default function Assessment() {
               }
               hideFooterPagination={true}
             />
+            </LoadingOverlay>
             </CardBody>
             <CardFooter></CardFooter>
           </Card>

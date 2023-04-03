@@ -1,4 +1,4 @@
-import { EVALUATIONGENERAL, EVALUATIONEXAM,SESSION,EXAMMARKS } from "../types";
+import { EVALUATIONGENERAL, EVALUATIONEXAM,SESSION,EXAMMARKS,EXAM_RESULT_LOADING } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var evaluation = RepositoryFactory.get("evaluation")
 export const markGeneralExam = (list) => async (dispatch) => {
@@ -66,9 +66,11 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const getExamMarks = (regno,session) => async (dispatch) => {
     try {
+      dispatch(examResultLoading(true))
       const {data} = await evaluation.getExamMarks(regno,session)
       if (data) {
         dispatch({ type: EXAMMARKS, payload: { examData: data } });
+        dispatch(examResultLoading(false))
       } else {
         alert("Marks loaded failed");
         throw new Error(data.error);
@@ -77,3 +79,7 @@ export const markGeneralExam = (list) => async (dispatch) => {
       alert(error.message);
     }
   };
+  export const examResultLoading = (val) => async (dispatch) => {
+    dispatch({ type: EXAM_RESULT_LOADING, payload: val });
+  };
+  

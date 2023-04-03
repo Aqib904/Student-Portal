@@ -1,6 +1,7 @@
-import { DATESHEET } from "../types";
+import { DATESHEET,DATESHEET_LOADING } from "../types";
 const initialState = {
-    datesheet:[]
+    datesheet:[],
+    loading:false,
   };
   const datesheetReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -9,6 +10,11 @@ const initialState = {
           ...state,
           datesheet: action.payload.datesheet,
         };
+        case DATESHEET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
       default:
         return state;
     }

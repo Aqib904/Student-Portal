@@ -107,7 +107,7 @@ export default function Evaluation() {
   }, []);
   return (
     <>
-    <h4 className='d-none d-md-block m-0 font-weight-bold mx-4'>Assessment</h4>
+    <h4 className='d-none d-md-block m-0 font-weight-bold mx-4'>Grading</h4>
   
     <Container>
     <Row>
@@ -129,7 +129,7 @@ export default function Evaluation() {
                 </Select>
               </FormControl>
         <Card className="shadow my-3 w-100 z-index-n1">
-          <CardHeader><h4 className='d-inline-block'>Assessment</h4>
+          <CardHeader><h4 className='d-inline-block'>Grading</h4>
           <Link to="/student/examresult">
           <Button className='d-inline-block float-right bg-site-brown border-0'>Old Results</Button>
           </Link>

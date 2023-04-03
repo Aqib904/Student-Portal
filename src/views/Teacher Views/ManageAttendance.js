@@ -48,7 +48,6 @@ export default function ManageAttendance() {
   const { teacherCourses } = useSelector((state) => state.attendance);
   const { token } = useSelector((state) => state.authUser);
   const attendanceList = location.state;
-  const allocationId = location.allocateId
   const [allocate,setAllocate] = useState("")
   const [program, setProgram] = useState([
     { course_code: "", course_name: "" },
@@ -61,6 +60,7 @@ console.log(attendanceList,'location');
   const [fileList, setFileList] = useState([]);
   const [flagSubmit, setFlagSubmit] = useState(false);
   const [type, setType] = useState("lab");
+  const [discipline,setDiscipline] = useState("")
   // const [courseTitle, setCourseTitle] = useState([
   //   { course_code: "", course_name: "" },
   // ]);
@@ -279,11 +279,14 @@ console.log(attendanceList,'location');
   }, [token?.username]);
   useEffect(()=>{
     let id = 0;
+    let discipline =""
     attendanceList.map((item)=>{
       return(
-        id=item.allocateId
+        id=item.allocateId,
+        discipline=item.discipline
       )
     })
+    setDiscipline(discipline)
     setAllocate(id)
   },[attendanceList])
   // useEffect(() => {
@@ -411,7 +414,7 @@ console.log(attendanceList,'location');
                         fontSize={12}
                         sx={{ color: "red" }}
                       >
-                        Upload minimum 7 photos of your property*
+                        Upload minimum 7 photos of your Attendance*
                       </Typography>
                     ) : null}
         </Col>
@@ -420,7 +423,7 @@ console.log(attendanceList,'location');
         <Col md={12}>
           <Card className="shadow my-3 ">
             <CardHeader>
-              <p className="d-inline-block">Attendance list </p>
+              <p className="d-inline-block">Attendance list of {discipline}</p>
               <Button
                 className="bg-site-success text-white border-0 float-right"
                 onClick={() => {

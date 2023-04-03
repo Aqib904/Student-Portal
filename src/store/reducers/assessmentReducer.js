@@ -1,8 +1,9 @@
-import { TEACHERCOURSE ,ASSESSMENTQUESTION,ALLTEACHERCOURSES,FEEDBACKTEACHER} from "../types";
+import { TEACHERCOURSE ,ASSESSMENTQUESTION,ALLTEACHERCOURSES,FEEDBACKTEACHER,TEACHER_LOADING} from "../types";
 const initialState = {
     teachersData:[],
     questions:[],
     feedback:[],
+    loading:false,
   };
   const assessmentReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -26,6 +27,11 @@ const initialState = {
           ...state,
           feedback: action.payload.feedback,
         };
+        case TEACHER_LOADING:
+          return {
+            ...state,
+            loading: action.payload,
+          };
       default:
         return state;
     }

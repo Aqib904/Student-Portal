@@ -8,11 +8,12 @@ import { gridClasses } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { useHistory } from 'react-router-dom';
+import LoadingOverlay from "react-loading-overlay";
 export default function ExamResult() {
     const dispatch = useDispatch();
     const history = useHistory();
     const { token,status } = useSelector((state) => state.authUser);
-    const { session,exam} = useSelector((state) => state.evaluation);
+    const { session,exam,loading} = useSelector((state) => state.evaluation);
     const StripedDataGrid = styled(DataGrid)(() => ({
         [`& .${gridClasses.row}.even`]: {
           backgroundColor: "#EEEE",
@@ -158,6 +159,7 @@ export default function ExamResult() {
         <Col sm={12} md={12}>
           <Card className="shadow my-3 w-100 z-index-n1">
             <CardHeader>Marks of {type}</CardHeader>
+            <LoadingOverlay active={loading} spinner text="Exam Result Loading....">
             <StripedDataGrid
               autoHeight
               autoWidth
@@ -169,6 +171,7 @@ export default function ExamResult() {
               }
               hideFooterPagination={true}
             />
+            </LoadingOverlay>
           </Card>
         </Col>
       </Row>

@@ -1,6 +1,7 @@
-import { DATESHEET } from "../types";
+import { DATESHEET ,DATESHEET_LOADING} from "../types";
 export const getDatesheet = (regno) => async (dispatch) => {
   try {
+    dispatch(datesheetLoading(true))
     const response = await fetch(
       `https://localhost:44374/api/Student/GetDateSheet?reg_no=${regno}`,
       {
@@ -11,6 +12,7 @@ export const getDatesheet = (regno) => async (dispatch) => {
     const data = await response.json();
     if (response.ok) {
       dispatch({ type: DATESHEET, payload: { datesheet: data } });
+      dispatch(datesheetLoading(false))
     } else {
       alert("DateSheet load failed");
       throw new Error(data.error);
@@ -59,4 +61,7 @@ export const addCourseAllocation = (file) => async (dispatch) => {
   } catch (error) {
     alert(error.message);
   }
+};
+export const datesheetLoading = (val) => async (dispatch) => {
+  dispatch({ type: DATESHEET_LOADING, payload: val });
 };

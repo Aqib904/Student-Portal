@@ -14,6 +14,7 @@ import {
   ModalFooter,
   Label,
   Input,
+  Spinner,
 } from "reactstrap";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
@@ -40,9 +41,8 @@ export default function TeacherDashboard() {
   const { teacherCourses, attendanceList } = useSelector(
     (state) => state.attendance
   );
-  console.log(teacherCourses,'attendaceList');
   const { token } = useSelector((state) => state.authUser);
-  const { contestList } = useSelector((state) => state.contest);
+  const { contestList,acceptLoading,rejectLoading } = useSelector((state) => state.contest);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [attendanceModal, setAttendanceModal] = useState(false);
@@ -80,7 +80,7 @@ export default function TeacherDashboard() {
       history.push({
         pathname: `/teacher/attendance/${id}`,
         state: studentAttendanceList,
-        allocateId:allocationId
+        allocateId:allocationId,
       });
     } else {
       alert("Please select the required Fields");
@@ -113,7 +113,6 @@ export default function TeacherDashboard() {
     setDecipline([{ id: "", program: "", semester: "", section: "" }]);
   };
   const handleProgramChange = (event,allocationIds) => {
-    console.log(allocationIds,'allocationId');
     setAllocationId(allocationIds)
     attendancetoggle();
     const course_code = event;
@@ -269,18 +268,20 @@ export default function TeacherDashboard() {
               size="sm"
               color="success"
               className="mx-2"
+              disabled={acceptLoading}
               onClick={async (e) => {
                 e.preventDefault();
                 await dispatch(contestAcceptAction(params.row.attendance_id));
                 dispatch(getContestList(token?.username));
               }}
             >
-              🗸
+             {acceptLoading ? <Spinner size="sm" /> : " 🗸"}
             </Button>
             <Button
               size="sm"
               color="danger"
               className="mx-2"
+              disabled={rejectLoading}
               onClick={async (e) => {
                 e.preventDefault();
                 await dispatch(contestRejectAction(params.row.attendance_id));
@@ -288,7 +289,7 @@ export default function TeacherDashboard() {
               }}
             >
               {" "}
-              X
+              {rejectLoading ? <Spinner size="sm" /> : "  X"}
             </Button>
           </>
         );
@@ -382,7 +383,8 @@ export default function TeacherDashboard() {
         reg_no: item.reg_no,
         status:item.status,
         profile_photo:item.profile_photo,
-        allocateId:allocationId
+        allocateId:allocationId,
+        discipline:select.discipline
       });
     });
     setStudentAttendanceList(tempdata);
@@ -444,7 +446,7 @@ export default function TeacherDashboard() {
                           handleProgramChange(data?.course_code,data?.allocation_id);
                         }}
                       >
-                        Attendance
+                        Mark Attendance
                       </Button>
                       <Button
                         className="bg-site-primary"
@@ -453,7 +455,7 @@ export default function TeacherDashboard() {
                         }}
                       >
                         {" "}
-                        Assessment
+                        Mark Grade
                       </Button>
                     </div>
                   </CardFooter>
@@ -462,16 +464,17 @@ export default function TeacherDashboard() {
             );
           })}
         </Row>
-        <Modal isOpen={modal} toggle={toggle}>
+        <Modal className="w-100" isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Contest Request Box</ModalHeader>
           {contestData.length !== 0 ? (
-            <ModalBody>
+            <ModalBody >
               <StripedDataGrid
                 autoHeight
                 autoWidth
                 columns={column}
                 rows={contestData}
                 disableSelectionOnClick={false}
+                
                 getRowClassName={(params) =>
                   params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
                 }
@@ -573,7 +576,7 @@ export default function TeacherDashboard() {
               clearSelect();
             }}
           >
-            Manage Assessment
+            Mark Grade
           </ModalHeader>
           <ModalBody>
             <div>
@@ -675,7 +678,7 @@ export default function TeacherDashboard() {
                 manageEvaluations();
               }}
             >
-              Assessment
+              Start Grading
             </Button>
           </ModalFooter>
         </Modal>

@@ -1,11 +1,13 @@
-import {CONTESTLIST,CONTESTDAYS} from "../types";
+import {CONTESTLIST,CONTESTDAYS,MARK_CONTEST_LOADING,ACCEPT_CONTEST_LOADING,REJECT_CONTEST_LOADING} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var contest = RepositoryFactory.get("contest");
 export const markContest = (list) => async (dispatch) => {
     try {
+      dispatch(markContestLoading(true))
       const { data } = await contest.markContest(list)
       if (data =="success") {
         alert("Contest Marked Successfully")
+        dispatch(markContestLoading(false))
       } else {
         alert("Contest Marked  failed")
       }
@@ -69,9 +71,11 @@ export const markContest = (list) => async (dispatch) => {
   };
   export const contestAcceptAction = (aid) => async (dispatch) => {
     try {
+      dispatch(acceptContestLoading(true))
       const { data } = await contest.contestAccept(aid)
       if (data =="success") {
         alert("You Accepted the student Request");
+        dispatch(acceptContestLoading(false))
       } else {
         alert("Accept failed")
         throw new Error(data.error);
@@ -82,9 +86,11 @@ export const markContest = (list) => async (dispatch) => {
   };
   export const contestRejectAction = (aid) => async (dispatch) => {
     try {
+      dispatch(rejectContestLoading(true))
       const { data } = await contest.contestReject(aid)
       if (data =="success") {
         alert("You Rejected the student Request");
+        dispatch(rejectContestLoading(false))
       } else {
         alert("Rejected failed")
         throw new Error(data.error);
@@ -92,4 +98,13 @@ export const markContest = (list) => async (dispatch) => {
     } catch (error) {
       alert(error.message);
     }
+  };
+  export const markContestLoading = (val) => async (dispatch) => {
+    dispatch({ type: MARK_CONTEST_LOADING, payload: val });
+  };
+  export const acceptContestLoading = (val) => async (dispatch) => {
+    dispatch({ type: ACCEPT_CONTEST_LOADING, payload: val });
+  };
+  export const rejectContestLoading = (val) => async (dispatch) => {
+    dispatch({ type: REJECT_CONTEST_LOADING, payload: val });
   };

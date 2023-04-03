@@ -10,11 +10,12 @@ import { useEffect } from "react";
 import { getWeeklyTimetable } from "../../store/actions/timetableAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import LoadingOverlay from "react-loading-overlay";
 import celebration from "../../assets/img/celebration.jpg";
 function TodayTimetable() {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.authUser);
-  const { timetable } = useSelector((state) => state.timetable);
+  const { timetable,loading } = useSelector((state) => state.timetable);
   const [todayTimetable, setTodayTimetable] = useState([]);
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
@@ -82,6 +83,7 @@ function TodayTimetable() {
             <Card className="shadow my-4 w-100 ">
               <CardHeader>Today Timetable</CardHeader>
               <Link to={"/student/timetable"}>
+              <LoadingOverlay active={loading} spinner text="Today Timetable Loading....">
                 <StripedDataGrid
                   autoHeight
                   autoWidth
@@ -93,6 +95,7 @@ function TodayTimetable() {
                   }
                   hideFooterPagination={true}
                 />
+                </LoadingOverlay>
               </Link>
             </Card>
           ) : (

@@ -158,7 +158,7 @@ const ImageCell = (props) => {
   }, [ evaluationList, title]);
   return (
     <>
-     <h4 className='d-none d-md-block m-0 font-weight-bold mx-3'>Manage Assessment</h4>
+     <h4 className='d-none d-md-block m-0 font-weight-bold mx-3'>Mark Grading</h4>
     <Container fluid>
       <Row>
         <Col className="my-3">
@@ -194,7 +194,7 @@ const ImageCell = (props) => {
           ):(
           <Card>
             <CardHeader>
-              <h6 className="d-inline-block">Assessment for {type}</h6>
+              <h6 className="d-inline-block">Grading for {type}</h6>
               <Button
                 className="bg-site-primary float-right d-inline-block"
                 disabled={evaluationList.length==0?true:false}

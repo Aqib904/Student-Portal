@@ -167,9 +167,6 @@ const PictureWall = ({ fileList, setFileList }) => {
       console.log("Error accessing camera", error);
     }
   };
-  
-  
-  console.log(fileList,'file')
   return (
     <>
     <Container>

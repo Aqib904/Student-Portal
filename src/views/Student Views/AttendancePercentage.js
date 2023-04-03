@@ -16,11 +16,12 @@ import Chart from "react-apexcharts";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentAttendaceList } from "../../store/actions/attendanceAction";
 import { useHistory } from "react-router-dom";
+import LoadingOverlay from "react-loading-overlay";
 export default function AttendancePercentage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useSelector((state) => state.authUser);
-  const { attendancelist } = useSelector((state) => state.attendance);
+  const { attendancelist,loading } = useSelector((state) => state.attendance);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [initialattendance, setInitialAttendance] = useState([]);
@@ -170,8 +171,9 @@ export default function AttendancePercentage() {
   return (
     <>
       <Col sm={12} md={12} lg={12} className="attendance">
+      <LoadingOverlay active={loading} spinner text="Attendance Percentage Loading....">
         <Card className="shadow my-4 w-100 d-inline-block">
-          <CardHeader>Attendance & Marks</CardHeader>
+          <CardHeader>Attendance & Grading</CardHeader>
           {finalattendance?.map((item) => {
             return (
               <div className="d-inline-block my-2 position-relative">
@@ -228,6 +230,7 @@ export default function AttendancePercentage() {
             );
           })}
         </Card>
+        </LoadingOverlay>
       </Col>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Course Information</ModalHeader>
@@ -255,7 +258,7 @@ export default function AttendancePercentage() {
                 })
               }
             >
-              Assessment
+              Grading
             </Button>
           </div>
         </ModalBody>

@@ -11,10 +11,11 @@ import { getDatesheet } from "../../store/actions/datesheetAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import LoadingOverlay from "react-loading-overlay";
 export default function Datesheet() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { datesheet } = useSelector((state) => state.datesheet);
+  const { datesheet ,loading} = useSelector((state) => state.datesheet);
   const { token ,status} = useSelector((state) => state.authUser);
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
@@ -75,6 +76,7 @@ export default function Datesheet() {
         <Col sm={12} md={12}>
           <Card className="shadow my-3 w-100 z-index-n1">
             <CardHeader>Datesheet of {datesheet.type}</CardHeader>
+            <LoadingOverlay active={loading} spinner text="Datesheet Loading....">
             <StripedDataGrid
               autoHeight
               autoWidth
@@ -86,6 +88,7 @@ export default function Datesheet() {
               }
               hideFooterPagination={true}
             />
+            </LoadingOverlay>
           </Card>
         </Col>
       </Row>

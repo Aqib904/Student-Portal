@@ -4,6 +4,7 @@ import {
   CLEAR_STUDENTLIST,
   STUDENTATTENDANCE,
   ABSENTSLIST,
+  ATTENDANCE_PERCENTAGE_LOADING,
 } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var attendance = RepositoryFactory.get("attendance");
@@ -109,12 +110,14 @@ export const ClearStudentList = () => async (dispatch) => {
 };
 export const getStudentAttendaceList = (regno) => async (dispatch) => {
   try {
+    dispatch(attendancePercentageLoading(true))
     const { data } = await attendance.getStudentAttendaceList(regno);
     if (data) {
       dispatch({
         type: STUDENTATTENDANCE,
         payload: { studentattendance: data },
       });
+    dispatch(attendancePercentageLoading(false))
     } else {
       alert("Timetable load failed");
       throw new Error(data.error);
@@ -122,4 +125,7 @@ export const getStudentAttendaceList = (regno) => async (dispatch) => {
   } catch (error) {
     alert(error.message);
   }
+};
+export const attendancePercentageLoading = (val) => async (dispatch) => {
+  dispatch({ type: ATTENDANCE_PERCENTAGE_LOADING, payload: val });
 };
