@@ -199,7 +199,7 @@ export default function AttendancePercentage() {
                     marginLeft: "80px",
                     marginTop: "33px",
                   }}
-                  className="bg-site-grey text-center d-inline-block rounded-circle position-absolute  "
+                  className="bg-site-grey text-center d-inline-block rounded-circle position-absolute "
                 ></div>
                 <p style={{ marginLeft: "30px" }} className="text-center">
                   Present:&nbsp;{item.present}

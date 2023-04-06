@@ -5,6 +5,7 @@ import {
   STUDENTATTENDANCE,
   ABSENTSLIST,
   ATTENDANCE_PERCENTAGE_LOADING,
+  ATTENDANCE_MARK_LOADING,
 } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var attendance = RepositoryFactory.get("attendance");
@@ -55,6 +56,7 @@ export const getAbsentsList = (enrollmentId) => async (dispatch) => {
 export const markAttendance =
   (list, allocationId, fileList, history) => async (dispatch) => {
     try {
+      dispatch(markPercentageLoading(true))
       const formData = new FormData();
       formData.append("attendances", JSON.stringify(list));
       formData.append("allocationId", allocationId);
@@ -74,6 +76,7 @@ export const markAttendance =
       );
       if (response.ok) {
         alert("Attendance Marked Successfully");
+        dispatch(markPercentageLoading(false));
         dispatch(ClearStudentList());
         history.push("/teacher/dashboard");
       } else {
@@ -128,4 +131,7 @@ export const getStudentAttendaceList = (regno) => async (dispatch) => {
 };
 export const attendancePercentageLoading = (val) => async (dispatch) => {
   dispatch({ type: ATTENDANCE_PERCENTAGE_LOADING, payload: val });
+};
+export const markPercentageLoading = (val) => async (dispatch) => {
+  dispatch({ type: ATTENDANCE_MARK_LOADING, payload: val });
 };

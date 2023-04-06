@@ -30,6 +30,7 @@ import ExamResult from "../views/Student Views/ExamResult";
 import CourseAllocation from "../views/Admin Views/CourseAllocation";
 import StudentSetting from "../views/Student Views/StudentSetting";
 import AdminSetting from "../views/Admin Views/AdminSetting"
+import GenerateChallan from "../views/Student Views/GenerateChallan";
 let routes = [
   {
     path: "/auth_login",
@@ -85,7 +86,14 @@ let routes = [
     name: "Assessment",
     role: "student",
   },
-  
+  {
+    path: "/student/generate_challan/:id",
+    component: GenerateChallan,
+    layout: "student",
+    icon:"fas fa-star-half-alt ",
+    name: "Generate Challan",
+    role: "student",
+  },
   {
     path: "/student/datesheet",
     component: Datesheet,
@@ -126,14 +134,14 @@ let routes = [
     name: "Enrollment",
     role: "student",
   },
-  // {
-  //   path: "/student/finance/fee",
-  //   component: Fee,
-  //   layout: "student",
-  //   icon:"fas fa-money-check-alt ",
-  //   name: "Fee",
-  //   role: "student",
-  // },
+  {
+    path: "/student/fee",
+    component: Fee,
+    layout: "student",
+    icon:"fas fa-money-check-alt ",
+    name: "Fee",
+    role: "student",
+  },
   // {
   //   path: "/student/finance/fine",
   //   component: Fine,
@@ -215,14 +223,6 @@ let routes = [
     role: "admin",
   },
   {
-    path: "/admin/fine",
-    component: ManageFine,
-    layout: "admin",
-    icon:"fas fa-rupee-sign ",
-    name: "Manage Fine",
-    role: "admin",
-  },
-  {
     path: "/admin/noticeboard",
     component: ManageNoticeboard,
     layout: "admin",
@@ -269,6 +269,14 @@ let routes = [
     name: "Setting",
     icon:"fas fa-user-cog ",
     role: "teacher",
+  },
+  {
+    path: "/admin/fine",
+    component: ManageFine,
+    layout: "admin",
+    icon:"fas fa-rupee-sign ",
+    name: "Manage Fine",
+    role: "admin",
   },
   {
     path: "/student/setting",

@@ -11,11 +11,10 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Spinner,
 } from "reactstrap";
-import {
-  Typography,
-} from "@mui/material";
-import user from "../../assets/img/user.png"
+import { Typography } from "@mui/material";
+import user from "../../assets/img/user.png";
 import { Stack } from "@mui/system";
 import { toastSuccess, toastWarning } from "../../components/global/Toast";
 import InputLabel from "@mui/material/InputLabel";
@@ -45,14 +44,16 @@ export default function ManageAttendance() {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const { teacherCourses } = useSelector((state) => state.attendance);
+  const { teacherCourses, markloading } = useSelector(
+    (state) => state.attendance
+  );
   const { token } = useSelector((state) => state.authUser);
   const attendanceList = location.state;
-  const [allocate,setAllocate] = useState("")
+  const [allocate, setAllocate] = useState("");
   const [program, setProgram] = useState([
     { course_code: "", course_name: "" },
   ]);
-console.log(attendanceList,'location');
+  console.log(attendanceList, "location");
   // const [decipline, setDecipline] = useState([
   //   { id: "", program: "", semester: "", section: "" },
   // ]);
@@ -60,7 +61,7 @@ console.log(attendanceList,'location');
   const [fileList, setFileList] = useState([]);
   const [flagSubmit, setFlagSubmit] = useState(false);
   const [type, setType] = useState("lab");
-  const [discipline,setDiscipline] = useState("")
+  const [discipline, setDiscipline] = useState("");
   // const [courseTitle, setCourseTitle] = useState([
   //   { course_code: "", course_name: "" },
   // ]);
@@ -101,8 +102,8 @@ console.log(attendanceList,'location');
         type: type,
       });
     });
-    
-    dispatch(markAttendance(list,allocate,fileList,history));
+
+    dispatch(markAttendance(list, allocate, fileList, history));
   };
   const handleTypeChange = (event) => {
     setType(event.target.value);
@@ -176,8 +177,8 @@ console.log(attendanceList,'location');
     },
   }));
 
-  const handleClick = (id,event) => {
-    event.stopPropagation(); 
+  const handleClick = (id, event) => {
+    event.stopPropagation();
     setRows((prevState) =>
       prevState.map((row) =>
         row.id === id ? { ...row, status: row.status === "P" ? "A" : "P" } : row
@@ -186,11 +187,11 @@ console.log(attendanceList,'location');
   };
   const ImageCell = (props) => {
     const [showModal, setShowModal] = useState(false);
-  
+
     const handleImageClick = () => {
       setShowModal(!showModal);
     };
-  
+
     return (
       <>
         <div onClick={handleImageClick}>
@@ -198,7 +199,11 @@ console.log(attendanceList,'location');
             className="rounded-circle"
             height={50}
             width={50}
-            src={props.row.profile_photo?`https://localhost:44374/AttendanceImages/${props.row.profile_photo}`:user}
+            src={
+              props.row.profile_photo
+                ? `https://localhost:44374/AttendanceImages/${props.row.profile_photo}`
+                : user
+            }
             alt={props.row.profile_photo}
           />
         </div>
@@ -209,7 +214,11 @@ console.log(attendanceList,'location');
               className=""
               height={200}
               width={200}
-              src={props.row.profile_photo?`https://localhost:44374/AttendanceImages/${props.row.profile_photo}`:user}
+              src={
+                props.row.profile_photo
+                  ? `https://localhost:44374/AttendanceImages/${props.row.profile_photo}`
+                  : user
+              }
               alt={props.row.profile_photo}
             />
           </ModalBody>
@@ -230,9 +239,9 @@ console.log(attendanceList,'location');
     { field: "regno", headerName: "Reg No", width: 170 },
     { field: "name", headerName: "Name", width: 170 },
     {
-      field: "actions",
-      type: "actions",
-      headerName: "Actions",
+      field: "mark",
+      type: "mark",
+      headerName: "Mark",
       width: 280,
       renderCell: (params) => {
         return (
@@ -240,7 +249,7 @@ console.log(attendanceList,'location');
             {params.row.status ? (
               <Button
                 className="bg-site-success text-white border-0"
-                onClick={(event) => handleClick(params.row.id,event)}
+                onClick={(event) => handleClick(params.row.id, event)}
               >
                 {params.row.status}
               </Button>
@@ -269,7 +278,7 @@ console.log(attendanceList,'location');
         regno: data.reg_no,
         name: data.name,
         status: data.status,
-        profile_photo:data.profile_photo
+        profile_photo: data.profile_photo,
       });
     });
     setRows(tempdata);
@@ -277,18 +286,15 @@ console.log(attendanceList,'location');
   useEffect(() => {
     dispatch(getTeacherCourses(token?.username));
   }, [token?.username]);
-  useEffect(()=>{
+  useEffect(() => {
     let id = 0;
-    let discipline =""
-    attendanceList.map((item)=>{
-      return(
-        id=item.allocateId,
-        discipline=item.discipline
-      )
-    })
-    setDiscipline(discipline)
-    setAllocate(id)
-  },[attendanceList])
+    let discipline = "";
+    attendanceList.map((item) => {
+      return (id = item.allocateId), (discipline = item.discipline);
+    });
+    setDiscipline(discipline);
+    setAllocate(id);
+  }, [attendanceList]);
   // useEffect(() => {
   //   let programData = [];
   //   teacherCourses?.map((item) => {
@@ -304,11 +310,13 @@ console.log(attendanceList,'location');
   // }, [teacherCourses]);
   return (
     <>
-    <h4 className='d-none d-md-block m-0 font-weight-bold mx-4'>Manage Attendance</h4>
-    <Container fluid>
-      <Row>
-        <Col className="my-2">
-          {/* <div>
+      <h4 className="d-none d-md-block m-0 font-weight-bold mx-4">
+        Manage Attendance
+      </h4>
+      <Container fluid>
+        <Row>
+          <Col className="my-2">
+            {/* <div>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small">Course</InputLabel>
               <Select
@@ -361,91 +369,85 @@ console.log(attendanceList,'location');
               </Select>
             </FormControl>
           </div> */}
-          <FormControl className="mx-3">
-            <FormLabel
-              id="demo-row-radio-buttons-group-label"
-              className="text-dark"
-            >
-              Type
-            </FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-              value={type}
-              onChange={handleTypeChange}
-            >
-              <FormControlLabel
-                value="lab"
-                control={<Radio color="success" />}
-                label="Lab"
-              />
-              <FormControlLabel
-                value="class"
-                control={<Radio color="success" />}
-                label="Class"
-              />
-            </RadioGroup>
-          </FormControl>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-        <Stack spacing={1} ml={2}>
-                      <h5>Upload Attendance Photos</h5>
-                      <Typography
-                        variant="p"
-                        mr={2}
-                        fontWeight={500}
-                        fontSize={12}
-                      >
-                        {/* (Upload a minimum of 7 photos of your Attendance) */}
-                      </Typography>
-                      <PictureWall
-                        fileList={fileList}
-                        setFileList={setFileList}
-                      />
-                    </Stack>
-                    {flagSubmit && fileList.length < 6 ? (
-                      <Typography
-                        variant="p"
-                        mr={2}
-                        fontWeight={500}
-                        fontSize={12}
-                        sx={{ color: "red" }}
-                      >
-                        Upload minimum 7 photos of your Attendance*
-                      </Typography>
-                    ) : null}
-        </Col>
-      </Row>
-      <Row>
-        <Col md={12}>
-          <Card className="shadow my-3 ">
-            <CardHeader>
-              <p className="d-inline-block">Attendance list of {discipline}</p>
-              <Button
-                className="bg-site-success text-white border-0 float-right"
-                onClick={() => {
-                  submitAttendanceList();
-                }}
-                disabled={attendanceList.length==0?true:false}
+            <FormControl className="mx-3">
+              <FormLabel
+                id="demo-row-radio-buttons-group-label"
+                className="text-dark"
               >
-                Submit
-              </Button>
-              <Button
-                className="bg-site-success text-white border-0 float-right mx-1"
-                onClick={handleAllPresent}
+                Type
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                value={type}
+                onChange={handleTypeChange}
               >
-                Mark Present
-              </Button>
-              <Button
-                className="bg-site-success text-white border-0 float-right mx-1"
-                onClick={handleAbsent}
+                <FormControlLabel
+                  value="lab"
+                  control={<Radio color="success" />}
+                  label="Lab"
+                />
+                <FormControlLabel
+                  value="class"
+                  control={<Radio color="success" />}
+                  label="Class"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Stack spacing={1} ml={2}>
+              <h5>Upload Attendance Photos</h5>
+              <Typography variant="p" mr={2} fontWeight={500} fontSize={12}>
+                {/* (Upload a minimum of 7 photos of your Attendance) */}
+              </Typography>
+              <PictureWall fileList={fileList} setFileList={setFileList} />
+            </Stack>
+            {flagSubmit && fileList.length < 6 ? (
+              <Typography
+                variant="p"
+                mr={2}
+                fontWeight={500}
+                fontSize={12}
+                sx={{ color: "red" }}
               >
-                Mark Absent
-              </Button>
-              {/* <div className="px-4 datePicker-Card   border-0  d-inline-block  ">
+                Upload minimum 7 photos of your Attendance*
+              </Typography>
+            ) : null}
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <Card className="shadow my-3 ">
+              <CardHeader>
+                <p className="d-inline-block">
+                  Attendance list of {discipline}
+                </p>
+                <Button
+                  className="bg-site-success text-white border-0 float-right"
+                  onClick={() => {
+                    submitAttendanceList();
+                  }}
+                  disabled={attendanceList.length == 0 ? true : false}
+                >
+                  {markloading ? <Spinner size="sm" /> : "submit"}
+                </Button>
+                <Button
+                  className="bg-site-success text-white border-0 float-right mx-1"
+                  onClick={handleAllPresent}
+                >
+                  Mark Present
+                </Button>
+                <Button
+                  className="bg-site-success text-white border-0 float-right mx-1"
+                  onClick={handleAbsent}
+                >
+                  Mark Absent
+                </Button>
+                {/* <div className="px-4 datePicker-Card   border-0  d-inline-block  ">
                 <DatePicker
                   value={selectedDay}
                   onChange={setSelectedDay}
@@ -474,26 +476,28 @@ console.log(attendanceList,'location');
                   }}
                 />
               </div> */}
-            </CardHeader>
-            <CardBody>
-              <div className="w-100">
-                <StripedDataGrid
-                  autoHeight
-                  autoWidth
-                  columns={columns}
-                  rows={rows}
-                  disableSelectionOnClick={false}
-                  getRowClassName={(params) =>
-                    params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
-                  }
-                  hideFooterPagination={true}
-                />
-              </div>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+              </CardHeader>
+              <CardBody>
+                <div className="w-100">
+                  <StripedDataGrid
+                    autoHeight
+                    autoWidth
+                    columns={columns}
+                    rows={rows}
+                    disableSelectionOnClick={false}
+                    getRowClassName={(params) =>
+                      params.indexRelativeToCurrentPage % 2 === 0
+                        ? "odd"
+                        : "even"
+                    }
+                    hideFooterPagination={true}
+                  />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }

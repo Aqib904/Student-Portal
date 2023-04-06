@@ -161,7 +161,7 @@ export default function Attendance() {
         return timeOnly;
       },
     },
-    {
+   {
       field: "status",
       headerName: "Status",
       width: 100,

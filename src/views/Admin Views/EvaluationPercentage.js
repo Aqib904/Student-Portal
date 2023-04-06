@@ -30,7 +30,8 @@ export default function EvaluationPercentage() {
   }));
   const [rows, setRows] = useState([]);
   let [seriesMerge,setSeriesMerge] = useState([]);
-  let [seriesIndividual,setSeriesIndividual] = useState([3,2,3,1])
+  console.log(seriesMerge,'length')
+  let [seriesIndividual,setSeriesIndividual] = useState([0,0,0,0])
   let [options, setOptions] = useState({
     labels: ["Excellent", "Good", "Average", "Poor"],
     chart: {
@@ -141,7 +142,17 @@ export default function EvaluationPercentage() {
       </Row>
       <Row>
         <Col lg={6} md={6} sm={12} sx={12}>
-          <Card className="shadow mx-3 my-2">
+        {seriesIndividual[0]==0&&seriesIndividual[1]==0&&seriesIndividual[2]==0&&seriesIndividual[3]==0?(
+            <Card className="shadow mx-3 my-2">
+              <CardHeader>Individual</CardHeader>
+              <CardBody>
+                <div className="d-flex justify-content-center align-items-center">
+                  <p className="text-danger">Graph view empty!</p>
+                </div>
+              </CardBody>
+            </Card>
+          ):(
+            <Card className="shadow mx-3 my-2">
             <CardHeader>Individual</CardHeader>
             {/* <Chart
               options={individual.options}
@@ -156,9 +167,20 @@ export default function EvaluationPercentage() {
               type="donut"
             />
           </Card>
+          )}
         </Col>
         <Col lg={6} md={6} sm={12} sx={12}>
-          <Card className="shadow mx-3 my-2">
+          {seriesMerge[0]==0&&seriesMerge[1]==0&&seriesMerge[2]==0&&seriesMerge[3]==0?(
+            <Card className="shadow mx-3 my-2">
+              <CardHeader>Merged</CardHeader>
+              <CardBody>
+                <div className="d-flex justify-content-center align-items-center">
+                  <p className="text-danger">Graph view empty!</p>
+                </div>
+              </CardBody>
+            </Card>
+          ):(
+            <Card className="shadow mx-3 my-2">
             <CardHeader>Merged</CardHeader>
             {/* <Chart
               options={individual.options}
@@ -173,6 +195,7 @@ export default function EvaluationPercentage() {
               type="donut"
             />
           </Card>
+          )}
         </Col>
       </Row>
       {rows.length == 0 ? (

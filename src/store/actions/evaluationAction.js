@@ -1,11 +1,13 @@
-import { EVALUATIONGENERAL, EVALUATIONEXAM,SESSION,EXAMMARKS,EXAM_RESULT_LOADING } from "../types";
+import { EVALUATIONGENERAL, EVALUATIONEXAM,SESSION,EXAMMARKS,EXAM_RESULT_LOADING,MARK_GENERAL_LOADING,MARK_EXAM_LOADING } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var evaluation = RepositoryFactory.get("evaluation")
 export const markGeneralExam = (list) => async (dispatch) => {
     try {
+      dispatch(markGeneralLoading(true))
       const {data} = await evaluation.markGeneralExam(list)
       if (data == "success") {
         alert(" Marked Successfully")
+        dispatch(markGeneralLoading(false))
       } else {
         alert(" Marked  failed")
       }
@@ -15,9 +17,11 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const markMidFinal = (list) => async (dispatch) => {
     try {
+      dispatch(markExamLoading(true))
       const {data} = await evaluation.markMidFinal(list)
       if (data =="success") {
         alert("Marked Successfully")
+        dispatch(markExamLoading(false))
       } else {
         alert("Marked failed")
       }
@@ -81,5 +85,11 @@ export const markGeneralExam = (list) => async (dispatch) => {
   };
   export const examResultLoading = (val) => async (dispatch) => {
     dispatch({ type: EXAM_RESULT_LOADING, payload: val });
+  };
+  export const markGeneralLoading = (val) => async (dispatch) => {
+    dispatch({ type: MARK_GENERAL_LOADING, payload: val });
+  };
+  export const markExamLoading = (val) => async (dispatch) => {
+    dispatch({ type: MARK_EXAM_LOADING, payload: val });
   };
   

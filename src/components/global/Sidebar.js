@@ -148,7 +148,7 @@ const Sidebar = (props) => {
         //   </UncontrolledDropdown>
         // ):(
           //
-        (route.path != "/student/attendance/:id" && route.path != "/teacher/attendance/:id"&& route.path != "/teacher/evaluation/:id"&& route.path != "/student/evaluation/:id"&&route.path != "/student/assessment/:id"&&route.path != "/admin/evaluationpercentage/:id"&&route.path != "/student/enrollment"? (
+        (route.path != "/student/attendance/:id"&&route.path != "/student/fee"&&route.path != "/student/generate_challan/:id" && route.path != "/teacher/attendance/:id"&& route.path != "/teacher/evaluation/:id"&& route.path != "/student/evaluation/:id"&&route.path != "/student/assessment/:id"&&route.path != "/admin/evaluationpercentage/:id"&&route.path != "/student/enrollment"? (
           <NavLink
             to={route.path}
             activeClassName="active"

@@ -5,6 +5,7 @@ import {
   STUDENTATTENDANCE,
   ABSENTSLIST,
   ATTENDANCE_PERCENTAGE_LOADING,
+  ATTENDANCE_MARK_LOADING
 } from "../types";
 const initialState = {
   teacherCourses: [],
@@ -12,6 +13,7 @@ const initialState = {
   attendancelist: [],
   absentslist: [],
   loading:false,
+  markloading:false,
 };
 const attendanceReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -46,6 +48,11 @@ const attendanceReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
       };
+      case ATTENDANCE_MARK_LOADING:
+        return {
+          ...state,
+          markloading: action.payload,
+        };
     default:
       return state;
   }
