@@ -129,8 +129,9 @@ export default function CheckEvaluation() {
   }, [selectedDayRange]);
   return (
     <>
+    <Container>
       <Row>
-        <Col className="mx-3">
+        <Col>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <InputLabel id="demo-select-small">Session</InputLabel>
             <Select
@@ -155,7 +156,6 @@ export default function CheckEvaluation() {
           </FormControl>
         </Col>
       </Row>
-      <Container>
         <Row>
           <Col>
             <Card className="shadow my-3 w-100 z-index-n1">

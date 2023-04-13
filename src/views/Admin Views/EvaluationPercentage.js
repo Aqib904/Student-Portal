@@ -107,11 +107,11 @@ export default function EvaluationPercentage() {
       width: 170,
       valueGetter: (params) => {
         const percentage = params.value;
-        if (percentage >= 75) {
+        if (percentage >= 80) {
           return "Excellent";
-        } else if (percentage >= 50 && percentage < 75) {
+        } else if (percentage >= 60 && percentage < 80) {
           return "Good";
-        } else if (percentage >= 25 && percentage < 50) {
+        } else if (percentage >= 40 && percentage < 60) {
           return "Average";
         } else {
           return "Poor";
@@ -146,6 +146,7 @@ export default function EvaluationPercentage() {
 }, [feedback]);
   return (
     <>
+    <Container>
       <Row>
         <Col>
           <h4 className="d-none d-md-block m-0 font-weight-bold mx-4">
@@ -212,7 +213,7 @@ export default function EvaluationPercentage() {
         </Col>
       </Row>
       {rows.length == 0 ? (
-        <Container>
+       
           <Row>
             <Col>
               <Card className="shadow my-4">
@@ -226,9 +227,9 @@ export default function EvaluationPercentage() {
               </Card>
             </Col>
           </Row>
-        </Container>
+
       ) : (
-        <Container>
+        
           <Row>
             <Col>
               <Card className="shadow my-4">
@@ -252,8 +253,9 @@ export default function EvaluationPercentage() {
               </Card>
             </Col>
           </Row>
+             )}
         </Container>
-      )}
+   
     </>
   );
 }
