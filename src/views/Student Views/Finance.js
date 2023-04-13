@@ -17,7 +17,7 @@ export default function Finance() {
       <Row>
         <Col lg={4}>
           
-          <Card>
+          <Card className='my-1 shadow'>
             <CardBody className='d-flex align-items-center justify-content-center flex-column'>
             <i
               className="fas fa-file-invoice-dollar d-flex justify-content-center align-items-center border rounded-circle  bg-light"
@@ -33,7 +33,7 @@ export default function Finance() {
           </Card>
         </Col>
         <Col lg={4}>
-          <Card>
+          <Card className='my-1 shadow'>
             <CardBody className='d-flex align-items-center justify-content-center flex-column'>
             <i
               className="fas fa-hand-holding-usd d-flex justify-content-center align-items-center border rounded-circle  bg-light"
@@ -48,14 +48,14 @@ export default function Finance() {
           </Card>
         </Col>
         <Col lg={4}>
-          <Card>
+          <Card className='my-1 shadow'>
             <CardBody className='d-flex align-items-center justify-content-center flex-column'>
             <i
               className="fas fa-user-circle d-flex justify-content-center align-items-center border rounded-circle  bg-light"
               style={{ fontSize: "50px", width: "130px", height: "130px" }}
             ></i>
-            <h4 className=" my-2">Financial Assisstant</h4>
-            <p className=" my-2 text-center">Apply for Financial<br/>Assisstant </p>
+            <h4 className=" my-2">Financial assistant</h4>
+            <p className=" my-2 text-center">Apply for Financial<br/>assistant </p>
             <Button className="bg-site-success px-4">
             <i className="fas fa-file-import mx-1"></i>Apply
             </Button>

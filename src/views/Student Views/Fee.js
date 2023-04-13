@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, CardHeader, Col, Container, Row } from "reactstrap";
-import { getFeeDetail } from "../../store/actions/feeAction";
+import { getChallan, getFeeDetail } from "../../store/actions/feeAction";
 import { Details } from "@material-ui/icons";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
@@ -20,56 +20,81 @@ export default function Fee() {
     },
   }));
   const [rows, setRows] = useState([]);
+  const handletransferData = (data)=>{
+    const totalAmount = data.semesterFee + data.otherFee + data.extraCourseFee + data.addmissionFee;
+    console.log(totalAmount, 'totalAmount');
+    history.push({
+      pathname: `/student/generate_challan/${data.id}`,
+      state: {
+        ...data,
+        totalAmount: totalAmount
+      },
+    })
+  }
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
       field: "semesterFee",
       headerName: "Semester Fee",
-      width: 240,
+      width: 130,
     },
     {
       field: "otherFee",
       headerName: "Other Fee",
-      width: 170,
+      width: 100,
+    },
+    {
+      field: "addmissionFee",
+      headerName: "Admission Fee",
+      width: 130,
     },
     {
       field: "extraCourseFee",
       headerName: "Extra Courses Fee",
       width: 170,
     },
-
     {
       field: "enrolledCoursesCount",
       headerName: "Total Enroll Courses",
-      width: 170,
+      width: 150,
+    },
+    {
+      field: "totalFee",
+      headerName: "Total Fee",
+      width: 150,
     },
     {
       field: "isChallanGenerated",
       type: "action",
-      headerName: "Challan",
-      width: 280,
+      headerName: "Action",
+      width: 150,
       renderCell: (params) => {
         return (
           <>
             {params.row.isChallanGenerated ? (
               <Button
                 className="bg-site-success text-white border-0"
+                onClick={()=>
+                  dispatch(getChallan(token?.username))
+                }
               >
-                View 
+                <i className="fas fa-print"></i>
               </Button>
             ) : (
               <Button
               className="bg-site-success text-white border-0"
               onClick={() =>
-                history.push({
-                  pathname: `/student/generate_challan/${params.row.id}`,
-                  state: params.row,
-                })
+               handletransferData(params.row)
               }
             >
-              Generate
+              <i className="fas fa-folder-plus"></i>
             </Button>
             )}
+             <Button
+                className="bg-site-success text-white border-0 mx-2"
+              >
+                <i className="fas fa-eye"></i>
+              </Button>
           </>
         );
       },
@@ -77,14 +102,29 @@ export default function Fee() {
   ];
   useEffect(() => {
     let tempdata = [];
+    let totalFee = 0;
+    if (!isNaN(feeDetail.semesterFee)) {
+      totalFee += feeDetail.semesterFee;
+    }
+    if (!isNaN(feeDetail.otherFee)) {
+      totalFee += feeDetail.otherFee;
+    }
+    if (!isNaN(feeDetail.extraCourseFee)) {
+      totalFee += feeDetail.extraCourseFee;
+    }
+    if (!isNaN(feeDetail.admissionFee)) {
+      totalFee += feeDetail.admissionFee;
+    }
     tempdata.push({
       id:1,
+      addmissionFee:feeDetail.admissionFee,
       enrolledCoursesCount: feeDetail.enrolledCoursesCount,
       extraCourseFee: feeDetail.extraCourseFee,
       otherFee: feeDetail.otherFee,
       semesterFee: feeDetail.semesterFee,
       isChallanGenerated: feeDetail.isChallanGenerated,
-    })
+      totalFee: totalFee
+    });
     setRows(tempdata);
   }, [feeDetail]);
   useEffect(() => {

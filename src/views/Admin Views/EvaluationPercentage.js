@@ -105,7 +105,20 @@ export default function EvaluationPercentage() {
       field: "percentage",
       headerName: "Percentage",
       width: 170,
+      valueGetter: (params) => {
+        const percentage = params.value;
+        if (percentage >= 75) {
+          return "Excellent";
+        } else if (percentage >= 50 && percentage < 75) {
+          return "Good";
+        } else if (percentage >= 25 && percentage < 50) {
+          return "Average";
+        } else {
+          return "Poor";
+        }
+      },
     },
+    
   ];
   useEffect(() => {
     let tempdata = [];
