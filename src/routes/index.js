@@ -31,6 +31,7 @@ import CourseAllocation from "../views/Admin Views/CourseAllocation";
 import StudentSetting from "../views/Student Views/StudentSetting";
 import AdminSetting from "../views/Admin Views/AdminSetting"
 import GenerateChallan from "../views/Student Views/GenerateChallan";
+import ViewFeeStatus from "../views/Student Views/ViewFeeStatus";
 let routes = [
   {
     path: "/auth_login",
@@ -135,11 +136,19 @@ let routes = [
     role: "student",
   },
   {
-    path: "/student/fee",
+    path: "/student/fee_detail",
     component: Fee,
     layout: "student",
     icon:"fas fa-money-check-alt ",
     name: "Fee",
+    role: "student",
+  },
+  {
+    path: "/student/fee_status",
+    component: ViewFeeStatus,
+    layout: "student",
+    icon:"fas fa-money-check-alt ",
+    name: "Fee Status",
     role: "student",
   },
   // {

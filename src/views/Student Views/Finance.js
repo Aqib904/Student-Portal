@@ -25,7 +25,7 @@ export default function Finance() {
             ></i>
             <h4 className=" my-2">Fee</h4>
             <p className=" my-2 text-center">Generate and Upload <br/> fee challan</p>
-            <Link to="/student/fee">
+            <Link to="/student/fee_detail">
             <Button className="bg-site-success px-4">
             <i className="fas fa-file-import mx-1"></i>Get Fee Challan
             </Button></Link>

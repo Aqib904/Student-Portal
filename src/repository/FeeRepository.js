@@ -2,6 +2,7 @@ import Repository from "./Repository";
 const FEEDETAIL ="/Student/GetFeeDetail";
 const GENERATECHALLAN = "/Student/GenerateChallan"
 const GETCHALLAN = "/Student/GetChallan"
+const GETFEESTATUS = "/Student/GetFeeStatus"
 export default {
     getFeeDetail(regno) {
         return Repository.get(`${FEEDETAIL}?reg_no=${regno}`);
@@ -11,5 +12,8 @@ export default {
     },
     getChallan(regno) {
         return Repository.get(`${GETCHALLAN}?regNo=${regno}`);
+    },
+    getFeeStatus(regno) {
+        return Repository.get(`${GETFEESTATUS}?reg_no=${regno}`);
     },
   };

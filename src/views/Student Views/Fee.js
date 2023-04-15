@@ -8,7 +8,7 @@ import { gridClasses } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import LoadingOverlay from "react-loading-overlay";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 export default function Fee() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -90,11 +90,13 @@ export default function Fee() {
               <i className="fas fa-folder-plus"></i>
             </Button>
             )}
+             <Link to="/student/fee_status">
              <Button
                 className="bg-site-success text-white border-0 mx-2"
               >
                 <i className="fas fa-eye"></i>
               </Button>
+              </Link>
           </>
         );
       },
