@@ -24,7 +24,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
         // dispatch({ type: CHALLAN, payload: { challan: data } });
         window.open(`https://localhost:44374/ChallanFiles/${data}`, '_blank');
         history.push({
-          pathname: `/student/fee`
+          pathname: `/student/fee_detail`
         })
         dispatch(challanLoading(false))
       } else {
