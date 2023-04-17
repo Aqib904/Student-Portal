@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   Col,
   Container,
@@ -103,83 +104,92 @@ export default function GenerateChallan() {
       <Container>
         <Row className="my-4">
           <Col>
+          {feeDetail.isChallanGenerated ==false? (
             <Card className="shadow">
-              <CardHeader>
-                Choose your installments and generate your challan form:
-              </CardHeader>
-              <CardBody>
-                <FormControl
-                  sx={{ m: 1, minWidth: 150, display: "block" }}
-                  size="small"
+            <CardHeader>
+              Choose your installments and generate your challan form:
+            </CardHeader>
+            <CardBody>
+              <FormControl
+                sx={{ m: 1, minWidth: 150, display: "block" }}
+                size="small"
+              >
+                <InputLabel id="demo-select-small">
+                  No of Installment
+                </InputLabel>
+                <Select
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  label="No of Installment"
+                  style={{width:"200px"}}
+                  required
+                  value={numInstallments}
+                  onChange={handleNumInstallmentsChange}
                 >
-                  <InputLabel id="demo-select-small">
-                    No of Installment
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    label="No of Installment"
-                    style={{width:"200px"}}
-                    required
-                    value={numInstallments}
-                    onChange={handleNumInstallmentsChange}
-                  >
-                    <MenuItem value="1">One Installment</MenuItem>
-                    <MenuItem value="2">Two Installment</MenuItem>
-                    <MenuItem value="3">Three Installment</MenuItem>
-                  </Select>
-                </FormControl>
-                {installments ? (
-                  <>
-                    {installments.map((item) => {
-                      return (
-                        <>
-                          <div className="d-flex mx-3">
-                            <FormControl>
-                              <Label>{item.installment}:</Label>
-                              <Input
-                                type="text"
-                                disabled={true}
-                                value={item.fee}
-                              ></Input>
-                            </FormControl>
-                          </div>
-                        </>
-                      );
-                    })}
-                  </>
-                ) : (
-                  ""
-                )}
-                {/* {!feeDetail.isChallanGenerated && (
-                  <> */}
-                {/* {!challanGenerated && ( */}
-                  <Button
-                    className="bg-site-primary my-4 mx-3"
-                    type="submit"
-                    disabled={numInstallments === "" ? true : false}
-                    onClick={handleGenerateChallan}
-                  >
-                    {challanloading ? (
-                      <Spinner size="sm" />
-                    ) : (
-                      "Generate Challan"
-                    )}
-                  </Button>
-                {/* )} */}
-                {/* </>
-                )} */}
-                {/* {challanGenerated && (
-                  <Button
-                    className="bg-site-primary my-4 mx-3"
-                    type="submit"
-                    onClick={handleDownloadChallan}
-                  >
-                    Download Challan
-                  </Button>
-                )} */}
-              </CardBody>
-            </Card>
+                  <MenuItem value="1">One Installment</MenuItem>
+                  <MenuItem value="2">Two Installment</MenuItem>
+                  <MenuItem value="3">Three Installment</MenuItem>
+                </Select>
+              </FormControl>
+              {installments ? (
+                <>
+                  {installments.map((item) => {
+                    return (
+                      <>
+                        <div className="d-flex mx-3">
+                          <FormControl>
+                            <Label>{item.installment}:</Label>
+                            <Input
+                              type="text"
+                              disabled={true}
+                              value={item.fee}
+                            ></Input>
+                          </FormControl>
+                        </div>
+                      </>
+                    );
+                  })}
+                </>
+              ) : (
+                ""
+              )}
+              {/* {!feeDetail.isChallanGenerated && (
+                <> */}
+              {/* {!challanGenerated && ( */}
+                <Button
+                  className="bg-site-primary my-4 mx-3"
+                  type="submit"
+                  disabled={numInstallments === "" ? true : false}
+                  onClick={handleGenerateChallan}
+                >
+                  {challanloading ? (
+                    <Spinner size="sm" />
+                  ) : (
+                    "Generate Challan"
+                  )}
+                </Button>
+              {/* )} */}
+              {/* </>
+              )} */}
+              {/* {challanGenerated && (
+                <Button
+                  className="bg-site-primary my-4 mx-3"
+                  type="submit"
+                  onClick={handleDownloadChallan}
+                >
+                  Download Challan
+                </Button>
+              )} */}
+            </CardBody>
+          </Card>
+          )
+          :(<Card>
+            <CardHeader></CardHeader>
+            <CardBody><p className="text-danger text-center">Already Challan Generated</p></CardBody>
+            <CardFooter></CardFooter>
+          </Card>)
+          }
+            
           </Col>
         </Row>
       </Container>

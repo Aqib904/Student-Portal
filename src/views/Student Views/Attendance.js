@@ -343,7 +343,7 @@ export default function Attendance() {
                   width: "90px",
                   marginTop: "90px",
                 }}
-                className="bg-site-primary position-absolute  mx-n4 d-inline-block text-light rounded-pill text-center"
+                className="bg-danger position-absolute  mx-n4 d-inline-block text-light rounded-pill text-center"
               >
                 Absent:&nbsp;{rowData.absent}
               </div>

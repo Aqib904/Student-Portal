@@ -90,12 +90,12 @@ function Timetable() {
             <Col sm={12} md={8} lg={6}>
               <LoadingOverlay active={loading} spinner text="Timetable Loading....">
               <Card
-                className={`shadow my-3 w-100 z-index-n1 my-2 ${
+                className={`shadow my-3 w-100  z-index-n1 my-2 ${
                   days == dayname ? "bg-site-table" : "bg-site-table-none"
                 }`}
               >
                 <h5 className="text-center">{dayname}</h5>
-                <table className="table w-100 fs-6 ">
+                <table className="table w-100  fs-6 ">
                   <thead className="bg-site-success  text-light">
                     <tr>
                       <th>Course</th>

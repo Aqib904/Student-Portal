@@ -32,6 +32,7 @@ import StudentSetting from "../views/Student Views/StudentSetting";
 import AdminSetting from "../views/Admin Views/AdminSetting"
 import GenerateChallan from "../views/Student Views/GenerateChallan";
 import ViewFeeStatus from "../views/Student Views/ViewFeeStatus";
+import StudentFee from "../views/Admin Views/StudentFee";
 let routes = [
   {
     path: "/auth_login",
@@ -285,6 +286,14 @@ let routes = [
     layout: "admin",
     icon:"fas fa-rupee-sign ",
     name: "Manage Fine",
+    role: "admin",
+  },
+  {
+    path: "/admin/student_fee",
+    component: StudentFee,
+    layout: "admin",
+    icon:"fas fa-money-check-alt ",
+    name: "Student Fee",
     role: "admin",
   },
   {

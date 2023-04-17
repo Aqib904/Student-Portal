@@ -3,6 +3,7 @@ const FEEDETAIL ="/Student/GetFeeDetail";
 const GENERATECHALLAN = "/Student/GenerateChallan"
 const GETCHALLAN = "/Student/GetChallan"
 const GETFEESTATUS = "/Student/GetFeeStatus"
+const GETSTUDENTS = "/Admin/GetStudents"
 export default {
     getFeeDetail(regno) {
         return Repository.get(`${FEEDETAIL}?reg_no=${regno}`);
@@ -15,5 +16,8 @@ export default {
     },
     getFeeStatus(regno) {
         return Repository.get(`${GETFEESTATUS}?reg_no=${regno}`);
+    },
+    getStudent() {
+        return Repository.get(`${GETSTUDENTS}`);
     },
   };

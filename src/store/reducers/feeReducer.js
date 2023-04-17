@@ -6,15 +6,17 @@ import {
   FEESTATUS,
   FEE_STATUS_LOADING,
   UPLOAD_CHALLAN_LOADING,
+  STUDENTS,
 } from "../types";
 const initialState = {
   feeDetail: [],
   challan: null,
+  students: [],
   loading: false,
   challanloading: false,
   feeStatus: [],
-  feeStatusloading:false,
-  uploadloading:false,
+  feeStatusloading: false,
+  uploadloading: false,
 };
 const feeReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -43,17 +45,21 @@ const feeReducer = (state = initialState, action) => {
         ...state,
         feeStatus: action.payload.feeStatus,
       };
-      case FEE_STATUS_LOADING:
-        return {
-          ...state,
-          feeStatusloading: action.payload,
-        };
-        //
-        case UPLOAD_CHALLAN_LOADING:
-          return {
-            ...state,
-            uploadloading: action.payload,
-          };
+    case STUDENTS:
+      return {
+        ...state,
+        students: action.payload.students,
+      };
+    case FEE_STATUS_LOADING:
+      return {
+        ...state,
+        feeStatusloading: action.payload,
+      };
+    case UPLOAD_CHALLAN_LOADING:
+      return {
+        ...state,
+        uploadloading: action.payload,
+      };
     default:
       return state;
   }

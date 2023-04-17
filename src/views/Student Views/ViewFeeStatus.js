@@ -41,7 +41,6 @@ export default function ViewFeeStatus() {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-  console.log(feeStatus, "feeStatus");
   const toggle = () => {
     setFileList([]);
     setModal(!modal);
@@ -101,7 +100,7 @@ export default function ViewFeeStatus() {
           <>
             {params.row.challan_image == null ? (
               <Button
-                className="bg-site-success"
+                className="bg-danger"
                 disabled={params.row.status == true ? true : false}
                 onClick={() => {
                   setSelectedId(params.row.id);
@@ -114,7 +113,7 @@ export default function ViewFeeStatus() {
             ) : (
               <Button
                 className={`${
-                  params.row.status == false ? "bg-site-success" : "bg-danger"
+                  params.row.status == false ? "bg-warning" : "bg-site-success"
                 } text-white border-0 `}
                 disabled={params.row.status == true ? true : false}
                 onClick={() => {
@@ -140,9 +139,7 @@ export default function ViewFeeStatus() {
     toggle();
   };
   useEffect(() => {
-    const updatedRows = feeStatus.map((obj, index) => ({
-      ...obj,
-    }));
+    const updatedRows = [...feeStatus].sort((a, b) => a.installment_no - b.installment_no);
     setRows(updatedRows);
   }, [feeStatus]);
   useEffect(() => {

@@ -1,4 +1,4 @@
-import {FEEDETAIL,FEE_LOADING,CHALLAN,CHALLAN_LOADING,FEESTATUS,FEE_STATUS_LOADING,UPLOAD_CHALLAN_LOADING } from "../types";
+import {FEEDETAIL,FEE_LOADING,CHALLAN,CHALLAN_LOADING,FEESTATUS,FEE_STATUS_LOADING,UPLOAD_CHALLAN_LOADING,STUDENTS } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var fee = RepositoryFactory.get("fee")
 export const getFeeDetail = (regno) => async (dispatch) => {
@@ -81,6 +81,19 @@ export const getFeeDetail = (regno) => async (dispatch) => {
         dispatch(uploadChallanLoading(false))
       } else {
         alert("Challan uploaded  failed");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const getStudent = () => async (dispatch) => {
+    try {
+      const {data} = await fee.getStudent()
+      if (data) {
+        dispatch({ type: STUDENTS, payload: { students: data } });
+      } else {
+        alert("Students loaded failed");
+        throw new Error(data.error);
       }
     } catch (error) {
       alert(error.message);
