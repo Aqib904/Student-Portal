@@ -33,6 +33,7 @@ import AdminSetting from "../views/Admin Views/AdminSetting"
 import GenerateChallan from "../views/Student Views/GenerateChallan";
 import ViewFeeStatus from "../views/Student Views/ViewFeeStatus";
 import StudentFee from "../views/Admin Views/StudentFee";
+import ManageStudentFee from "../views/Admin Views/ManageStudentFee";
 let routes = [
   {
     path: "/auth_login",
@@ -270,6 +271,14 @@ let routes = [
     layout: "admin",
     icon:"fas fa-star-half-alt ",
     name: "Evaluation",
+    role: "admin",
+  },
+  {
+    path: "/admin/manage_fee/:id",
+    component: ManageStudentFee,
+    layout: "admin",
+    icon:"fas fa-star-half-alt ",
+    name: "Manage Student Fee",
     role: "admin",
   },
   {

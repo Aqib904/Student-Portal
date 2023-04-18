@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Col, Container, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Row,
+} from "reactstrap";
 import { getStudent } from "../../store/actions/feeAction";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import user from "../../assets/img/user.png";
+import { useHistory } from "react-router-dom";
 export default function StudentFee() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { students } = useSelector((state) => state.fee);
   const [discipline, setDiscipline] = useState([]);
   const [selectedDiscipline, setSelectedDiscipline] = useState("");
@@ -34,11 +45,11 @@ export default function StudentFee() {
             height={50}
             width={50}
             src={
-              props.row.profile_photo
-                ? `https://localhost:44374/AttendanceImages/${props.row.profile_photo}`
+              props.row.profilePhoto
+                ? `https://localhost:44374/AttendanceImages/${props.row.profilePhoto}`
                 : user
             }
-            alt={props.row.profile_photo}
+            alt={props.row.profilePhoto}
           />
         </div>
         <Modal isOpen={showModal} toggle={handleImageClick}>
@@ -49,11 +60,11 @@ export default function StudentFee() {
               height={200}
               width={200}
               src={
-                props.row.profile_photo
-                  ? `https://localhost:44374/AttendanceImages/${props.row.profile_photo}`
+                props.row.profilePhoto
+                  ? `https://localhost:44374/AttendanceImages/${props.row.profilePhoto}`
                   : user
               }
-              alt={props.row.profile_photo}
+              alt={props.row.profilePhoto}
             />
           </ModalBody>
         </Modal>
@@ -63,16 +74,61 @@ export default function StudentFee() {
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
-        field: "profile_photo",
-        headerName: "Profile Photo",
-        width: 150,
-        renderCell: (params) => {
-          return <ImageCell row={params.row} />;
-        },
+      field: "profilePhoto",
+      headerName: "Profile Photo",
+      width: 150,
+      renderCell: (params) => {
+        return <ImageCell row={params.row} />;
       },
-      { field: "reg_no", headerName: "Reg No", width: 200 },
-      { field: "name", headerName: "Name", width: 230 },
-      { field: "selectedDiscipline", headerName: "Discipline", width: 170 },
+    },
+    { field: "regNo", headerName: "Reg No", width: 200 },
+    { field: "name", headerName: "Name", width: 230 },
+    { field: "selectedDiscipline", headerName: "Discipline", width: 170 },
+    {
+      field: "status",
+      type: "mark",
+      headerName: "Status",
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <>
+            <span>
+              {params.row.isPending == false ? "Pending" : "Approved"}
+            </span>
+          </>
+        );
+      },
+    },
+    {
+      field: "isPending",
+      type: "mark",
+      headerName: "Action",
+      width: 280,
+      renderCell: (params) => {
+        return (
+          <>
+            <Button
+              className={`${
+                params.row.isPending == false ? "bg-site-success" : "bg-warning"
+              } text-white border-0 `}
+              disabled={params.row.isPending == false ? false : true}
+              onClick={() =>
+                history.push({
+                  pathname: `/admin/manage_fee/${params.row.regNo}`,
+                  state: params.row,
+                })
+              }
+            >
+              {params.row.isPending == false ? (
+                <i class="fas fa-user-times"></i>
+              ) : (
+                <i class="fas fa-user-check"></i>
+              )}
+            </Button>
+          </>
+        );
+      },
+    },
   ];
   useEffect(() => {
     const programSectionSemester = students
@@ -111,7 +167,7 @@ export default function StudentFee() {
         )
         .map((student) => {
           index++;
-          return { ...student, selectedDiscipline,id:index };
+          return { ...student, selectedDiscipline, id: index };
         });
       setRows(matchingStudents);
     } else {
@@ -134,7 +190,7 @@ export default function StudentFee() {
             <Select
               labelId="demo-select-small"
               id="demo-select-small"
-              style={{width:"200px"}}
+              style={{ width: "200px" }}
               label="Discipline"
               required
               value={selectedDiscipline}
@@ -151,8 +207,8 @@ export default function StudentFee() {
       </Row>
       <Row className="my-3">
         <Col>
-        <Card className="shadow">
-        <StripedDataGrid
+          <Card className="shadow">
+            <StripedDataGrid
               autoHeight
               autoWidth
               columns={columns}
@@ -163,7 +219,7 @@ export default function StudentFee() {
               }
               hideFooterPagination={true}
             />
-        </Card>
+          </Card>
         </Col>
       </Row>
     </Container>
