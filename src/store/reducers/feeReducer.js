@@ -7,6 +7,8 @@ import {
   FEE_STATUS_LOADING,
   UPLOAD_CHALLAN_LOADING,
   STUDENTS,
+  APPROVE_LOADING,
+  REJECT_LOADING
 } from "../types";
 const initialState = {
   feeDetail: [],
@@ -17,6 +19,8 @@ const initialState = {
   feeStatus: [],
   feeStatusloading: false,
   uploadloading: false,
+  approveloading:false,
+  rejectloading:false,
 };
 const feeReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -60,6 +64,16 @@ const feeReducer = (state = initialState, action) => {
         ...state,
         uploadloading: action.payload,
       };
+      case  APPROVE_LOADING:
+        return {
+          ...state,
+          approveloading: action.payload,
+        };
+        case  REJECT_LOADING:
+          return {
+            ...state,
+            rejectloading: action.payload,
+          };
     default:
       return state;
   }

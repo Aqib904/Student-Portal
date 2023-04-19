@@ -1,4 +1,4 @@
-import {FEEDETAIL,FEE_LOADING,CHALLAN,CHALLAN_LOADING,FEESTATUS,FEE_STATUS_LOADING,UPLOAD_CHALLAN_LOADING,STUDENTS } from "../types";
+import {FEEDETAIL,FEE_LOADING,CHALLAN,CHALLAN_LOADING,FEESTATUS,FEE_STATUS_LOADING,UPLOAD_CHALLAN_LOADING,STUDENTS,APPROVE_LOADING,REJECT_LOADING } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var fee = RepositoryFactory.get("fee")
 export const getFeeDetail = (regno) => async (dispatch) => {
@@ -98,6 +98,40 @@ export const getFeeDetail = (regno) => async (dispatch) => {
     } catch (error) {
       alert(error.message);
     }
+  };
+  export const approveFeeStatus = (challanId) => async (dispatch) => {
+    try {
+      dispatch(approveLoading(true))
+      const {data} = await fee.approveFeeStatus(challanId)
+      if (data=="success") {
+        alert("Status approved successfully")
+        dispatch(approveLoading(false))
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const rejectFeeStatus = (challanId) => async (dispatch) => {
+    try {
+      dispatch(rejectLoading(true))
+      const {data} = await fee.rejectFeeStatus(challanId)
+      if (data=="success") {
+        alert("Status reject successfully")
+        dispatch(rejectLoading(false))
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const approveLoading = (val) => async (dispatch) => {
+    dispatch({ type: APPROVE_LOADING, payload: val });
+  };
+  export const rejectLoading = (val) => async (dispatch) => {
+    dispatch({ type: REJECT_LOADING, payload: val });
   };
   export const feeLoading = (val) => async (dispatch) => {
     dispatch({ type: FEE_LOADING, payload: val });

@@ -123,7 +123,8 @@ export default function ViewFeeStatus() {
                   toggle();
                 }}
               >
-                <i class="fas fa-edit"></i>
+                {params.row.status==true?<i class="fas fa-eye-slash"></i>: <i class="fas fa-edit"></i>}
+               
               </Button>
             )}
           </>
@@ -205,8 +206,8 @@ export default function ViewFeeStatus() {
                           <Image
                             src={`https://localhost:44374/ChallanImages/${challanImage}`}
                             alt="Batch"
-                            height={400}
-                            width={400}
+                            // height={500}
+                            width={350}
                           />
                           </ModalBody>
                         </Modal>
