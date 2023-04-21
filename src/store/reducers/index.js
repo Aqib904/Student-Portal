@@ -11,6 +11,7 @@ import evaluationReducer from "./evaluationReducer";
 import assessmentReducer from "./assessmentReducer";
 import enrollmentReducer from "./enrollmentReducer";
 import feeReducer from "./feeReducer";
+import financialAssistanceReducer from "./financialAssistanceReducer"
 export let rootReducer = combineReducers({
   authUser: authUserReducer,
   userAuth:authReducer,
@@ -22,5 +23,6 @@ export let rootReducer = combineReducers({
   assessment:assessmentReducer,
   enrollment:enrollmentReducer,
   fee:feeReducer,
+  financial:financialAssistanceReducer,
 });
 export default rootReducer;

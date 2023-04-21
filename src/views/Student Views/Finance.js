@@ -56,9 +56,11 @@ export default function Finance() {
             ></i>
             <h4 className=" my-2">Financial assistant</h4>
             <p className=" my-2 text-center">Apply for Financial<br/>assistant </p>
+            <Link to="/student/financial_assistance">
             <Button className="bg-site-success px-4">
             <i className="fas fa-file-import mx-1"></i>Apply
             </Button>
+            </Link>
             </CardBody>
           </Card>
         </Col>

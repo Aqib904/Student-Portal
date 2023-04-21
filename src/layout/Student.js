@@ -46,6 +46,10 @@ const Student = (props) => {
       return (
         <h4 className="d-none d-md-block m-0 font-weight-bold">Exam Result</h4>
       );
+    } else if (history.location.pathname == "/student/financial_assistance") {
+      return (
+        <h4 className="d-none d-md-block m-0 font-weight-bold">Financial Assistance</h4>
+      );
     } else if (history.location.pathname == "/student/dashboard") {
       return (
         <h4 className="d-none d-md-block m-0 font-weight-bold">

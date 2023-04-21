@@ -161,14 +161,14 @@ let routes = [
   //   name: "Fine",
   //   role: "student",
   // },
-  // {
-  //   path: "/student/finance/financial",
-  //   component: Financial,
-  //   layout: "student",
-  //   icon:"fas fa-donate ",
-  //   name: "Financial",
-  //   role: "student",
-  // },
+  {
+    path: "/student/financial_assistance",
+    component: Financial,
+    layout: "student",
+    icon:"fas fa-donate ",
+    name: "Financial Assistance",
+    role: "student",
+  },
   {
     path: "/student/attendance/:id",
     component: Attendance,
