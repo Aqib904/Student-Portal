@@ -54,11 +54,11 @@ export default function Finance() {
               className="fas fa-user-circle d-flex justify-content-center align-items-center border rounded-circle  bg-light"
               style={{ fontSize: "50px", width: "130px", height: "130px" }}
             ></i>
-            <h4 className=" my-2">Financial assistant</h4>
-            <p className=" my-2 text-center">Apply for Financial<br/>assistant </p>
+            <h4 className=" my-2">Financial assistance</h4>
+            <p className=" my-2 text-center">Apply for Financial<br/>assistance </p>
             <Link to="/student/financial_assistance">
             <Button className="bg-site-success px-4">
-            <i className="fas fa-file-import mx-1"></i>Apply
+            <i className="fas fa-file-import mx-1"></i>Request
             </Button>
             </Link>
             </CardBody>

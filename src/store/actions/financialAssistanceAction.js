@@ -1,4 +1,6 @@
-import { REQUEST_LOADING} from "../types";
+import { REQUEST_LOADING,ASSISTANCEREQUESTS,GET_REQUEST_LOADING,ASSISTANCEREQUESTSIMAGES,ACCEPT_REQUEST_LOADING,REJECT_REQUEST_LOADING} from "../types";
+import { RepositoryFactory } from "../../repository/RepositoryFactory";
+var financialAssistance = RepositoryFactory.get("financialAssistance")
 export const requestFinancialAssistance =
   (reg_no,description, fileList,history) => async (dispatch) => {
     try {
@@ -28,6 +30,79 @@ export const requestFinancialAssistance =
       dispatch(requestLoading(false));
     }
   };
+  export const getFinancialAssistanceRequests = () => async (dispatch) => {
+    try {
+      dispatch(getRequestLoading(true))
+      const { data } = await financialAssistance.getFinancialAssistanceRequests()
+      if (data) {
+        dispatch({ type: ASSISTANCEREQUESTS, payload: { assistanceRequestList: data } });
+        dispatch(getRequestLoading(false))
+      } else {
+        console.log("Request load failed")
+        dispatch(getRequestLoading(false))
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const getFinancialAssistanceImages = (id) => async (dispatch) => {
+    try {
+      const { data } = await financialAssistance.getFinancialAssistanceImages(id)
+      if (data) {
+        console.log(data,'images')
+        dispatch({ type: ASSISTANCEREQUESTSIMAGES, payload: { assistanceRequestImages: data } });
+      } else {
+        console.log("Images loaded failed")
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const requestAcceptAction = (id,history) => async (dispatch) => {
+    try {
+      dispatch(acceptRequestLoading(true))
+      const { data } = await financialAssistance.requestAccept(id)
+      if (data =="success") {
+        alert("You Accepted the student Request");
+        history.push("/admin/assistantrequest")
+        dispatch(acceptRequestLoading(false))
+        
+      } else {
+        alert("Accept failed")
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const requestRejectAction = (id,history) => async (dispatch) => {
+    try {
+      dispatch(rejectRequestLoading(true))
+      const { data } = await financialAssistance.requestReject(id)
+      if (data =="success") {
+        alert("You Rejected the student Request");
+        history.push("/admin/assistantrequest")
+        dispatch(rejectRequestLoading(false))
+       
+      } else {
+        alert("Rejected failed")
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   export const requestLoading = (val) => async (dispatch) => {
     dispatch({ type: REQUEST_LOADING, payload: val });
+  };
+  export const acceptRequestLoading = (val) => async (dispatch) => {
+    dispatch({ type: ACCEPT_REQUEST_LOADING, payload: val });
+  };
+  export const rejectRequestLoading = (val) => async (dispatch) => {
+    dispatch({ type: REJECT_REQUEST_LOADING, payload: val });
+  };
+  export const getRequestLoading = (val) => async (dispatch) => {
+    dispatch({ type: GET_REQUEST_LOADING, payload: val });
   };

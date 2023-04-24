@@ -8,7 +8,7 @@ const Teacher = (props) => {
   const dashboardText = () => {
     if (history.location.pathname == "/admin/assistantrequest") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">Assistant Request</h4>
+        <h4 className="d-none d-md-block m-0 font-weight-bold">Financial Assistance Requests</h4>
       );
     }  else if (history.location.pathname == "/admin/datesheet") {
       return (

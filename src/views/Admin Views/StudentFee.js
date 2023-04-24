@@ -90,10 +90,11 @@ export default function StudentFee() {
       headerName: "Status",
       width: 130,
       renderCell: (params) => {
+        console.log(params.row)
         return (
           <>
             <span>
-              {params.row.isPending == false ? "Pending" : "Approved"}
+              {params.row.isPending == true ? "Pending" : "Approved"}
             </span>
           </>
         );
@@ -109,9 +110,9 @@ export default function StudentFee() {
           <>
             <Button
               className={`${
-                params.row.isPending == false ? "bg-site-success" : "bg-warning"
+                params.row.isPending == true ? "bg-site-success" : "bg-warning"
               } text-white border-0 `}
-              disabled={params.row.isPending == false ? false : true}
+              disabled={params.row.isPending == true ? false : true}
               onClick={() =>
                 history.push({
                   pathname: `/admin/manage_fee/${params.row.regNo}`,
@@ -119,7 +120,7 @@ export default function StudentFee() {
                 })
               }
             >
-              {params.row.isPending == false ? (
+              {params.row.isPending == true ? (
                 <i class="fas fa-user-times"></i>
               ) : (
                 <i class="fas fa-user-check"></i>

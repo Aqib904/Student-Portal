@@ -3,7 +3,7 @@ const FEEDETAIL ="/Student/GetFeeDetail";
 const GENERATECHALLAN = "/Student/GenerateChallan"
 const GETCHALLAN = "/Student/GetChallan"
 const GETFEESTATUS = "/Student/GetFeeStatus"
-const GETSTUDENTS = "/Admin/GetStudents"
+const GETSTUDENTS = "/Admin/GetFeeStudents"
 const APPROVESTATUS = "/Admin/ApproveFee"
 const REJECTSTATUS = "/Admin/RejectFee"
 export default {

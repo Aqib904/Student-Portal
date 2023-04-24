@@ -79,8 +79,7 @@ export default function Assessment() {
       <Row>
         <Col >
           <Card className="my-2 ">
-            <CardHeader></CardHeader>
-            <CardBody>
+      
             <LoadingOverlay active={loading} spinner text="Teachers Data Loading...."> 
             <StripedDataGrid
               autoHeight
@@ -94,8 +93,7 @@ export default function Assessment() {
               hideFooterPagination={true}
             />
             </LoadingOverlay>
-            </CardBody>
-            <CardFooter></CardFooter>
+      
           </Card>
         </Col>
       </Row>

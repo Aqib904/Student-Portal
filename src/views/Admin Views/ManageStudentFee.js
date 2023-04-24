@@ -193,6 +193,7 @@ export default function ManageStudentFee() {
                             src={`https://localhost:44374/ChallanImages/${challanImage}`}
                             alt="Batch"
                             // height={500}
+                            className="img-fluid"
                             width={350}
                           />
                         </ModalBody>
