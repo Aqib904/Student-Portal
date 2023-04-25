@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Button,
   Card,
@@ -133,7 +133,7 @@ export default function ManageStudentFee() {
   return (
     <>
       <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
-        Manage Student Fee
+      <Link className="text-dark" to="/admin/student_fee"><i class="fas fa-arrow-alt-circle-left"></i></Link>&nbsp;Manage Student Fee
       </h4>
       <Container>
         <Row>

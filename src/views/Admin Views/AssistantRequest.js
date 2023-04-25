@@ -9,6 +9,7 @@ import user from "../../assets/img/user.png";
 import { DataGrid } from "@mui/x-data-grid";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router-dom";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 export default function AssistantRequest() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -16,7 +17,9 @@ export default function AssistantRequest() {
     (state) => state.financial
   );
   const [rows,setRows] = useState([])
-    console.log(rows,'setRows')
+  const [discipline, setDiscipline] = useState([]);
+  const [selectedDiscipline, setSelectedDiscipline] = useState("");
+    console.log(discipline,'setRows')
     const StripedDataGrid = styled(DataGrid)(() => ({
       [`& .${gridClasses.row}.even`]: {
         backgroundColor: "#EEEE",
@@ -84,9 +87,22 @@ export default function AssistantRequest() {
         width: 170,
       },
       {
-        field: "discipline",
+        field: "selectedDiscipline",
         headerName: "Discipline",
         width: 170,
+      },
+      {
+        field: "status",
+        type: "status",
+        headerName: "Status",
+        width: 150,
+        renderCell: (params) => {
+          return (
+            <>
+             <span>{params.row.status==null?"Pending":params.row.status==false?"Rejected":"Approved"}</span>
+            </>
+          );
+        },
       },
       {
         field: "Action",
@@ -112,18 +128,80 @@ export default function AssistantRequest() {
         },
       },
     ];
+    useEffect(() => {
+      const programSectionSemester = requestList
+        .map((student) => {
+          return {
+            program: student.program,
+            section: student.section,
+            semester: student.semester,
+          };
+        })
+        .filter((student, index, self) => {
+          return (
+            index ===
+            self.findIndex(
+              (s) =>
+                s.program === student.program &&
+                s.section === student.section &&
+                s.semester === student.semester
+            )
+          );
+        })
+        .map((student) => {
+          return `${"BS"}${student.program}${student.semester}${student.section}`;
+        });
+      setDiscipline(programSectionSemester);
+    }, [requestList]);
   useEffect(() => {
-    const updatedArray = requestList.map((request) => ({
-      ...request,
-      discipline: `BS${request.program}${request.semester}${request.section}`,
-    }));
-    setRows(updatedArray);
-  }, [requestList]);
+    let index = 0;
+    if (selectedDiscipline !== "") {
+      const matchingStudents = requestList
+        .filter(
+          (student) =>
+            student.program === selectedDiscipline.slice(2, 4) &&
+            student.semester === parseInt(selectedDiscipline.slice(4, 5)) &&
+            student.section === selectedDiscipline.slice(5)
+        )
+        .map((student) => {
+          index++;
+          return { ...student, selectedDiscipline };
+        });
+      setRows(matchingStudents);
+    } else {
+      setRows([]);
+    }
+  }, [selectedDiscipline, requestList]);
   useEffect(() => {
     dispatch(getFinancialAssistanceRequests());
   }, []);
   return (
     <Container fluid>
+      <Row>
+        <Col>
+          <FormControl
+            sx={{ m: 1, minWidth: 150, display: "block" }}
+            size="small"
+          >
+            <InputLabel id="demo-select-small">Discipline</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              style={{ width: "200px" }}
+              label="Discipline"
+              required
+              value={selectedDiscipline}
+              onChange={(e) => setSelectedDiscipline(e.target.value)}
+            >
+              {discipline.map((item, index) => (
+                <MenuItem key={index} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Col>
+      </Row>
       <Row>
         <Col>
         <Card className="shadow my-3 w-100 z-index-n1">

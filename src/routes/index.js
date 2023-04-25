@@ -35,6 +35,9 @@ import ViewFeeStatus from "../views/Student Views/ViewFeeStatus";
 import StudentFee from "../views/Admin Views/StudentFee";
 import ManageStudentFee from "../views/Admin Views/ManageStudentFee";
 import ManageFinancialAssistance from "../views/Admin Views/ManageFinancialAssistance";
+import FineList from "../views/Admin Views/FineList";
+import FineDetails from "../views/Admin Views/FineDetails";
+import AddFine from "../views/Admin Views/AddFine";
 let routes = [
   {
     path: "/auth_login",
@@ -299,11 +302,35 @@ let routes = [
     role: "teacher",
   },
   {
+    path: "/admin/addfine",
+    component: AddFine,
+    layout: "admin",
+    icon:"fas fa-rupee-sign ",
+    name: "Add Fine",
+    role: "admin",
+  },
+  {
     path: "/admin/fine",
     component: ManageFine,
     layout: "admin",
     icon:"fas fa-rupee-sign ",
     name: "Manage Fine",
+    role: "admin",
+  },
+  {
+    path: "/admin/fine_details/:id",
+    component: FineDetails,
+    layout: "admin",
+    icon:"fas fa-rupee-sign ",
+    name: "Fine Details",
+    role: "admin",
+  },
+  {
+    path: "/admin/finelist",
+    component: FineList,
+    layout: "admin",
+    icon:"fas fa-rupee-sign ",
+    name: "Fine List",
     role: "admin",
   },
   {

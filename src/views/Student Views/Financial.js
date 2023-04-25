@@ -54,7 +54,7 @@ export default function Financial() {
               <Stack spacing={1} ml={2}>
                 <h5>Upload Photos</h5>
                 <Typography variant="p" mr={2} fontWeight={500} fontSize={12}>
-                  (Upload a minimum 4 photos )
+                  (Upload a minimum 3 photos )
                 </Typography>
                 <FinancialWall fileList={fileList} setFileList={setFileList} />
               </Stack>

@@ -34,9 +34,17 @@ const Teacher = (props) => {
         return (
           <h4 className="d-none d-md-block m-0 font-weight-bold">Course Allocation</h4>
         );
+      } else if (history.location.pathname == "/admin/finelist") {
+        return (
+          <h4 className="d-none d-md-block m-0 font-weight-bold">Students Fine List</h4>
+        );
       } else if (history.location.pathname == "/admin/student_fee") {
         return (
           <h4 className="d-none d-md-block m-0 font-weight-bold">Student Fee</h4>
+        );
+      }else if (history.location.pathname == "/admin/addfine") {
+        return (
+          <h4 className="d-none d-md-block m-0 font-weight-bold">Add Fine</h4>
         );
       } else if (history.location.pathname == "/admin/dashboard"){
       return (
