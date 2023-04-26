@@ -87,6 +87,19 @@ export default function FineList() {
       width: 170,
     },
     {
+      field: "status",
+      type: "status",
+      headerName: "Status",
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <>
+           <span>{params.row.status==null?"Pending":params.row.status==false?"Rejected":"Approved"}</span>
+          </>
+        );
+      },
+    },
+    {
         field: "detail",
         type: "detail",
         headerName: "Fine Details",

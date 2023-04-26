@@ -60,7 +60,7 @@ export default function ManageFinancialAssistance() {
                 <Row>
                   {requestImages.map((item) => {
                     return (
-                      <Col md="4" sm="12" className="my-1">
+                      <Col md="4" sm="12" className="my-1 h-50">
                         <Image
                           src={`https://localhost:44374/FinancialAssistanceImages/${item}`}
                           alt="Batch"

@@ -1,4 +1,4 @@
-import {FINELIST,FINE_LIST_LOADING,STUDENTSLIST,STUDENT_LIST_LOADING } from "../types";
+import {FINELIST,FINE_LIST_LOADING,STUDENTSLIST,STUDENT_LIST_LOADING,ADD_FINE_LOADING,ACCEPT_FINE_LOADING,REJECT_FINE_LOADING } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var fine = RepositoryFactory.get("fine")
 export const getFineList= () => async (dispatch) => {
@@ -31,9 +31,68 @@ export const getFineList= () => async (dispatch) => {
       alert(error.message);
     }
   };
+  export const addFine = (list) => async (dispatch) => {
+    try {
+      dispatch(addFineLoading(true))
+      const {data} = await fine.addFine(list)
+      if (data == "success") {
+        alert("Fine added Successfully");
+        dispatch(addFineLoading(false))
+      } else {
+        console.log("Fine added  failed")
+        dispatch(addFineLoading(false))
+      }
+    } catch (error) {
+      console.log(error.message);
+      dispatch(addFineLoading(false))
+    }
+  };
+  export const fineAcceptAction = (id,history) => async (dispatch) => {
+    try {
+      dispatch(acceptFineLoading(true))
+      const { data } = await fine.fineAccept(id)
+      if (data =="success") {
+        alert("You Accepted the student Fine Request");
+        history.push("/admin/finelist")
+        dispatch(acceptFineLoading(false))
+        
+      } else {
+        alert("Accept failed")
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const fineRejectAction = (id,history) => async (dispatch) => {
+    try {
+      dispatch(rejectFineLoading(true))
+      const { data } = await fine.fineReject(id)
+      if (data =="success") {
+        alert("You Rejected the student Fine Request");
+        history.push("/admin/finelist")
+        dispatch(rejectFineLoading(false))
+       
+      } else {
+        alert("Rejected failed")
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   export const fineListLoading = (val) => async (dispatch) => {
     dispatch({ type: FINE_LIST_LOADING, payload: val });
   };
+  export const addFineLoading = (val) => async (dispatch) => {
+    dispatch({ type: ADD_FINE_LOADING, payload: val });
+  };
   export const studentsListLoading = (val) => async (dispatch) => {
     dispatch({ type: STUDENT_LIST_LOADING, payload: val });
+  };
+  export const acceptFineLoading = (val) => async (dispatch) => {
+    dispatch({ type: ACCEPT_FINE_LOADING, payload: val });
+  };
+  export const rejectFineLoading = (val) => async (dispatch) => {
+    dispatch({ type: REJECT_FINE_LOADING, payload: val });
   };

@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getStudentsList } from "../../store/actions/fineAction";
+import { addFine, getStudentsList } from "../../store/actions/fineAction";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
@@ -21,12 +21,13 @@ import {
   ModalFooter,
   ModalHeader,
   Row,
+  Spinner,
 } from "reactstrap";
 import { useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 export default function AddFine() {
   const dispatch = useDispatch();
-  const { studentsList, studentsloading } = useSelector((state) => state.fine);
+  const { studentsList, studentsloading ,addFineloading} = useSelector((state) => state.fine);
   const [rows, setRows] = useState([]);
   const [discipline, setDiscipline] = useState([]);
   const [selectedDiscipline, setSelectedDiscipline] = useState("");
@@ -87,6 +88,15 @@ export default function AddFine() {
   const clearState =()=>{
     setDescription("");
     setAmount("");
+  }
+  const handleSubmit=()=>{
+    let list ={
+      reg_no:regno,
+      amount:amount,
+      description:description
+    }
+    dispatch(addFine(list))
+    toggle()
   }
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
@@ -251,7 +261,7 @@ export default function AddFine() {
             <Label>Amount:</Label>
             <Input
               placeholder="Enter the amount"
-              type="text"
+              type="number"
               value={amount}
               onChange={(e) => {
                 setAmount(e.target.value);
@@ -274,8 +284,9 @@ export default function AddFine() {
               disabled={
                 amount == "" || description == "" || regno == "" ? true : false
               }
+              onClick={()=>{handleSubmit()}}
             >
-              Add
+               {addFineloading ? <Spinner size="sm" /> : "Add"}
             </Button>
             <Button className="bg-danger" onClick={toggle}>
               cancel

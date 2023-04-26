@@ -1,9 +1,12 @@
-import { FINELIST ,FINE_LIST_LOADING ,STUDENTSLIST,STUDENT_LIST_LOADING} from "../types";
+import { FINELIST ,FINE_LIST_LOADING ,STUDENTSLIST,STUDENT_LIST_LOADING,ADD_FINE_LOADING,ACCEPT_FINE_LOADING,REJECT_FINE_LOADING} from "../types";
 const initialState = {
     fineList:[],
     studentsList:[],
     loading:false,
     studentsloading:false,
+    addFineloading:false,
+    acceptFineloading:false,
+    rejectFineloading:false,
 };
 const fineReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -17,6 +20,7 @@ const fineReducer = (state = initialState, action) => {
         ...state,
         studentsList: action.payload.studentsList,
       };
+      
       case FINE_LIST_LOADING:
       return {
         ...state,
@@ -27,6 +31,21 @@ const fineReducer = (state = initialState, action) => {
           ...state,
           studentsloading: action.payload,
         };
+        case ADD_FINE_LOADING:
+          return {
+            ...state,
+            addFineloading: action.payload,
+          };
+          case ACCEPT_FINE_LOADING:
+          return {
+            ...state,
+            acceptFineloading: action.payload,
+          };
+          case REJECT_FINE_LOADING:
+          return {
+            ...state,
+            rejectFineloading: action.payload,
+          };
     default:
       return state;
   }
