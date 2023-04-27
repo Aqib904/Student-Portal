@@ -38,6 +38,7 @@ import ManageFinancialAssistance from "../views/Admin Views/ManageFinancialAssis
 import FineList from "../views/Admin Views/FineList";
 import FineDetails from "../views/Admin Views/FineDetails";
 import AddFine from "../views/Admin Views/AddFine";
+import UploadFine from "../views/Student Views/UploadFine";
 let routes = [
   {
     path: "/auth_login",
@@ -107,6 +108,14 @@ let routes = [
     layout: "student",
     icon:"fas fa-table ",
     name: "Datesheet",
+    role: "student",
+  },
+  {
+    path: "/student/uploadfine",
+    component: UploadFine,
+    layout: "student",
+    icon:"fas fa-table ",
+    name: "Upload Fine",
     role: "student",
   },
   {

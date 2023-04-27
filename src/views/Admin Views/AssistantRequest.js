@@ -84,12 +84,17 @@ export default function AssistantRequest() {
       {
         field: "reg_no",
         headerName: "Reg no",
-        width: 170,
+        width: 130,
       },
       {
         field: "selectedDiscipline",
         headerName: "Discipline",
-        width: 170,
+        width: 130,
+      },
+      {
+        field: "date",
+        headerName: "Date",
+        width: 130,
       },
       {
         field: "status",

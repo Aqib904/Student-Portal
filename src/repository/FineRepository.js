@@ -4,6 +4,7 @@ const STUDENTSLIST = "/Admin/GetStudents"
 const ADDFINE = "/Admin/AddFine"
 const FINEACCEPT = "/Admin/ApproveFine"
 const FINEREJECT = "/Admin/RejectFine"
+const STUDENTFINE ="/Student/GetFine"
 export default {
     getFineList() {
         return Repository.get(`${FINELIST}`);
@@ -19,5 +20,8 @@ export default {
     },
     fineReject(id) {
         return Repository.post(`${FINEREJECT}?id=${id}`);
+    },
+    getStudentFine(reg_no) {
+        return Repository.get(`${STUDENTFINE}?reg_no=${reg_no}`);
     },
 };

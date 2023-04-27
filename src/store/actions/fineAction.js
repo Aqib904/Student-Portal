@@ -1,4 +1,4 @@
-import {FINELIST,FINE_LIST_LOADING,STUDENTSLIST,STUDENT_LIST_LOADING,ADD_FINE_LOADING,ACCEPT_FINE_LOADING,REJECT_FINE_LOADING } from "../types";
+import {FINELIST,FINE_LIST_LOADING,STUDENTSLIST,STUDENT_LIST_LOADING,ADD_FINE_LOADING,ACCEPT_FINE_LOADING,REJECT_FINE_LOADING,STUDENTFINE} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var fine = RepositoryFactory.get("fine")
 export const getFineList= () => async (dispatch) => {
@@ -8,6 +8,21 @@ export const getFineList= () => async (dispatch) => {
       if (data) {
         dispatch(fineListLoading(false))
         dispatch({ type: FINELIST, payload: { fineList: data } });
+      } else {
+        console.log("Fine List loaded failed");
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const getStudentFine= (reg_no) => async (dispatch) => {
+    try {
+        dispatch(fineListLoading(true))
+      const {data} = await fine.getStudentFine(reg_no)
+      if (data) {
+        dispatch(fineListLoading(false))
+        dispatch({ type: STUDENTFINE, payload: { studentFine: data } });
       } else {
         console.log("Fine List loaded failed");
         throw new Error(data.error);
