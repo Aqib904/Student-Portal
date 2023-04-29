@@ -96,6 +96,29 @@ export const getFineList= () => async (dispatch) => {
       alert(error.message);
     }
   };
+  export const uploadFineReceipt = (file,id) => async (dispatch) => {
+    try {
+      dispatch(addFineLoading(true))
+      const formData = new FormData();
+      formData.append("receipt", file);
+      formData.append("id", id);
+      const response = await fetch(
+        "https://localhost:44374/api/Student/UploadFineReceipt",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (response.ok) {
+        alert("Receipt Uploaded Successfully");
+        dispatch(addFineLoading(false))
+      } else {
+        console.log("Receipt uploaded  failed");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   export const fineListLoading = (val) => async (dispatch) => {
     dispatch({ type: FINE_LIST_LOADING, payload: val });
   };

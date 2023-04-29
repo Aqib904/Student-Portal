@@ -83,7 +83,7 @@ export default function FineDetails() {
               </CardBody>
               <CardFooter>
                 <Row className="float-right">
-                  {data?.status == null ? (
+                  {data?.status !=true ? (
                     <>
                       <Button
                         className="bg-site-success mx-2"

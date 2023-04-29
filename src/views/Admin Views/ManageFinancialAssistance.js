@@ -102,29 +102,29 @@ export default function ManageFinancialAssistance() {
               </CardBody>
               <CardFooter>
                 <Row className=" float-right">
-                  {data?.status == true || data?.status == false ? (
-                    ""
-                  ) : (
+                  {data?.status != true  ? (
                     <>
-                      <Button
-                        className="bg-site-success mx-1"
-                        onClick={() => {
-                          setRequest("Accept");
-                          confirmtoggle();
-                        }}
-                      >
-                        Accept Request
-                      </Button>
-                      <Button
-                        className="bg-danger"
-                        onClick={() => {
-                          setRequest("Reject");
-                          confirmtoggle();
-                        }}
-                      >
-                        Reject Request
-                      </Button>
-                    </>
+                    <Button
+                      className="bg-site-success mx-1"
+                      onClick={() => {
+                        setRequest("Accept");
+                        confirmtoggle();
+                      }}
+                    >
+                      Accept Request
+                    </Button>
+                    <Button
+                      className="bg-danger"
+                      onClick={() => {
+                        setRequest("Reject");
+                        confirmtoggle();
+                      }}
+                    >
+                      Reject Request
+                    </Button>
+                  </>
+                  ) : (
+                    ""
                   )}
                 </Row>
               </CardFooter>

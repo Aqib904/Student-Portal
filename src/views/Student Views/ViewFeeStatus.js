@@ -38,6 +38,7 @@ export default function ViewFeeStatus() {
   const [challanImage, setChallanImage] = useState(null);
   const [challanStatus, setChallanStatus] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(selectedId,'selectedId')
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };

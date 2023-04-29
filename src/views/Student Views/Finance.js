@@ -54,9 +54,10 @@ export default function Finance() {
               </p>
               <Link to="/student/uploadfine">
                 <Button
-                  className={`${
-                    studentFine.length == 0 ? "bg-site-success" : "bg-danger"
-                  } px-4`}
+                  // className={`${
+                  //   studentFine.length == 0 ? "bg-site-success" : "bg-danger"
+                  // } px-4`}
+                  className="bg-site-success"
                 >
                   <i className="fas fa-file-import mx-1"></i>Fine Details
                 </Button>
