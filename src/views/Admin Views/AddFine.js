@@ -170,6 +170,13 @@ export default function AddFine() {
       });
     setDiscipline(programSectionSemester);
   }, [studentsList]);
+  useEffect(()=>{
+    if(discipline.length > 0){
+      setSelectedDiscipline(discipline[0])
+    }else{
+      setSelectedDiscipline("")
+    }
+  },[discipline])
   useEffect(() => {
     let index = 0;
     if (selectedDiscipline !== "") {

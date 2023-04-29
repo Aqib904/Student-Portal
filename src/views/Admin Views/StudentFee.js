@@ -110,9 +110,9 @@ export default function StudentFee() {
           <>
             <Button
               className={`${
-                params.row.isPending == true ? "bg-site-success" : "bg-warning"
+                params.row.isPending == true ? "bg-warning" : "bg-site-success"
               } text-white border-0 `}
-              disabled={params.row.isPending == true ? false : true}
+              // disabled={params.row.isPending == true ? false : true}
               onClick={() =>
                 history.push({
                   pathname: `/admin/manage_fee/${params.row.regNo}`,
@@ -131,6 +131,13 @@ export default function StudentFee() {
       },
     },
   ];
+  useEffect(()=>{
+    if(discipline.length > 0){
+      setSelectedDiscipline(discipline[0])
+    }else{
+      setSelectedDiscipline("")
+    }
+  },[discipline])
   useEffect(() => {
     const programSectionSemester = students
       .map((student) => {

@@ -37,8 +37,9 @@ export default function ViewFeeStatus() {
   const [selectedId, setSelectedId] = useState(null);
   const [challanImage, setChallanImage] = useState(null);
   const [challanStatus, setChallanStatus] = useState(false);
+  const [status, setStatus] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(selectedId,'selectedId')
+  console.log(selectedId, "selectedId");
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -107,6 +108,7 @@ export default function ViewFeeStatus() {
                   setSelectedId(params.row.id);
                   toggle();
                   setChallanStatus(false);
+                  setStatus(params.row.status);
                 }}
               >
                 <i class="fas fa-upload"></i>
@@ -116,16 +118,20 @@ export default function ViewFeeStatus() {
                 className={`${
                   params.row.status == false ? "bg-warning" : "bg-site-success"
                 } text-white border-0 `}
-                disabled={params.row.status == true ? true : false}
+                // disabled={params.row.status == true ? true : false}
                 onClick={() => {
                   setChallanImage(params.row.challan_image);
                   setSelectedId(params.row.id);
                   setChallanStatus(true);
+                  setStatus(params.row.status);
                   toggle();
                 }}
               >
-                {params.row.status==true?<i class="fas fa-eye-slash"></i>: <i class="fas fa-edit"></i>}
-               
+                {params.row.status == true ? (
+                  <i class="fas fa-eye"></i>
+                ) : (
+                  <i class="fas fa-edit"></i>
+                )}
               </Button>
             )}
           </>
@@ -141,7 +147,9 @@ export default function ViewFeeStatus() {
     toggle();
   };
   useEffect(() => {
-    const updatedRows = [...feeStatus].sort((a, b) => a.installment_no - b.installment_no);
+    const updatedRows = [...feeStatus].sort(
+      (a, b) => a.installment_no - b.installment_no
+    );
     setRows(updatedRows);
   }, [feeStatus]);
   useEffect(() => {
@@ -201,23 +209,29 @@ export default function ViewFeeStatus() {
                       {isModalOpen && (
                         <Modal isOpen={isModalOpen} toggle={toggleModal}>
                           <ModalHeader toggle={toggleModal}>
-                          Preview Your Photo
+                            Preview Your Photo
                           </ModalHeader>
                           <ModalBody>
-                          <Image
-                            src={`https://localhost:44374/ChallanImages/${challanImage}`}
-                            alt="Batch"
-                            // height={500}
-                            width={350}
-                          />
+                            <Image
+                              src={`https://localhost:44374/ChallanImages/${challanImage}`}
+                              alt="Batch"
+                              // height={500}
+                              width={350}
+                            />
                           </ModalBody>
                         </Modal>
                       )}
-                      <h5>Update Photo</h5>
-                      <ChallanWall
-                        fileList={fileList}
-                        setFileList={setFileList}
-                      />
+                      {status == true ? (
+                        ""
+                      ) : (
+                        <>
+                          <h5>Update Photo</h5>
+                          <ChallanWall
+                            fileList={fileList}
+                            setFileList={setFileList}
+                          />
+                        </>
+                      )}
                     </Stack>
                   </>
                 ) : (
@@ -255,22 +269,28 @@ export default function ViewFeeStatus() {
           </Container>
         </ModalBody>
         <ModalFooter>
-          {challanStatus == true ? (
-            <Button
-              className="bg-site-primary"
-              disabled={fileList.length == 0 ? true : false}
-              onClick={handleUpload}
-            >
-              {uploadloading ? <Spinner size="sm" /> : "Update Challan"}
-            </Button>
+          {status == true ? (
+            ""
           ) : (
-            <Button
-              className="bg-site-primary"
-              disabled={fileList.length == 0 ? true : false}
-              onClick={handleUpload}
-            >
-              {uploadloading ? <Spinner size="sm" /> : "Upload Challan"}
-            </Button>
+            <>
+              {challanStatus == true ? (
+                <Button
+                  className="bg-site-primary"
+                  disabled={fileList.length == 0 ? true : false}
+                  onClick={handleUpload}
+                >
+                  {uploadloading ? <Spinner size="sm" /> : "Update Challan"}
+                </Button>
+              ) : (
+                <Button
+                  className="bg-site-primary"
+                  disabled={fileList.length == 0 ? true : false}
+                  onClick={handleUpload}
+                >
+                  {uploadloading ? <Spinner size="sm" /> : "Upload Challan"}
+                </Button>
+              )}
+            </>
           )}
         </ModalFooter>
       </Modal>

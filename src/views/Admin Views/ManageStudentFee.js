@@ -39,6 +39,7 @@ export default function ManageStudentFee() {
   const [challanImage, setChallanImage] = useState(null);
   const [modal, setModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [status, setStatus] = useState(null);
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -101,12 +102,13 @@ export default function ManageStudentFee() {
           <>
             <Button
               className={`${
-                params.row.status == false ? "bg-site-success" : "bg-warning"
+                params.row.status == false ? "bg-site-success" : "bg-site-success"
               } text-white border-0 `}
               disabled={params.row.challan_image == null ? true : false}
               onClick={() => {
                 setChallanImage(params.row.challan_image);
                 setSelectedId(params.row.id);
+                setStatus(params.row.status);
                 toggle();
               }}
             >
@@ -133,7 +135,10 @@ export default function ManageStudentFee() {
   return (
     <>
       <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
-      <Link className="text-dark" to="/admin/student_fee"><i class="fas fa-arrow-alt-circle-left"></i></Link>&nbsp;Manage Student Fee
+        <Link className="text-dark" to="/admin/student_fee">
+          <i class="fas fa-arrow-alt-circle-left"></i>
+        </Link>
+        &nbsp;Manage Student Fee
       </h4>
       <Container>
         <Row>
@@ -206,32 +211,38 @@ export default function ManageStudentFee() {
           </Container>
         </ModalBody>
         <ModalFooter>
-          <Button
-            size="sm"
-            color="success"
-            className="mx-2"
-            onClick={async (e) => {
-              e.preventDefault();
-             await dispatch(approveFeeStatus(selectedId));
-             dispatch(getFeeStatus(data?.regNo));
-             toggle()
-            }}
-          >
-            {approveLoading ? <Spinner size="sm" /> : "🗸"}
-          </Button>
-          <Button
-            size="sm"
-            color="danger"
-            className="mx-2"
-            onClick={async (e) => {
-              e.preventDefault();
-              await dispatch(rejectFeeStatus(selectedId));
-              dispatch(getFeeStatus(data?.regNo));
-              toggle()
-            }}
-          >
-            {rejectLoading ? <Spinner size="sm" /> : "X"}
-          </Button>
+          {status == true ? (
+            ""
+          ) : (
+            <>
+              <Button
+                size="sm"
+                color="success"
+                className="mx-2"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await dispatch(approveFeeStatus(selectedId));
+                  dispatch(getFeeStatus(data?.regNo));
+                  toggle();
+                }}
+              >
+                {approveLoading ? <Spinner size="sm" /> : "🗸"}
+              </Button>
+              <Button
+                size="sm"
+                color="danger"
+                className="mx-2"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await dispatch(rejectFeeStatus(selectedId));
+                  dispatch(getFeeStatus(data?.regNo));
+                  toggle();
+                }}
+              >
+                {rejectLoading ? <Spinner size="sm" /> : "X"}
+              </Button>
+            </>
+          )}
         </ModalFooter>
       </Modal>
     </>
