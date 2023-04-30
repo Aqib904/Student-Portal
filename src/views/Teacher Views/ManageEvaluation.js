@@ -173,7 +173,7 @@ export default function ManageEvaluation() {
   }, [evaluationList, title]);
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
         Mark Grading
       </h4>
       <Container fluid>
@@ -276,7 +276,7 @@ export default function ManageEvaluation() {
                                   type="number"
                                   required
                                   defaultValue={item.obtained_marks}
-                                  className="w-25"
+                                  className="w-75"
                                   onChange={(e) => {
                                     handleMarksChange(
                                       e.target.value,

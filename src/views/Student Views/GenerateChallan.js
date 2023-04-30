@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   Button,
   Card,
@@ -100,8 +100,11 @@ export default function GenerateChallan() {
   }, []);
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
-        Generate Challan Form
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
+      <Link className="text-dark" to="/student/fee_detail">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+          </Link>
+          &nbsp;Generate Challan Form
       </h4>
       <Container>
         <Row className="my-4">

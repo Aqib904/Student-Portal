@@ -75,7 +75,7 @@ export default function UploadFine() {
                   className="mx-1 cursor-pointer rounded-circle"
                 />
                 </div>
-                <h5 className="text-center my-3">Folder Empty</h5>
+                <h5 className="text-center my-3">Yet Fine Folder Empty</h5>
               </CardBody>
             </Card>
           </Col>

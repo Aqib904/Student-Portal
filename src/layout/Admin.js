@@ -2,53 +2,75 @@ import React, { useState } from "react";
 import Sidebar from "../components/global/Sidebar";
 import Header from "../components/global/Header";
 import { Collapse } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 const Teacher = (props) => {
   const history = useHistory();
   const dashboardText = () => {
     if (history.location.pathname == "/admin/assistantrequest") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">Financial Assistance Requests</h4>
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Financial Assistance Requests
+        </h4>
       );
-    }  else if (history.location.pathname == "/admin/datesheet") {
+    } else if (history.location.pathname == "/admin/datesheet") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">Manage Datesheet</h4>
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Manage Datesheet
+        </h4>
       );
-    }  else if (history.location.pathname == "/admin/fine") {
+    } else if (history.location.pathname == "/admin/fine") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">Manage Fine</h4>
+        <h4 className="d-block d-md-block m-0 font-weight-bold">Manage Fine</h4>
       );
-    }else if (history.location.pathname == "/admin/noticeboard") {
-        return (
-          <h4 className="d-none d-md-block m-0 font-weight-bold">Manage Noticeboard</h4>
-        );
-      }else if (history.location.pathname == "/admin/timetable") {
-        return (
-          <h4 className="d-none d-md-block m-0 font-weight-bold">Manage Timetable</h4>
-        );
-      } else if (history.location.pathname == "/admin/checkevaluation") {
-        return (
-          <h4 className="d-none d-md-block m-0 font-weight-bold">Check Evaluation</h4>
-        );
-      } else if (history.location.pathname == "/admin/courseallocation") {
-        return (
-          <h4 className="d-none d-md-block m-0 font-weight-bold">Course Allocation</h4>
-        );
-      } else if (history.location.pathname == "/admin/finelist") {
-        return (
-          <h4 className="d-none d-md-block m-0 font-weight-bold">Students Fine List</h4>
-        );
-      } else if (history.location.pathname == "/admin/student_fee") {
-        return (
-          <h4 className="d-none d-md-block m-0 font-weight-bold">Student Fee</h4>
-        );
-      }else if (history.location.pathname == "/admin/addfine") {
-        return (
-          <h4 className="d-none d-md-block m-0 font-weight-bold">Add Fine</h4>
-        );
-      } else if (history.location.pathname == "/admin/dashboard"){
+    } else if (history.location.pathname == "/admin/noticeboard") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Manage Noticeboard
+        </h4>
+      );
+    } else if (history.location.pathname == "/admin/timetable") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Manage Timetable
+        </h4>
+      );
+    } else if (history.location.pathname == "/admin/checkevaluation") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Check Evaluation
+        </h4>
+      );
+    } else if (history.location.pathname == "/admin/courseallocation") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Course Allocation
+        </h4>
+      );
+    } else if (history.location.pathname == "/admin/finelist") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          <Link className="text-dark" to="/admin/fine">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+          </Link>
+          &nbsp;Students Fine List
+        </h4>
+      );
+    } else if (history.location.pathname == "/admin/student_fee") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">Student Fee</h4>
+      );
+    } else if (history.location.pathname == "/admin/addfine") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          <Link className="text-dark" to="/admin/fine">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+          </Link>
+          &nbsp; Add Fine
+        </h4>
+      );
+    } else if (history.location.pathname == "/admin/dashboard") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
           {" "}
           Teacher Dashboard
         </h4>
@@ -77,11 +99,14 @@ const Teacher = (props) => {
       <div className="d-block d-lg-none  ">
         {" "}
         <Header toggle={toggle} />
+        <div className="container">
+          <h4 className="my-3 d-block">{dashboardText()}</h4>
+        </div>
         <div className=" position-relative">
           <Collapse
             isOpen={isOpen}
             className="position-absolute"
-            style={{ zIndex: "100", top: "-90px" }}
+            style={{ zIndex: "100", top: "-135px" }}
           >
             <Sidebar sidebarToggle={toggle} outsideClose={outsideClose} />
           </Collapse>

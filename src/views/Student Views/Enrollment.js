@@ -278,7 +278,7 @@ export default function Enrollment() {
   },[status])
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
         Enrollment
       </h4>
       <Container>

@@ -157,8 +157,11 @@ export default function ViewFeeStatus() {
   }, []);
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
-        Fee Status
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
+      <Link className="text-dark" to="/student/fee_detail">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+          </Link>
+          &nbsp;Fee Status
       </h4>
       <Container>
         <Row>
@@ -188,7 +191,7 @@ export default function ViewFeeStatus() {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>
           {" "}
-          {challanStatus == true ? "Update Challan" : "Upload Challan"}
+          {challanStatus == true ? "Manage Challan" : "Upload Challan"}
         </ModalHeader>
         <ModalBody>
           <Container>

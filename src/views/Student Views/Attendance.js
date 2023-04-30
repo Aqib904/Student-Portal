@@ -16,7 +16,7 @@ import {
   Spinner,
 } from "reactstrap";
 import Chart from "react-apexcharts";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -279,8 +279,11 @@ export default function Attendance() {
   // },[rowData?.enrollmentId])
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-2">
-        Attendance
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-2">
+      <Link className="text-dark" to="/student/dashboard">
+          <i class="fas fa-arrow-alt-circle-left"></i>
+        </Link>
+        &nbsp;Attendance
       </h4>
       <Container>
         <Row>

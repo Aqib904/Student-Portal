@@ -134,8 +134,11 @@ export default function Fee() {
   }, []);
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
-        Fee Detail
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
+      <Link className="text-dark" to="/student/finance">
+          <i class="fas fa-arrow-alt-circle-left"></i>
+        </Link>
+        &nbsp;Fee Detail
       </h4>
       <Container fluid>
         <Row>

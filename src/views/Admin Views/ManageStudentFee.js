@@ -28,12 +28,14 @@ import { GridToolbar } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
+import emptyFolder from "../../assets/img/emptyFolder.jpg";
 export default function ManageStudentFee() {
   const location = useLocation();
   const dispatch = useDispatch();
   const data = location?.state;
   const { feeStatus, feeStatusloading, approveLoading, rejectLoading } =
     useSelector((state) => state.fee);
+  console.log(feeStatus, "feeStatus");
   const [rows, setRows] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [challanImage, setChallanImage] = useState(null);
@@ -102,7 +104,9 @@ export default function ManageStudentFee() {
           <>
             <Button
               className={`${
-                params.row.status == false ? "bg-site-success" : "bg-site-success"
+                params.row.status == false
+                  ? "bg-site-success"
+                  : "bg-site-success"
               } text-white border-0 `}
               disabled={params.row.challan_image == null ? true : false}
               onClick={() => {
@@ -134,7 +138,7 @@ export default function ManageStudentFee() {
   }, []);
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
         <Link className="text-dark" to="/admin/student_fee">
           <i class="fas fa-arrow-alt-circle-left"></i>
         </Link>
@@ -142,33 +146,55 @@ export default function ManageStudentFee() {
       </h4>
       <Container>
         <Row>
-          <Col sm={12} md={12}>
-            <Card className="shadow my-3 w-100 z-index-n1">
-              <LoadingOverlay
-                active={feeStatusloading}
-                spinner
-                text="Fee Status Loading...."
-              >
-                <CardHeader>
-                  <div>
-                    <h6 className="d-inline-block">Name:&nbsp;</h6>
-                    <span>{data.name}</span>
+          {feeStatus.length == 0 ? (
+            <Col lg={12} className="my-5">
+              <Card>
+                <CardHeader>Challan  Details</CardHeader>
+                <CardBody>
+                  <div className=" d-flex justify-content-center align-items-center">
+                    <Image
+                      src={emptyFolder}
+                      alt="Batch"
+                      height={140}
+                      width={140}
+                      className="mx-1 cursor-pointer rounded-circle"
+                    />
                   </div>
-                </CardHeader>
-                <StripedDataGrid
-                  autoHeight
-                  autoWidth
-                  columns={columns}
-                  rows={rows}
-                  disableSelectionOnClick={false}
-                  getRowClassName={(params) =>
-                    params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
-                  }
-                  hideFooterPagination={true}
-                />
-              </LoadingOverlay>
-            </Card>
-          </Col>
+                  <h5 className="text-center my-3">Yet Challan not generated</h5>
+                </CardBody>
+              </Card>
+            </Col>
+          ) : (
+            <Col sm={12} md={12}>
+              <Card className="shadow my-5 w-100 z-index-n1">
+                <LoadingOverlay
+                  active={feeStatusloading}
+                  spinner
+                  text="Fee Status Loading...."
+                >
+                  <CardHeader>
+                    <div>
+                      <h6 className="d-inline-block">Name:&nbsp;</h6>
+                      <span>{data.name}</span>
+                    </div>
+                  </CardHeader>
+                  <StripedDataGrid
+                    autoHeight
+                    autoWidth
+                    columns={columns}
+                    rows={rows}
+                    disableSelectionOnClick={false}
+                    getRowClassName={(params) =>
+                      params.indexRelativeToCurrentPage % 2 === 0
+                        ? "odd"
+                        : "even"
+                    }
+                    hideFooterPagination={true}
+                  />
+                </LoadingOverlay>
+              </Card>
+            </Col>
+          )}
         </Row>
       </Container>
       <Modal isOpen={modal} toggle={toggle}>

@@ -8,19 +8,19 @@ const Teacher = (props) => {
   const dashboardText = () => {
     if (history.location.pathname == "/teacher/timetable") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">Timetable</h4>
+        <h4 className="d-block d-md-block m-0 font-weight-bold">Timetable</h4>
       );
     }  else if (history.location.pathname == "/teacher/attendance/:id") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">Manage Attendance</h4>
+        <h4 className="d-block d-md-block m-0 font-weight-bold">Manage Attendance</h4>
       );
     } else if (history.location.pathname == "/teacher/evaluation/:id") {
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">Manage Evaluation</h4>
+        <h4 className="d-block d-md-block m-0 font-weight-bold">Manage Evaluation</h4>
       );
     } else if (history.location.pathname == "/teacher/dashboard"){
       return (
-        <h4 className="d-none d-md-block m-0 font-weight-bold">
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
           {" "}
           Teacher Dashboard
         </h4>
@@ -49,11 +49,14 @@ const Teacher = (props) => {
       <div className="d-block d-lg-none  ">
         {" "}
         <Header toggle={toggle} />
+        <div className="container">
+          <h4 className="my-3 d-block">{dashboardText()}</h4>
+        </div>
         <div className=" position-relative">
           <Collapse
             isOpen={isOpen}
             className="position-absolute"
-            style={{ zIndex: "100", top: "-90px" }}
+            style={{ zIndex: "100", top: "-132px" }}
           >
             <Sidebar sidebarToggle={toggle} outsideClose={outsideClose} />
           </Collapse>

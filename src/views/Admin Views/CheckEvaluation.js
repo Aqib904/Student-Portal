@@ -88,7 +88,7 @@ export default function CheckEvaluation() {
                 });
               }}
             >
-              <i className="fas fa-star-half-alt "></i>
+              <i className="fas fa-eye "></i>
             </Button>
           </>
         );

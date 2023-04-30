@@ -32,7 +32,7 @@ export default function FineDetails() {
   console.log(data, "data");
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
         <Link className="text-dark" to="/admin/finelist">
           <i class="fas fa-arrow-alt-circle-left"></i>
         </Link>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getTeachersFeedback } from "../../store/actions/assessmentAction";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
@@ -149,8 +149,11 @@ export default function EvaluationPercentage() {
     <Container>
       <Row>
         <Col>
-          <h4 className="d-none d-md-block m-0 font-weight-bold mx-4">
-            Evaluation Data
+          <h4 className="d-block d-md-block m-0 font-weight-bold mx-4">
+          <Link className="text-dark" to="/admin/checkevaluation">
+          <i class="fas fa-arrow-alt-circle-left"></i>
+        </Link>
+        &nbsp;Evaluation Percentage
           </h4>
         </Col>
       </Row>

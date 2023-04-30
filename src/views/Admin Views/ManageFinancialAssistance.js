@@ -47,7 +47,7 @@ export default function ManageFinancialAssistance() {
   }, [data?.id]);
   return (
     <>
-      <h4 className="d-none d-md-block m-0 font-weight-bold mx-3">
+      <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
       <Link className="text-dark" to="/admin/assistantrequest"><i class="fas fa-arrow-alt-circle-left"></i></Link>&nbsp;Manage Financial Assistance
       </h4>
       <Container>
