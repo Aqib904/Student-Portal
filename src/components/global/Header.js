@@ -73,7 +73,7 @@ const Header = (props) => {
         <div className="container top-nav d-flex bg-white ">
           <img src={logo} height={50} width={50} alt="logo" className="logo" />
           <h4 className="d-none d-md-block mx-3 m-0 font-weight-bold ">Barani Institute of information technology</h4>
-          <i class="fas fa-bell"></i>
+          <i class="fas fa-bell" style={{ fontSize: "25px", width: "10px", height: "10px", marginTop:"-10px"}}></i>
           <div className="d-flex position-relative  ml-auto header__dropDown-bg">
             <img
               src={user?.profile_photo?`https://localhost:44374/AttendanceImages/${user?.profile_photo}`:users}
@@ -81,7 +81,7 @@ const Header = (props) => {
               className="position-absolute headerProfileImg "
             />
             <div
-              className=" bg-site-profilebg  headerProfile-box d-flex align-items-center justify-content-center cursor-pointer"
+              className="bg-site-profilebg  headerProfile-box d-flex align-items-center justify-content-center cursor-pointer"
               onClick={() => {
                 if (profileDropdown == -1) {
                   setProfileDropdown(1);

@@ -59,7 +59,8 @@ export default function Assessment() {
                 });
               }}
             >
-              <i className="fas fa-star-half-alt "></i>
+              {params.row.isPending==false?(<i class="fas fa-check"></i>):(<i class="fas fa-hand-point-right"></i>)}
+              
             </Button>
           </>
         );

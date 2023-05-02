@@ -92,9 +92,10 @@ export default function FineList() {
       headerName: "Status",
       width: 150,
       renderCell: (params) => {
+        console.log(params.row,'params')
         return (
           <>
-           <span>{params.row.status==null?"Pending":params.row.status==false?"Rejected":"Approved"}</span>
+           <span>{params.row.status==null&&params.row.receipt==null?"Pending":params.row.status==null&&params.row.receipt!=null?"Paid":params.row.status==false?"Rejected":"Approved"}</span>
           </>
         );
       },

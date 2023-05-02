@@ -28,6 +28,15 @@ const Student = (props) => {
           &nbsp;Datesheet
         </h4>
       );
+    }else if (history.location.pathname == "/student/setting") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          <Link className="text-dark" to="/student/dashboard">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+          </Link>
+          &nbsp;Update Profile
+        </h4>
+      );
     } else if (history.location.pathname == "/student/courses") {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">Courses</h4>
