@@ -101,7 +101,7 @@ export default function UploadFine() {
                         ></Input>
                         <Label>Amount:</Label>
                         <Input value={item?.amount} disabled={true}></Input>
-                        <Label>Description:</Label>
+                        <Label>Reason:</Label>
                         <Input
                           value={item?.description}
                           type="textarea"

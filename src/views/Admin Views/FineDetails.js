@@ -71,7 +71,7 @@ export default function FineDetails() {
                       disabled={true}
                       type="text"
                     ></Input>
-                    <Label>Description:</Label>
+                    <Label>Reason:</Label>
                     <Input
                       value={data?.description}
                       type="textarea"

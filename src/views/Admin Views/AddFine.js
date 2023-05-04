@@ -274,9 +274,9 @@ export default function AddFine() {
                 setAmount(e.target.value);
               }}
             ></Input>
-            <Label>Description:</Label>
+            <Label>Reason:</Label>
             <Input
-              placeholder="description..."
+              placeholder="reason..."
               type="textarea"
               value={description}
               onChange={(e) => {

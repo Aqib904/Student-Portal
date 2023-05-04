@@ -61,7 +61,7 @@ export default function Financial() {
               <Input
                 type="textarea"
                 required
-                placeholder="Add description..."
+                placeholder="Add reason..."
                 onChange={(e) => {
                   setDescription(e.target.value);
                 }}

@@ -91,7 +91,7 @@ export default function ManageFinancialAssistance() {
                       </ModalBody>
                     </Modal>
                   )}
-                  <Label>Description:</Label>
+                  <Label>Reason:</Label>
                   <Input
                     value={data?.description}
                     type="textarea"
