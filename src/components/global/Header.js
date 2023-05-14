@@ -3,13 +3,15 @@ import { Link, useHistory } from "react-router-dom";
 import TogglerDark from "../../assets/img/TogglerDark.svg";
 import logo from "../../assets/img/biit.png";
 import HeaderDropdown from "./HeaderDropdown";
-import ArrowDown from "../../assets/img/ArrowDown.svg"
-import users from "../../assets/img/user.png"
+import ArrowDown from "../../assets/img/ArrowDown.svg";
+import users from "../../assets/img/user.png";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUser } from "../../store/actions/authAction";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 const Header = (props) => {
   const history = useHistory();
-  const { token,user } = useSelector((state) => state.authUser);
+  const { token, user } = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
   const [isMobile, setIsMobile] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(-1);
@@ -21,9 +23,9 @@ const Header = (props) => {
   const updatePredicate = () => {
     setIsMobile(window.innerWidth < 992);
   };
-  useEffect(()=>{
-    dispatch(GetUser(token?.username,token?.role))
-  },[token])
+  useEffect(() => {
+    dispatch(GetUser(token?.username, token?.role));
+  }, [token]);
   return (
     <>
       {isMobile ? (
@@ -35,13 +37,18 @@ const Header = (props) => {
                 src={TogglerDark}
                 className="cursor-pointer py-3"
               />
-              
             </div>
             <div className="">
               <Link to="/">
-                <img src={logo} height={50} width={50} alt="logo" className="logo" />
+                <img
+                  src={logo}
+                  height={50}
+                  width={50}
+                  alt="logo"
+                  className="logo"
+                />
               </Link>
-            </div> 
+            </div>
             <div className="d-flex position-relative  justify-content-end">
               <div
                 className=" bg-site-profilebg  profile-box d-flex align-items-center justify-content-center cursor-pointer"
@@ -56,10 +63,14 @@ const Header = (props) => {
                 <img src={ArrowDown} alt="drop-down" className="ml-3" />
               </div>
               <img
-              src={user?.profile_photo?`https://localhost:44374/AttendanceImages/${user?.profile_photo}`:users}
-              alt="profile"
-              className="position-absolute headerProfileImg "
-            />
+                src={
+                  user?.profile_photo
+                    ? `https://localhost:44374/AttendanceImages/${user?.profile_photo}`
+                    : users
+                }
+                alt="profile"
+                className="position-absolute headerProfileImg "
+              />
             </div>
             {profileDropdown == 1 && (
               <HeaderDropdown
@@ -72,11 +83,20 @@ const Header = (props) => {
       ) : (
         <div className="container top-nav d-flex bg-white ">
           <img src={logo} height={50} width={50} alt="logo" className="logo" />
-          <h4 className="d-none d-md-block mx-3 m-0 font-weight-bold ">Barani Institute of information technology</h4>
-          <i class="fas fa-bell" style={{ fontSize: "25px", width: "10px", height: "10px", marginTop:"-10px"}}></i>
+          <h4 className="d-none d-md-block mx-3 m-0 font-weight-bold ">
+            Barani Institute of information technology
+          </h4>
+          {/* <i class="fas fa-bell" style={{ fontSize: "25px", width: "10px", height: "10px", marginTop:"-10px"}}></i> */}
+          <Badge badgeContent={"3"} color="error">
+            <NotificationsIcon />
+          </Badge>
           <div className="d-flex position-relative  ml-auto header__dropDown-bg">
             <img
-              src={user?.profile_photo?`https://localhost:44374/AttendanceImages/${user?.profile_photo}`:users}
+              src={
+                user?.profile_photo
+                  ? `https://localhost:44374/AttendanceImages/${user?.profile_photo}`
+                  : users
+              }
               alt="profile"
               className="position-absolute headerProfileImg "
             />
@@ -104,7 +124,6 @@ const Header = (props) => {
                 profileDropdown={profileDropdown}
               />
             )}
-            
           </div>
         </div>
       )}

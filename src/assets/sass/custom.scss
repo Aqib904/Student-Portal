@@ -102,7 +102,7 @@ $theme-colors: (
 }
 .sidebar {
   padding-right: 0px !important;
-  min-height: 105vh !important;
+  min-height: 107vh !important;
   display: flex;
   flex-direction: column !important;
   justify-content: space-between !important;
@@ -206,8 +206,8 @@ body {
     width: 100% !important;
   }
   &__dropdown {
-    width: 250px;
-    height: 230px;
+    width: 200px;
+    // height: 230px;
     background: #ffffff;
     border-radius: 12px;
     position: absolute !important;
@@ -223,11 +223,12 @@ body {
         font-family: "DM Sans", sans-serif;
         font-style: normal;
         font-weight: 700;
-        font-size: 30px;
+        font-size: 20px;
         text-align: center;
         color: #ffffff;
         &__link {
           font-size: 48px;
+          font-weight: 500;
           color: white;
           &:hover {
             text-decoration: none;
@@ -239,7 +240,7 @@ body {
       &__description {
         font-family: "DM Sans", sans-serif;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 600;
         font-size: 16px;
         text-align: center;
 
@@ -250,8 +251,8 @@ body {
       &__item {
         font-family: "DM Sans", sans-serif;
         font-style: normal;
-        font-weight: 700;
-        font-size: 18px;
+        font-weight: 500;
+        font-size: 15px;
         color: #101128;
         &:hover {
           text-decoration: none;
