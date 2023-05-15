@@ -1,4 +1,5 @@
 import { ENROLLMENT } from "../types";
+import { toast } from "react-toastify";
 export const getEnrollment = (regno) => async (dispatch) => {
     try {
       const response = await fetch(
@@ -12,7 +13,7 @@ export const getEnrollment = (regno) => async (dispatch) => {
       if (response.ok) {
         dispatch({ type: ENROLLMENT, payload: { enrollment: data } });
       } else {
-        alert("DateSheet load failed");
+        toast.error("Enrollment load failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -28,10 +29,10 @@ export const getEnrollment = (regno) => async (dispatch) => {
       })
      response.json();
       if (response.ok) {
-        alert("Enroll Successfully")
+        toast.success("Enroll Successfully")
         history.push("/")
       } else {
-        alert("Enrollment failed")
+        toast.error("Enrollment failed")
       }
     } catch (error) {
       alert(error.message);

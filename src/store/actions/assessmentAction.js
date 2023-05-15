@@ -1,5 +1,6 @@
 import {TEACHERCOURSE,ASSESSMENTQUESTION,ALLTEACHERCOURSES,FEEDBACKTEACHER,TEACHER_LOADING} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 var assessment = RepositoryFactory.get("assessment");
 export const getCourseTeacher = (regno) => async (dispatch) => {
     try {
@@ -9,11 +10,11 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
         dispatch({ type: TEACHERCOURSE, payload: { teacherdata: data } });
         dispatch(teacherLoading(false))
       } else {
-        alert("DateSheet load failed");
+        toast.error("DateSheet load failed");
         throw new Error(data.error);
       }
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   export const getAssessmentQuestions = (id) => async (dispatch) => {
@@ -22,7 +23,7 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
       if (data) {
         dispatch({ type: ASSESSMENTQUESTION, payload: { question: data } });
       } else {
-        alert("Question load failed");
+        toast.error("Question load failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -33,7 +34,7 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
     try {
       const {data} = await assessment.markEvaluation(list)
       if (data == "success") {
-        alert("Feedback added Successfully");
+        toast.success("Feedback added Successfully");
         history.push("/student/evaluation")
       } else {
         alert("Feedback added  failed")
@@ -46,9 +47,9 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
     try {
       const {data} = await assessment.startNewEvaluation(list)
       if (data == "success") {
-        alert("Evaluation Started Successfully");
+        toast.success("Evaluation Started Successfully");
       } else {
-        alert("Evaluation Start  failed")
+        toast.error("Evaluation Start  failed")
       }
     } catch (error) {
       alert(error.message);
@@ -60,7 +61,7 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
       if (data) {
         dispatch({ type: ALLTEACHERCOURSES, payload: { teacher: data } });
       } else {
-        alert("DateSheet load failed");
+        toast.error("DateSheet load failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -73,7 +74,7 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
       if (data) {
         dispatch({ type: FEEDBACKTEACHER, payload: { feedback: data } });
       } else {
-        alert("Feedback load failed");
+        toast.error("Feedback load failed");
         throw new Error(data.error);
       }
     } catch (error) {

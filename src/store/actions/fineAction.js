@@ -1,5 +1,6 @@
 import {FINELIST,FINE_LIST_LOADING,STUDENTSLIST,STUDENT_LIST_LOADING,ADD_FINE_LOADING,ACCEPT_FINE_LOADING,REJECT_FINE_LOADING,STUDENTFINE} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 var fine = RepositoryFactory.get("fine")
 export const getFineList= () => async (dispatch) => {
     try {
@@ -51,7 +52,7 @@ export const getFineList= () => async (dispatch) => {
       dispatch(addFineLoading(true))
       const {data} = await fine.addFine(list)
       if (data == "success") {
-        alert("Fine added Successfully");
+        toast.success("Fine added Successfully");
         dispatch(addFineLoading(false))
       } else {
         console.log("Fine added  failed")
@@ -67,7 +68,7 @@ export const getFineList= () => async (dispatch) => {
       dispatch(acceptFineLoading(true))
       const { data } = await fine.fineAccept(id)
       if (data =="success") {
-        alert("You Accepted the student Fine Request");
+        toast.success("You Accepted the student Fine Request");
         history.push("/admin/finelist")
         dispatch(acceptFineLoading(false))
         
@@ -84,7 +85,7 @@ export const getFineList= () => async (dispatch) => {
       dispatch(rejectFineLoading(true))
       const { data } = await fine.fineReject(id)
       if (data =="success") {
-        alert("You Rejected the student Fine Request");
+        toast.success("You Rejected the student Fine Request");
         history.push("/admin/finelist")
         dispatch(rejectFineLoading(false))
        
@@ -110,7 +111,7 @@ export const getFineList= () => async (dispatch) => {
         }
       );
       if (response.ok) {
-        alert("Receipt Uploaded Successfully");
+        toast.success("Receipt Uploaded Successfully");
         dispatch(addFineLoading(false))
       } else {
         console.log("Receipt uploaded  failed");

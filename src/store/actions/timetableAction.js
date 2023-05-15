@@ -1,4 +1,5 @@
 import { TIMETABLE, TIMETABLE_LOADING } from "../types";
+import { toast } from "react-toastify";
 export const getWeeklyTimetable = (regno) => async (dispatch) => {
   try {
     dispatch(timetaleLoading(true));
@@ -33,9 +34,9 @@ export const addTimetable = (file) => async (dispatch) => {
       }
     );
     if (response.ok) {
-      alert("Timetable Uploaded Successfully");
+      toast.success("Timetable Uploaded Successfully");
     } else {
-      alert("Timetable uploaded  failed");
+      toast.error("Timetable uploaded  failed");
     }
   } catch (error) {
     alert(error.message);

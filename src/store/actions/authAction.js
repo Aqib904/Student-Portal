@@ -1,5 +1,6 @@
 import { toastSuccess, toastWarning } from "../../components/global/Toast";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 import { LOGIN, LOGOUT,LOGIN_FAILURE,LOGIN_LOADING ,ENROLLMENTSTATUS,USER} from "../types";
 var auth = RepositoryFactory.get("auth");
 export const login = (username, password) => async (dispatch) => {
@@ -15,7 +16,7 @@ export const login = (username, password) => async (dispatch) => {
       dispatch(loginLoading(false));
       dispatch({ type: LOGIN, payload: { token: data } });
     } else {
-      toastWarning("Login Failed")
+      toast.error("Invalid User")
       throw new Error(data.error);
     }
   } catch (error) {

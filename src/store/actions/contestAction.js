@@ -1,15 +1,16 @@
 import {CONTESTLIST,CONTESTDAYS,MARK_CONTEST_LOADING,ACCEPT_CONTEST_LOADING,REJECT_CONTEST_LOADING} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 var contest = RepositoryFactory.get("contest");
 export const markContest = (list) => async (dispatch) => {
     try {
       dispatch(markContestLoading(true))
       const { data } = await contest.markContest(list)
       if (data =="success") {
-        alert("Contest Marked Successfully")
+        toast.success("Contest Marked Successfully")
         dispatch(markContestLoading(false))
       } else {
-        alert("Contest Marked  failed")
+        toast.error("Contest Marked  failed")
       }
     } catch (error) {
       alert(error.message);
@@ -21,7 +22,7 @@ export const markContest = (list) => async (dispatch) => {
       if (data) {
         dispatch({ type: CONTESTLIST, payload: { contestList: data } });
       } else {
-        alert("Contest load failed")
+        toast.error("Contest load failed")
         throw new Error(data.error);
       }
     } catch (error) {
@@ -61,7 +62,7 @@ export const markContest = (list) => async (dispatch) => {
         }
       );
       if (response.ok) {
-        alert("Contest Setting Update")
+        toast.success("Contest Setting Update")
       } else {
         alert("Contest Setting failed")
       }
@@ -74,7 +75,7 @@ export const markContest = (list) => async (dispatch) => {
       dispatch(acceptContestLoading(true))
       const { data } = await contest.contestAccept(aid)
       if (data =="success") {
-        alert("You Accepted the student Request");
+        toast.success("You Accepted the student Request");
         dispatch(acceptContestLoading(false))
       } else {
         alert("Accept failed")
@@ -89,10 +90,10 @@ export const markContest = (list) => async (dispatch) => {
       dispatch(rejectContestLoading(true))
       const { data } = await contest.contestReject(aid)
       if (data =="success") {
-        alert("You Rejected the student Request");
+        toast.success("You Rejected the student Request");
         dispatch(rejectContestLoading(false))
       } else {
-        alert("Rejected failed")
+        toast.error("Rejected failed")
         throw new Error(data.error);
       }
     } catch (error) {

@@ -1,4 +1,5 @@
 import { DATESHEET ,DATESHEET_LOADING} from "../types";
+import { toast } from "react-toastify";
 export const getDatesheet = (regno) => async (dispatch) => {
   try {
     dispatch(datesheetLoading(true))
@@ -14,7 +15,7 @@ export const getDatesheet = (regno) => async (dispatch) => {
       dispatch({ type: DATESHEET, payload: { datesheet: data } });
       dispatch(datesheetLoading(false))
     } else {
-      alert("DateSheet load failed");
+      toast.error("DateSheet load failed");
       throw new Error(data.error);
     }
   } catch (error) {
@@ -34,9 +35,9 @@ export const addDatesheet = (file, type) => async (dispatch) => {
       }
     );
     if (response.ok) {
-      alert("Datesheet Uploaded Successfully");
+      toast.success("Datesheet Uploaded Successfully");
     } else {
-      alert("Datesheet uploaded  failed");
+      toast.error("Datesheet uploaded  failed");
     }
   } catch (error) {
     alert(error.message);
@@ -54,9 +55,9 @@ export const addCourseAllocation = (file) => async (dispatch) => {
       }
     );
     if (response.ok) {
-      alert("Courses Uploaded Successfully");
+      toast.success("Courses Uploaded Successfully");
     } else {
-      alert("Courses uploaded  failed");
+      toast.error("Courses uploaded  failed");
     }
   } catch (error) {
     alert(error.message);

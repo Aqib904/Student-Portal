@@ -1,12 +1,13 @@
 import { EVALUATIONGENERAL, EVALUATIONEXAM,SESSION,EXAMMARKS,EXAM_RESULT_LOADING,MARK_GENERAL_LOADING,MARK_EXAM_LOADING } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 var evaluation = RepositoryFactory.get("evaluation")
 export const markGeneralExam = (list) => async (dispatch) => {
     try {
       dispatch(markGeneralLoading(true))
       const {data} = await evaluation.markGeneralExam(list)
       if (data == "success") {
-        alert(" Marked Successfully")
+        toast.success(" Marked Successfully")
         dispatch(markGeneralLoading(false))
       } else {
         alert(" Marked  failed")
@@ -20,10 +21,10 @@ export const markGeneralExam = (list) => async (dispatch) => {
       dispatch(markExamLoading(true))
       const {data} = await evaluation.markMidFinal(list)
       if (data =="success") {
-        alert("Marked Successfully")
+        toast.success("Marked Successfully")
         dispatch(markExamLoading(false))
       } else {
-        alert("Marked failed")
+        toast.error("Marked failed")
       }
     } catch (error) {
       alert(error.message);
@@ -35,7 +36,7 @@ export const markGeneralExam = (list) => async (dispatch) => {
       if (data) {
         dispatch({ type: EVALUATIONGENERAL, payload: { general: data } });
       } else {
-        alert("DateSheet load failed");
+        toast.error("Assignment Quiz marks loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -48,7 +49,7 @@ export const markGeneralExam = (list) => async (dispatch) => {
       if (data) {
         dispatch({ type: EVALUATIONEXAM, payload: { exam: data } });
       } else {
-        alert("DateSheet load failed");
+        alert("Exam marks loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -61,7 +62,7 @@ export const markGeneralExam = (list) => async (dispatch) => {
       if (data) {
         dispatch({ type: SESSION, payload: { session: data } });
       } else {
-        alert("Session load failed");
+        toast.error("Session loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {

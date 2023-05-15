@@ -6,7 +6,6 @@ import Teacher from "./layout/Teacher"
 import Admin from "./layout/Admin"
 import routes from "./routes";
 import store from "./store";
-
 function App() {
   return (
     <>

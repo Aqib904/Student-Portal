@@ -8,6 +8,7 @@ import {
   ATTENDANCE_MARK_LOADING,
 } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 var attendance = RepositoryFactory.get("attendance");
 export const getTeacherCourses = (username) => async (dispatch) => {
   try {
@@ -15,7 +16,7 @@ export const getTeacherCourses = (username) => async (dispatch) => {
     if (data) {
       dispatch({ type: TEACHERCOURSES, payload: { teachercourses: data } });
     } else {
-      alert("Timetable load failed");
+      toast.error("Timetable load failed");
       throw new Error(data.error);
     }
   } catch (error) {
@@ -28,7 +29,7 @@ export const getStudentsList = (id, section) => async (dispatch) => {
     if (data) {
       dispatch({ type: STUDENTLIST, payload: { studentLists: data } });
     } else {
-      alert("list load failed");
+      toast.error("list load failed");
       throw new Error(data.error);
     }
   } catch (error) {
@@ -75,12 +76,12 @@ export const markAttendance =
         }
       );
       if (response.ok) {
-        alert("Attendance Marked Successfully");
         dispatch(markPercentageLoading(false));
         dispatch(ClearStudentList());
         history.push("/teacher/dashboard");
+        toast.success("Attendance Marked Successfully");
       } else {
-        alert("Attendance Marked  failed");
+        toast.error("Attendance Marked  failed");
       }
     } catch (error) {
       alert(error.message);

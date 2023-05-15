@@ -486,3 +486,7 @@ body {
     font-size: 7px;
   }
 }
+.checkbox-success .form-check-input[type="checkbox"]:checked {
+  background-color: #28a745;
+  border-color: #28a745;
+}

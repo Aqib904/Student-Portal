@@ -1,5 +1,6 @@
 import { REQUEST_LOADING,ASSISTANCEREQUESTS,GET_REQUEST_LOADING,ASSISTANCEREQUESTSIMAGES,ACCEPT_REQUEST_LOADING,REJECT_REQUEST_LOADING} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 var financialAssistance = RepositoryFactory.get("financialAssistance")
 export const requestFinancialAssistance =
   (reg_no,description, fileList,history) => async (dispatch) => {
@@ -19,11 +20,11 @@ export const requestFinancialAssistance =
         }
       );
       if (response.ok) {
-        alert("Request send Successfully");
+        toast.success("Request send Successfully");
         dispatch(requestLoading(false));
         history.push("/student/finance");
       } else {
-        alert("Request send failed");
+        toast.error("Request send failed");
       }
     } catch (error) {
       alert(error.message);
@@ -65,7 +66,7 @@ export const requestFinancialAssistance =
       dispatch(acceptRequestLoading(true))
       const { data } = await financialAssistance.requestAccept(id)
       if (data =="success") {
-        alert("You Accepted the student Request");
+        toast.success("You Accepted the student Request");
         history.push("/admin/assistantrequest")
         dispatch(acceptRequestLoading(false))
         
@@ -82,7 +83,7 @@ export const requestFinancialAssistance =
       dispatch(rejectRequestLoading(true))
       const { data } = await financialAssistance.requestReject(id)
       if (data =="success") {
-        alert("You Rejected the student Request");
+        toast.success("You Rejected the student Request");
         history.push("/admin/assistantrequest")
         dispatch(rejectRequestLoading(false))
        

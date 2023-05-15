@@ -1,5 +1,6 @@
 import {FEEDETAIL,FEE_LOADING,CHALLAN,CHALLAN_LOADING,FEESTATUS,FEE_STATUS_LOADING,UPLOAD_CHALLAN_LOADING,STUDENTS,APPROVE_LOADING,REJECT_LOADING } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import { toast } from "react-toastify";
 var fee = RepositoryFactory.get("fee")
 export const getFeeDetail = (regno) => async (dispatch) => {
     try {
@@ -9,7 +10,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
         dispatch(feeLoading(false))
         dispatch({ type: FEEDETAIL, payload: { feeDetail: data } });
       } else {
-        alert("Fee Detail loaded failed");
+        toast.error("Fee Detail loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -28,7 +29,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
         })
         dispatch(challanLoading(false))
       } else {
-        alert("Challan loaded failed");
+        toast.error("Challan loaded failed");
       }
     } catch (error) {
       alert(error.message);
@@ -41,7 +42,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       if (data) {
         window.open(`https://localhost:44374/ChallanFiles/${data}`, '_blank');
       } else {
-        alert("Challan loaded failed");
+        toast.error("Challan loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -56,7 +57,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
         dispatch({ type: FEESTATUS, payload: { feeStatus: data } });
         dispatch(feeStatusLoading(false))
       } else {
-        alert("Fee Status loaded failed");
+        toast.error("Fee Status loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -77,10 +78,10 @@ export const getFeeDetail = (regno) => async (dispatch) => {
         }
       );
       if (response.ok) {
-        alert("Challan Uploaded Successfully");
+        toast.success("Challan Uploaded Successfully");
         dispatch(uploadChallanLoading(false))
       } else {
-        alert("Challan uploaded  failed");
+        toast.error("Challan uploaded  failed");
       }
     } catch (error) {
       alert(error.message);
@@ -104,7 +105,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       dispatch(approveLoading(true))
       const {data} = await fee.approveFeeStatus(challanId)
       if (data=="success") {
-        alert("Status approved successfully")
+        toast.success("Status approved successfully")
         dispatch(approveLoading(false))
       } else {
         throw new Error(data.error);
@@ -118,7 +119,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       dispatch(rejectLoading(true))
       const {data} = await fee.rejectFeeStatus(challanId)
       if (data=="success") {
-        alert("Status reject successfully")
+        toast.success("Status reject successfully")
         dispatch(rejectLoading(false))
       } else {
         throw new Error(data.error);
