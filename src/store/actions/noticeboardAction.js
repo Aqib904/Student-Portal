@@ -1,4 +1,4 @@
-import {SECTIONLIST,SECTION_LIST_LOADING,ADD_NOTICE_LOADING} from "../types";
+import {SECTIONLIST,SECTION_LIST_LOADING,ADD_NOTICE_LOADING,NOTICEBOARD} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 import { toast } from "react-toastify";
 var noticeboard = RepositoryFactory.get("noticeboard");
@@ -11,6 +11,23 @@ export const getSectionList = () => async (dispatch) => {
         dispatch(sectionListLoading(false))
       } else {
         toast.error("Section List loaded failed")
+        dispatch(sectionListLoading(false))
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+      dispatch(sectionListLoading(false))
+    }
+  };
+  export const getNoticeboard = (reg_no) => async (dispatch) => {
+    try {
+        dispatch(sectionListLoading(true))
+      const { data } = await noticeboard.getNoticeboard(reg_no)
+      if (data) {
+        dispatch({ type: NOTICEBOARD, payload: { noticeboard: data } });
+        dispatch(sectionListLoading(false))
+      } else {
+        toast.error("Noticeboard loaded failed")
         dispatch(sectionListLoading(false))
         throw new Error(data.error);
       }

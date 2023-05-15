@@ -46,10 +46,11 @@ export default function Attendance() {
   const toggle = () => setModal(!modal);
   const [confirmModal, setConfirmModal] = useState(false);
   const confirmtoggle = () => setConfirmModal(!confirmModal);
-  const [type, setType] = useState("class");
+  const [type, setType] = useState("all");
   const [modalType, setModalType] = useState("class");
   const [classData, setClassData] = useState([]);
   const [labData, setLabData] = useState([]);
+  const[allData,setAllData] = useState([])
   const [modalClass, setModalClass] = useState([]);
   const [modalLab, setModalLab] = useState([]);
   const toggleContest = ()=>{
@@ -167,6 +168,39 @@ export default function Attendance() {
       width: 100,
     },
   ];
+  const allDataColumns = [
+    { field: "id", headerName: "Id", hide: true, filterable: false },
+    {
+      field: "date",
+      headerName: " Date",
+      width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const dateOnly = dateTimeString.split(",")[0];
+        return dateOnly;
+      },
+    },
+    {
+      field: "time",
+      headerName: " Time",
+      width: 180,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const timeOnly = dateTimeString.split(",")[1];
+        return timeOnly;
+      },
+    },
+   {
+      field: "status",
+      headerName: "Status",
+      width: 100,
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 100,
+    },
+  ];
   const columnsmodal = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
@@ -225,25 +259,40 @@ export default function Attendance() {
     let tempclass = [];
     let templab = [];
     let index = 0;
+    let allData = []; // Create an array to store all data
+  
     rowData?.detail?.map((item) => {
       index++;
-      return item.type == "class"
-        ? tempclass.push({
-            date: item.date,
-            status: item.status,
-            aid: item.aid,
-            id: index,
-          })
-        : templab.push({
-            date: item.date,
-            status: item.status,
-            aid: item.aid,
-            id: index,
-          });
+      if (item.type === "class") {
+        tempclass.push({
+          date: item.date,
+          status: item.status,
+          aid: item.aid,
+          id: index,
+        });
+      } else {
+        templab.push({
+          date: item.date,
+          status: item.status,
+          aid: item.aid,
+          id: index,
+        });
+      }
+  
+      allData.push({ // Push each item to allData array
+        date: item.date,
+        status: item.status,
+        aid: item.aid,
+        id: index,
+        type: item.type,
+      });
     });
+  
     setClassData(tempclass);
     setLabData(templab);
+    setAllData(allData); // Set the allData state variable
   }, [rowData.detail]);
+  
   console.log(absentslist,'absentsList')
   useEffect(() => {
     let tempclass = [];
@@ -302,6 +351,11 @@ export default function Attendance() {
                 value={type}
                 onChange={handleTypeChange}
               >
+                 <FormControlLabel
+                  value="all"
+                  control={<Radio color="success" />}
+                  label="All"
+                />
                 <FormControlLabel
                   value="class"
                   control={<Radio color="success" />}
@@ -368,8 +422,8 @@ export default function Attendance() {
                 <StripedDataGrid
                   autoHeight
                   autoWidth
-                  columns={columns}
-                  rows={type == "class" ? classData : labData}
+                  columns={type=="all"?allDataColumns:columns}
+                  rows={type == "class" ? classData :type=="all"?allData: labData}
                   disableSelectionOnClick={false}
                   getRowClassName={(params) =>
                     params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"

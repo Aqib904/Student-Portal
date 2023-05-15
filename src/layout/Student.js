@@ -96,6 +96,15 @@ const Student = (props) => {
           &nbsp;Fine Details
         </h4>
       );
+    } else if (history.location.pathname == "/student/viewnoticeboard") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          <Link className="text-dark" to="/student/dashboard">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+          </Link>
+          &nbsp;Noticeboard
+        </h4>
+      );
     } else if (history.location.pathname == "/student/dashboard") {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">

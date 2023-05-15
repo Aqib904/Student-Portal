@@ -1,8 +1,9 @@
-import { SECTIONLIST,SECTION_LIST_LOADING,ADD_NOTICE_LOADING} from "../types";
+import { SECTIONLIST,SECTION_LIST_LOADING,ADD_NOTICE_LOADING,NOTICEBOARD} from "../types";
 const initialState = {
    sectionList:[],
    loading:false,
    addloading:false,
+   noticeboard:[],
 };
 const noticeboardReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -20,6 +21,12 @@ const noticeboardReducer = (state = initialState, action) => {
       return {
         ...state,
         addloading: action.payload,
+      };
+      //
+      case NOTICEBOARD:
+      return {
+        ...state,
+        noticeboard: action.payload.noticeboard,
       };
     default:
       return state;

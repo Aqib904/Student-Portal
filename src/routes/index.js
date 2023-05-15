@@ -39,6 +39,7 @@ import FineList from "../views/Admin Views/FineList";
 import FineDetails from "../views/Admin Views/FineDetails";
 import AddFine from "../views/Admin Views/AddFine";
 import UploadFine from "../views/Student Views/UploadFine";
+import ViewNoticeBoard from "../views/Student Views/ViewNoticeBoard";
 let routes = [
   {
     path: "/auth_login",
@@ -188,6 +189,14 @@ let routes = [
     layout: "student",
     icon:"fas fa-users ",
     name: "Attendance",
+    role: "student",
+  },
+  {
+    path: "/student/viewnoticeboard",
+    component: ViewNoticeBoard,
+    layout: "student",
+    icon:"fas fa-envelope ",
+    name: "Noticeboard",
     role: "student",
   },
   // {

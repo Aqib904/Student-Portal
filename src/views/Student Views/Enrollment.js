@@ -25,6 +25,7 @@ export default function Enrollment() {
   const [passed, setPassed] = useState([]);
   const [failed, setFailed] = useState([]);
   const [passCheck, setPassCheck] = useState(true);
+  const [totalCrHour,setTotalCrHour] = useState("")
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -236,7 +237,9 @@ export default function Enrollment() {
   ];
   useEffect(() => {
     let tempdata = [];
+    let totalCrHour = 0;
     enrollmentCourses?.enrollmentCourses?.map((item) => {
+      totalCrHour += item.credit_hours;
       return tempdata.push({
         id: item.id,
         course_name: item.course_name,
@@ -248,6 +251,7 @@ export default function Enrollment() {
       });
     });
     setPassed(tempdata);
+    setTotalCrHour(totalCrHour);
   }, [enrollmentCourses]);
   useEffect(() => {
     let tempdata = [];
@@ -282,6 +286,11 @@ export default function Enrollment() {
         Enrollment
       </h4>
       <Container>
+        <Row>
+          <Col className="mt-4">
+          <h6 className="d-inline-block">Total Enroll credit hours:</h6>&nbsp;<span>{totalCrHour}</span>
+          </Col>
+        </Row>
         <Row>
           <Col>
             <Card className="shadow my-3 w-100 z-index-n1">
