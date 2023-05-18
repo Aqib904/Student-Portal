@@ -22,10 +22,12 @@ export default function Enrollment() {
   const history = useHistory();
   const { token,status } = useSelector((state) => state.authUser);
   const { enrollmentCourses } = useSelector((state) => state.enrollment);
+  console.log(enrollmentCourses ,'enrollmentCourses ')
   const [passed, setPassed] = useState([]);
   const [failed, setFailed] = useState([]);
   const [passCheck, setPassCheck] = useState(true);
-  const [totalCrHour,setTotalCrHour] = useState("")
+  const [totalCrHour,setTotalCrHour] = useState({id:"",crHour:""})
+  console.log(totalCrHour,'totalCrHour')
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -70,6 +72,7 @@ export default function Enrollment() {
   const [checkboxValues, setCheckboxValues] = useState({});
   const [final, setFinal] = useState([]);
   const [selectedSection, setSelectedSection] = useState([]);
+  console.log(selectedSection,'selectedSection')
   const [submit,setSubmit] = useState([])
   const handleSubmit = () => {
     const submitData = passed.map((item) => {
@@ -87,7 +90,6 @@ export default function Enrollment() {
         section: section.section,
       }
     }));
-  
     setSubmit(submitData);
     dispatch(AddEnrollment(submitData,history))
   };
@@ -113,6 +115,7 @@ export default function Enrollment() {
               section: matchedSection.sectionName,
               discipline:"BS"+ matchedSection.program+matchedSection.semester+ matchedSection.sectionName,
               courseCode:courseId,
+              credit_hours:matchedSection.credit_hours
             },
           ]);
         } else {
@@ -122,6 +125,7 @@ export default function Enrollment() {
             id: matchedSection.sectionId,
             section: matchedSection.sectionName,
             discipline:"BS"+ matchedSection.program+matchedSection.semester+ matchedSection.sectionName,
+            credit_hours:matchedSection.credit_hours,
             courseCode:courseId,
           };
           setSelectedSection(updatedSelectedSection);
@@ -130,7 +134,7 @@ export default function Enrollment() {
     }
   };
   const handleCheckboxChange = (event, courseCode) => {
-    event.preventDefault()
+    event.preventDefault();
     const newCheckboxValues = { ...checkboxValues };
     newCheckboxValues[courseCode] = event.target.checked;
     setCheckboxValues(newCheckboxValues);
@@ -143,22 +147,61 @@ export default function Enrollment() {
         sectionName: section.section,
         semester: section.semester,
         program: section.program,
-        discipline: "BS"+section.program + section.semester + section.section,
+        credit_hours:matchedCourse.credit_hours,
+        discipline: "BS" + section.program + section.semester + section.section,
       }));
+      // Remove duplicates from the sections array
+      const uniqueSections = Array.from(new Set(sections.map((section) => JSON.stringify(section))))
+        .map((sectionString) => JSON.parse(sectionString));
+  
       const finalData = {
         courseCode,
-        sections,
+        sections: uniqueSections,
       };
+  
       setFinal((prevFinal) => {
         if (event.target.checked) {
           return [...prevFinal, finalData];
         } else {
-          setSelectedSection(selectedSection.filter(section => section.courseCode !== courseCode));
+          setSelectedSection(selectedSection.filter((section) => section.courseCode !== courseCode));
           return prevFinal.filter((data) => data.courseCode !== courseCode);
         }
       });
     }
   };
+  // const handleCheckboxChange = (event, courseCode) => {
+  //   event.preventDefault()
+  //   const newCheckboxValues = { ...checkboxValues };
+  //   newCheckboxValues[courseCode] = event.target.checked;
+  //   setCheckboxValues(newCheckboxValues);
+  //   const matchedCourse = enrollmentCourses.failedCourses1.find(
+  //     (course) => course.course_code === courseCode
+  //   );
+  //   if (matchedCourse) {
+  //     const sections = matchedCourse.sections.map((section) => ({
+  //       sectionId: section.id,
+  //       sectionName: section.section,
+  //       semester: section.semester,
+  //       program: section.program,
+  //       discipline: "BS"+section.program + section.semester + section.section,
+  //     }));
+  //         let uniqueProgram = [
+  //     ...new Map(sections.map((m) => [m.course_code, m])).values(),
+  //   ];
+  //     const finalData = {
+  //       courseCode,
+  //       sections,
+  //     };
+  //     setFinal((prevFinal) => {
+  //       if (event.target.checked) {
+  //         return [...prevFinal, finalData];
+  //       } else {
+  //         setSelectedSection(selectedSection.filter(section => section.courseCode !== courseCode));
+  //         return prevFinal.filter((data) => data.courseCode !== courseCode);
+  //       }
+  //     });
+  //   }
+  // };
   const failcolumns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
@@ -240,6 +283,7 @@ export default function Enrollment() {
     let totalCrHour = 0;
     enrollmentCourses?.enrollmentCourses?.map((item) => {
       totalCrHour += item.credit_hours;
+      setTotalCrHour({id:"",crHour:totalCrHour});
       return tempdata.push({
         id: item.id,
         course_name: item.course_name,
@@ -249,9 +293,9 @@ export default function Enrollment() {
         program: item.program,
         section: item.section,
       });
-    });
+    }
+    );
     setPassed(tempdata);
-    setTotalCrHour(totalCrHour);
   }, [enrollmentCourses]);
   useEffect(() => {
     let tempdata = [];
@@ -280,6 +324,19 @@ export default function Enrollment() {
       history.push("/student/dashboard")
     }
   },[status])
+  useEffect(() => {
+    let newTotalCrHour = totalCrHour.crHour;
+    
+    selectedSection.forEach(section => {
+      newTotalCrHour += section.credit_hours;
+    });
+    
+    setTotalCrHour(prevTotalCrHour => ({
+      ...prevTotalCrHour,
+      crHour: newTotalCrHour
+    }));
+  }, [selectedSection]);
+  
   return (
     <>
       <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
@@ -288,7 +345,7 @@ export default function Enrollment() {
       <Container>
         <Row>
           <Col className="mt-4">
-          <h6 className="d-inline-block">Total Enroll credit hours:</h6>&nbsp;<span>{totalCrHour}</span>
+          <h6 className="d-inline-block">Total Enroll credit hours:</h6>&nbsp;<span>{totalCrHour.crHour}</span>
           </Col>
         </Row>
         <Row>
