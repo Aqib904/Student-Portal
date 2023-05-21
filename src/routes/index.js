@@ -40,6 +40,7 @@ import FineDetails from "../views/Admin Views/FineDetails";
 import AddFine from "../views/Admin Views/AddFine";
 import UploadFine from "../views/Student Views/UploadFine";
 import ViewNoticeBoard from "../views/Student Views/ViewNoticeBoard";
+import CourseAdvisor from "../views/Admin Views/CourseAdvisor";
 let routes = [
   {
     path: "/auth_login",
@@ -293,6 +294,14 @@ let routes = [
     layout: "admin",
     icon:"fas fa-book-medical ",
     name: "Course Allocation",
+    role: "admin",
+  },
+  {
+    path: "/admin/course-advisor",
+    component: CourseAdvisor,
+    layout: "admin",
+    icon:"fas fa-book-medical ",
+    name: "Course Advisor",
     role: "admin",
   },
   {

@@ -53,6 +53,7 @@ export default function Datesheet() {
   useEffect(() => {
     let datesheetsData = [];
     let index = 0;
+  
     datesheet.dateSheet?.map((item) => {
       index++;
       return datesheetsData.push({
@@ -63,8 +64,18 @@ export default function Datesheet() {
         time: item.time,
       });
     });
+  
+    // Sort the datesheetsData array in descending order based on the 'date' property
+    datesheetsData.sort((a, b) => {
+      const dateA = new Date(a.date.split('-').reverse().join('-'));
+      const dateB = new Date(b.date.split('-').reverse().join('-'));
+      return dateA - dateB;
+    });
+  
     setDatesheetData(datesheetsData);
   }, [datesheet]);
+  console.log(datesheet,'datesheet')
+  
   useEffect(()=>{
     if(status==false){
       history.push("/student/enrollment")

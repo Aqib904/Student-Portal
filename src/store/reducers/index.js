@@ -1,5 +1,4 @@
 // Root Reducer
-
 import { combineReducers } from "redux";
 import authUserReducer from "./authUser";
 import authReducer from "./authReducer";
@@ -14,6 +13,7 @@ import feeReducer from "./feeReducer";
 import financialAssistanceReducer from "./financialAssistanceReducer"
 import fineReducer from "./fineReducer"
 import noticeboardReducer from "./noticeboardReducer";
+import courseAdvisorReducer from "./courseAdvisorReducer"
 export let rootReducer = combineReducers({
   authUser: authUserReducer,
   userAuth:authReducer,
@@ -28,5 +28,6 @@ export let rootReducer = combineReducers({
   financial:financialAssistanceReducer,
   fine:fineReducer,
   noticeboard:noticeboardReducer,
+  courseAdvisor:courseAdvisorReducer,
 });
 export default rootReducer;

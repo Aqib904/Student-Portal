@@ -80,7 +80,7 @@ function Timetable() {
     if (todayObject) {
       // If today's object exists, add it at the beginning of the weeklyTime array
       const detailArray = [];
-      todayObject.detail.forEach((detailObj) => {
+      todayObject?.detail.forEach((detailObj) => {
         let indexval = indexMap.get(
           detailObj.course +
           detailObj.teacher +
@@ -90,7 +90,7 @@ function Timetable() {
         if (!indexval) {
           index++;
           indexval = index;
-          indexMap.set(
+          indexMap?.set(
             detailObj.course +
             detailObj.teacher +
             detailObj.time +
@@ -98,7 +98,7 @@ function Timetable() {
             indexval
           );
         }
-        detailArray.push({
+        detailArray?.push({
           indexval: index,
           course: detailObj.course,
           teacher: detailObj.teacher,
@@ -114,9 +114,9 @@ function Timetable() {
     
     // Sort remaining objects in weeklyTime based on weekly days order
     const remainingDays = timetable?.filter((day) => day.day !== getCurrentDay());
-    remainingDays.sort((a, b) => getDayOrder(a.day) - getDayOrder(b.day));
+    remainingDays?.sort((a, b) => getDayOrder(a.day) - getDayOrder(b.day));
     
-    remainingDays.forEach((day) => {
+    remainingDays?.forEach((day) => {
       let detailArray = [];
       day.detail.forEach((detailObj) => {
         let indexval = indexMap.get(

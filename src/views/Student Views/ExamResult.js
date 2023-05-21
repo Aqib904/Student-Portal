@@ -26,11 +26,11 @@ export default function ExamResult() {
   const [rows, setRows] = useState([]);
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
-    {
-      field: "courseName",
-      headerName: " Course Name",
-      width: 240,
-    },
+    // {
+    //   field: "courseName",
+    //   headerName: " Course Name",
+    //   width: 240,
+    // },
     {
       field: "totalMarks",
       headerName: "Total Marks",
@@ -41,25 +41,31 @@ export default function ExamResult() {
       headerName: "Obtained Marks",
       width: 170,
     },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 170,
+    },
   ];
   useEffect(() => {
     let tempdata = [];
     let index = 0;
-    if (select && selectCourse && type) {
+    if (select && selectCourse) {
       exam.map((item) => {
-        if (selectCourse == item.courseName && type == item.type) {
+        if (selectCourse == item.courseName ) {
           index++;
           return tempdata.push({
             id: index,
             courseName: item.courseName,
             totalMarks: item.total_marks,
             obtainedMarks: item.obtained_marks,
+            type:item.type
           });
         }
       });
     }
     setRows(tempdata);
-  }, [select, selectCourse, type]);
+  }, [select, selectCourse]);
   useEffect(() => {
     dispatch(getSession(token?.username));
   }, []);
@@ -131,7 +137,7 @@ export default function ExamResult() {
               })}
             </Select>
           </FormControl>
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          {/* <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <InputLabel id="demo-select-small">Type</InputLabel>
             <Select
               labelId="demo-select-small"
@@ -153,13 +159,13 @@ export default function ExamResult() {
                 Final
               </MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
         </Col>
       </Row>
       <Row>
         <Col sm={12} md={12}>
           <Card className="shadow my-3 w-100 z-index-n1">
-            <CardHeader>Marks of {type}</CardHeader>
+            {/* <CardHeader>Marks of {type}</CardHeader> */}
             <LoadingOverlay
               active={loading}
               spinner

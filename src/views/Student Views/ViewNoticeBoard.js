@@ -38,7 +38,7 @@ export default function ViewNoticeBoard() {
                     value={item.description}
                     type="textarea"
                     disabled={true}
-                    rows={Math.ceil(item?.description.length / 50)}
+                    rows={Math.ceil(item?.description.length / 30)}
                   ></Input>
                 </CardBody>
               </Card>

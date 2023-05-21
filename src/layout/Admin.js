@@ -46,6 +46,12 @@ const Teacher = (props) => {
           Course Allocation
         </h4>
       );
+    }else if (history.location.pathname == "/admin/course-advisor") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Course Advisor
+        </h4>
+      );
     } else if (history.location.pathname == "/admin/finelist") {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">
