@@ -69,6 +69,11 @@ function Timetable() {
     };
     return order[day];
   };
+
+  function convertTimeToMinutes(time) {
+    const [hours, minutes] = time.split(':');
+    return parseInt(hours) * 60 + parseInt(minutes);
+  }
   useEffect(() => {
     let tempdata = [];
     let index = 0;
@@ -144,15 +149,36 @@ function Timetable() {
           venue: detailObj.venue,
         });
       });
+      detailArray.sort((a, b) => {
+        const timeA = a.time.split('-')[0].trim(); // Assuming time is in the format "08:30am"
+        const timeB = b.time.split('-')[0].trim();
+    
+        const [hoursA, minutesA, periodA] = timeA.split(/:|(?=[ap]m)/i);
+        const [hoursB, minutesB, periodB] = timeB.split(/:|(?=[ap]m)/i);
+    
+        if (periodA.toLowerCase() === 'pm' && periodB.toLowerCase() === 'am') {
+          return 1; // Sort 'pm' after 'am'
+        } else if (periodA.toLowerCase() === 'am' && periodB.toLowerCase() === 'pm') {
+          return -1; // Sort 'am' before 'pm'
+        } else if (hoursA === '12' && hoursB !== '12') {
+          return 1; // Sort '12:00am' after '12:00pm'
+        } else if (hoursA !== '12' && hoursB === '12') {
+          return -1; // Sort '12:00pm' before '12:00am'
+        } else {
+          const timeValueA = parseInt(hoursA) * 60 + parseInt(minutesA);
+          const timeValueB = parseInt(hoursB) * 60 + parseInt(minutesB);
+          return timeValueA - timeValueB;
+        }
+      });
       tempdata.push({
         day: day.day,
         detail: detailArray,
       });
     });
-  
+    console.log(tempdata,'tempdata')
     setWeeklyTime(tempdata);
   }, [timetable]);
-  
+  console.log(timetable,'timetable')
   // useEffect(() => {
   //   let tempdata = [];
   //   let index = 0;
@@ -216,8 +242,8 @@ function Timetable() {
                   <tr>
                     <th>Course</th>
                     <th>Time</th>
-                    <th>Venue</th>
                     <th>Teacher</th>
+                    <th>Venue</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -225,10 +251,10 @@ function Timetable() {
                     <tr key={details.indexval}>
                       <td>{details.course}</td>
                       <td>{details.time}</td>
-                      <td>{details.venue}</td>
                       <td id={`teacher_${details.indexval}`}>
                         {details.teacher.substr(0, 8)}..
                       </td>
+                      <td>{details.venue}</td>
                       <UncontrolledTooltip
                         placement="below"
                         target={`#teacher_${details.indexval}`}

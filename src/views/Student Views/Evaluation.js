@@ -79,7 +79,7 @@ export default function Assessment() {
     <Container>
       <Row>
         <Col >
-          <Card className="my-2 ">
+          <Card className="my-2 shadow">
             <LoadingOverlay active={loading} spinner text="Teachers Data Loading...."> 
             <StripedDataGrid
               autoHeight

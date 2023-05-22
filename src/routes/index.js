@@ -41,6 +41,9 @@ import AddFine from "../views/Admin Views/AddFine";
 import UploadFine from "../views/Student Views/UploadFine";
 import ViewNoticeBoard from "../views/Student Views/ViewNoticeBoard";
 import CourseAdvisor from "../views/Admin Views/CourseAdvisor";
+import AdviseStudent from "../views/Teacher Views/AdviseStudent";
+import ManageAdviseStudents from "../views/Teacher Views/ManageAdviseStudents";
+import ManageAdvises from "../views/Teacher Views/ManageAdvises";
 let routes = [
   {
     path: "/auth_login",
@@ -319,6 +322,30 @@ let routes = [
     icon:"fas fa-star-half-alt ",
     name: "Manage Student Fee",
     role: "admin",
+  },
+  {
+    path: "/teacher/advise-student",
+    component: AdviseStudent,
+    layout: "teacher",
+    name: "Advise Student",
+    icon:"fas fa-user-tie ",
+    role: "teacher",
+  },
+  {
+    path: "/teacher/manage_advise_students/:id",
+    component: ManageAdviseStudents,
+    layout: "teacher",
+    name: "Manage Advise Student",
+    icon:"fas fa-user-tie ",
+    role: "teacher",
+  },
+  {
+    path: "/teacher/manage_advises/:id",
+    component: ManageAdvises,
+    layout: "teacher",
+    name: "Manage Advises",
+    icon:"fas fa-user-tie ",
+    role: "teacher",
   },
   {
     path: "/teacher/setting",

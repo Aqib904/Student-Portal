@@ -18,6 +18,10 @@ const Teacher = (props) => {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">Manage Evaluation</h4>
       );
+    }  else if (history.location.pathname == "/teacher/advise-student") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">Advise Student</h4>
+      );
     } else if (history.location.pathname == "/teacher/dashboard"){
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">

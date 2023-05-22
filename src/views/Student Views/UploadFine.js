@@ -63,7 +63,7 @@ export default function UploadFine() {
       <Row>
         {studentFine.length == 0 ? (
           <Col lg={12} >
-            <Card>
+            <Card className="shadow">
               <CardHeader>Fine Details</CardHeader>
               <CardBody>
                 <div className=" d-flex justify-content-center align-items-center">

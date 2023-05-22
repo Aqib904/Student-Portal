@@ -251,7 +251,6 @@ export default function Enrollment() {
       renderCell: (params) => {
         const courseCode = params.row.course_code;
         const sections = final.find((data) => data.courseCode === courseCode)?.sections || [];
-    
         return (
           <>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">

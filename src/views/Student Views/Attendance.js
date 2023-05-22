@@ -36,7 +36,7 @@ export default function Attendance() {
   const dispatch = useDispatch();
   const location = useLocation();
   const rowData = location.state;
-  console.log(rowData,'rowData')
+  console.log(rowData, "rowData");
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -50,13 +50,13 @@ export default function Attendance() {
   const [modalType, setModalType] = useState("class");
   const [classData, setClassData] = useState([]);
   const [labData, setLabData] = useState([]);
-  const[allData,setAllData] = useState([])
+  const [allData, setAllData] = useState([]);
   const [modalClass, setModalClass] = useState([]);
   const [modalLab, setModalLab] = useState([]);
-  const toggleContest = ()=>{
-    toggle()
-    dispatch(getAbsentsList(rowData?.enrollmentId))
-  }
+  const toggleContest = () => {
+    toggle();
+    dispatch(getAbsentsList(rowData?.enrollmentId));
+  };
   const handleTypeChange = (event) => {
     setType(event.target.value);
   };
@@ -64,32 +64,39 @@ export default function Attendance() {
     setModalType(event.target.value);
   };
   const [contestData, setContestData] = useState([]);
-  const handleSubmitContest = () => {
-    dispatch(markContest(contestData));
+  const handleSubmitContest = async() => {
+    await dispatch(markContest(contestData));
+    dispatch(getAbsentsList(rowData?.enrollmentId));
     toggle();
     confirmtoggle();
     setContestData([]);
   };
-  const handleCheckboxClick = (row) => {
+  const handleAddContest = (row) => {
     const { attendance_id, enrollment_id, course_code } = row;
-    const index = contestData.findIndex(
-      (item) =>
-        item.attendance_id === attendance_id &&
-        item.enrollment_id === enrollment_id &&
-        item.course_code === course_code
-    );
-    if (index > -1) {
-      setContestData([
-        ...contestData.slice(0, index),
-        ...contestData.slice(index + 1),
-      ]);
-    } else {
-      setContestData([
-        ...contestData,
-        { attendance_id, enrollment_id, course_code },
-      ]);
-    }
+    setContestData([{ attendance_id, enrollment_id, course_code }]);
+    confirmtoggle();
   };
+  // const handleCheckboxClick = (row) => {
+  //   const { attendance_id, enrollment_id, course_code } = row;
+  //   const index = contestData.findIndex(
+  //     (item) =>
+  //       item.attendance_id === attendance_id &&
+  //       item.enrollment_id === enrollment_id &&
+  //       item.course_code === course_code
+  //   );
+  //   if (index > -1) {
+  //     setContestData([
+  //       ...contestData.slice(0, index),
+  //       ...contestData.slice(index + 1),
+  //     ]);
+  //   } else {
+  //     setContestData([
+  //       ...contestData,
+  //       { attendance_id, enrollment_id, course_code },
+  //     ]);
+  //   }
+  // };
+  console.log(contestData, "contestData");
   const myoption = {
     labels: ["Percentage"],
     chart: {
@@ -145,7 +152,7 @@ export default function Attendance() {
     {
       field: "date",
       headerName: " Date",
-      width: 180,
+      width: 130,
       renderCell: (params) => {
         const dateTimeString = params.row.date;
         const dateOnly = dateTimeString.split(",")[0];
@@ -154,69 +161,8 @@ export default function Attendance() {
     },
     {
       field: "time",
-      headerName: " Time",
-      width: 180,
-      renderCell: (params) => {
-        const dateTimeString = params.row.date;
-        const timeOnly = dateTimeString.split(",")[1];
-        return timeOnly;
-      },
-    },
-   {
-      field: "status",
-      headerName: "Status",
-      width: 100,
-    },
-  ];
-  const allDataColumns = [
-    { field: "id", headerName: "Id", hide: true, filterable: false },
-    {
-      field: "date",
-      headerName: " Date",
-      width: 180,
-      renderCell: (params) => {
-        const dateTimeString = params.row.date;
-        const dateOnly = dateTimeString.split(",")[0];
-        return dateOnly;
-      },
-    },
-    {
-      field: "time",
-      headerName: " Time",
-      width: 180,
-      renderCell: (params) => {
-        const dateTimeString = params.row.date;
-        const timeOnly = dateTimeString.split(",")[1];
-        return timeOnly;
-      },
-    },
-   {
-      field: "status",
-      headerName: "Status",
-      width: 100,
-    },
-    {
-      field: "type",
-      headerName: "Type",
-      width: 100,
-    },
-  ];
-  const columnsmodal = [
-    { field: "id", headerName: "Id", hide: true, filterable: false },
-    {
-      field: "date",
-      headerName: " Date",
-      width: 180,
-      renderCell: (params) => {
-        const dateTimeString = params.row.date;
-        const dateOnly = dateTimeString.split(",")[0];
-        return dateOnly;
-      },
-    },
-    {
-      field: "time",
-      headerName: " Time",
-      width: 180,
+      headerName: "Mark Time",
+      width: 130,
       renderCell: (params) => {
         const dateTimeString = params.row.date;
         const timeOnly = dateTimeString.split(",")[1];
@@ -234,102 +180,228 @@ export default function Attendance() {
       headerName: "Actions",
       width: 100,
       renderCell: (params) => {
-        const { attendance_id, enrollment_id, course_code } = params.row;
-        const isSelected = contestData.some(
-          (item) =>
-            item.attendance_id === attendance_id &&
-            item.enrollment_id === enrollment_id &&
-            item.course_code === course_code
-        );
-        return (
-          <FormGroup check>
-            <Input
-              type="checkbox"
-              className="my-n2"
-              checked={isSelected}
-              required
-              onChange={() => handleCheckboxClick(params.row)}
-            />
-          </FormGroup>
-        );
+        const { attendance_id, status } = params.row;
+        const matchingItem = absentslist.find((item) => item.id === attendance_id);
+
+        if (status === "A" && matchingItem) {
+          return (
+            <Button
+              className="bg-site-primary"
+              onClick={() => handleAddContest(params.row)}
+            >
+              <i className="fas fa-share"></i>
+            </Button>
+          );
+        } else if (status === "A") {
+          return (
+            <Button className="bg-danger">
+              <i class="fas fa-window-close"></i>
+            </Button>
+          );
+        } else {
+          return null; // Return null if status is not "A"
+        }
       },
     },
   ];
+  const allDataColumns = [
+    { field: "id", headerName: "Id", hide: true, filterable: false },
+    {
+      field: "date",
+      headerName: " Date",
+      width: 130,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const dateOnly = dateTimeString.split(",")[0];
+        return dateOnly;
+      },
+    },
+    {
+      field: "time",
+      headerName: "Mark Time",
+      width: 130,
+      renderCell: (params) => {
+        const dateTimeString = params.row.date;
+        const timeOnly = dateTimeString.split(",")[1];
+        return timeOnly;
+      },
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 70,
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 100,
+    },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      width: 100,
+      renderCell: (params) => {
+        const { attendance_id, status } = params.row;
+        const matchingItem = absentslist.find((item) => item.id === attendance_id);
+
+        if (status === "A" && matchingItem) {
+          return (
+            <Button
+              className="bg-site-primary"
+              onClick={() => handleAddContest(params.row)}
+            >
+              <i className="fas fa-share"></i>
+            </Button>
+          );
+        } else if (status === "A") {
+          return (
+            <Button className="bg-danger">
+              <i class="fas fa-window-close"></i>
+            </Button>
+          );
+        } else {
+          return null; // Return null if status is not "A"
+        }
+      },
+    },
+  ];
+  // const columnsmodal = [
+  //   { field: "id", headerName: "Id", hide: true, filterable: false },
+  //   {
+  //     field: "date",
+  //     headerName: " Date",
+  //     width: 180,
+  //     renderCell: (params) => {
+  //       const dateTimeString = params.row.date;
+  //       const dateOnly = dateTimeString.split(",")[0];
+  //       return dateOnly;
+  //     },
+  //   },
+  //   {
+  //     field: "time",
+  //     headerName: "Mark Time",
+  //     width: 180,
+  //     renderCell: (params) => {
+  //       const dateTimeString = params.row.date;
+  //       const timeOnly = dateTimeString.split(",")[1];
+  //       return timeOnly;
+  //     },
+  //   },
+  //   {
+  //     field: "status",
+  //     headerName: "Status",
+  //     width: 100,
+  //   },
+  //   {
+  //     field: "actions",
+  //     type: "actions",
+  //     headerName: "Actions",
+  //     width: 100,
+  //     renderCell: (params) => {
+  //       const { attendance_id, enrollment_id, course_code } = params.row;
+  //       const isSelected = contestData.some(
+  //         (item) =>
+  //           item.attendance_id === attendance_id &&
+  //           item.enrollment_id === enrollment_id &&
+  //           item.course_code === course_code
+  //       );
+  //       return (
+  //         <FormGroup check>
+  //           <Input
+  //             type="checkbox"
+  //             className="my-n2"
+  //             checked={isSelected}
+  //             required
+  //             onChange={() => handleCheckboxClick(params.row)}
+  //           />
+  //         </FormGroup>
+  //       );
+  //     },
+  //   },
+  // ];
   useEffect(() => {
     let tempclass = [];
     let templab = [];
     let index = 0;
     let allData = []; // Create an array to store all data
-  
+
     rowData?.detail?.map((item) => {
       index++;
       if (item.type === "class") {
         tempclass.push({
           date: item.date,
           status: item.status,
-          aid: item.aid,
+          attendance_id: item.aid,
+          enrollment_id: rowData.enrollmentId,
+          course_code: rowData.courseCode,
           id: index,
         });
       } else {
         templab.push({
           date: item.date,
           status: item.status,
-          aid: item.aid,
+          attendance_id: item.aid,
+          enrollment_id: rowData.enrollmentId,
+          course_code: rowData.courseCode,
           id: index,
         });
       }
-  
-      allData.push({ // Push each item to allData array
+
+      allData.push({
+        // Push each item to allData array
         date: item.date,
         status: item.status,
-        aid: item.aid,
+        attendance_id: item.aid,
+        enrollment_id: rowData.enrollmentId,
+        course_code: rowData.courseCode,
         id: index,
         type: item.type,
       });
     });
-  
+
     setClassData(tempclass);
     setLabData(templab);
     setAllData(allData); // Set the allData state variable
   }, [rowData.detail]);
-  
-  console.log(absentslist,'absentsList')
+
+  console.log(absentslist, "absentsList");
+  // useEffect(() => {
+  //   let tempclass = [];
+  //   let templab = [];
+  //   let index = 0;
+  //   absentslist?.map((item) => {
+  //     index++;
+  //     return item.type === "class" && item.status === "A"
+  //       ? tempclass.push({
+  //           date: item.dateTime,
+  //           status: item.status,
+  //           attendance_id: item.id,
+  //           enrollment_id: rowData.enrollmentId,
+  //           course_code: rowData.courseCode,
+  //           id: index,
+  //         })
+  //       : item.type === "lab" && item.status === "A"
+  //       ? templab.push({
+  //           date: item.dateTime,
+  //           status: item.status,
+  //           attendance_id: item.id,
+  //           enrollment_id: rowData.enrollmentId,
+  //           course_code: rowData.courseCode,
+  //           id: index,
+  //         })
+  //       : "";
+  //   });
+  //   setModalClass(tempclass);
+  //   setModalLab(templab);
+  // }, [absentslist]);
   useEffect(() => {
-    let tempclass = [];
-    let templab = [];
-    let index = 0;
-    absentslist?.map((item) => {
-      index++;
-      return item.type === "class" && item.status === "A"
-        ? tempclass.push({
-            date: item.dateTime,
-            status: item.status,
-            attendance_id: item.id,
-            enrollment_id: rowData.enrollmentId,
-            course_code: rowData.courseCode,
-            id: index,
-          })
-        : item.type === "lab" && item.status === "A"
-        ? templab.push({
-            date: item.dateTime,
-            status: item.status,
-            attendance_id: item.id,
-            enrollment_id: rowData.enrollmentId,
-            course_code: rowData.courseCode,
-            id: index,
-          })
-        : "";
-    });
-    setModalClass(tempclass);
-    setModalLab(templab);
-  }, [absentslist]);
-  // useEffect(()=>{
-  //   dispatch(getAbsentsList(rowData?.enrollmentId))
-  // },[rowData?.enrollmentId])
+    dispatch(getAbsentsList(rowData?.enrollmentId));
+  }, [rowData]);
   return (
     <>
       <h4 className="d-block d-md-block m-0 font-weight-bold mx-2">
-      <Link className="text-dark" to="/student/dashboard">
+        <Link className="text-dark" to="/student/dashboard">
           <i class="fas fa-arrow-alt-circle-left"></i>
         </Link>
         &nbsp;Attendance
@@ -351,7 +423,7 @@ export default function Attendance() {
                 value={type}
                 onChange={handleTypeChange}
               >
-                 <FormControlLabel
+                <FormControlLabel
                   value="all"
                   control={<Radio color="success" />}
                   label="All"
@@ -388,7 +460,6 @@ export default function Attendance() {
                 style={{
                   height: "30px",
                   width: "90px",
-                  
                 }}
                 className="bg-site-primary position-absolute my-5 mx-n4 d-inline-block text-light rounded-pill text-center"
               >
@@ -410,20 +481,26 @@ export default function Attendance() {
             <Card className="shadow">
               <CardHeader>
                 <h5 className="d-inline-block">Attendance</h5>
-                <Button
+                {/* <Button
                   variant="contained"
                   className="bg-site-primary float-right d-inline-block"
                   onClick={toggleContest}
                 >
                   Contest
-                </Button>
+                </Button> */}
               </CardHeader>
               <CardBody>
                 <StripedDataGrid
                   autoHeight
                   autoWidth
-                  columns={type=="all"?allDataColumns:columns}
-                  rows={type == "class" ? classData :type=="all"?allData: labData}
+                  columns={type == "all" ? allDataColumns : columns}
+                  rows={
+                    type == "class"
+                      ? classData
+                      : type == "all"
+                      ? allData
+                      : labData
+                  }
                   disableSelectionOnClick={false}
                   getRowClassName={(params) =>
                     params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
@@ -434,7 +511,7 @@ export default function Attendance() {
             </Card>
           </Col>
         </Row>
-        <Modal isOpen={modal} toggle={toggle}>
+        {/* <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Contest Box</ModalHeader>
           <ModalBody>
             <FormControl>
@@ -484,7 +561,7 @@ export default function Attendance() {
               Submit
             </Button>
           </ModalFooter>
-        </Modal>
+        </Modal> */}
         <Modal isOpen={confirmModal} toggle={confirmtoggle}>
           <ModalHeader toggle={confirmtoggle}>Confirmation Box</ModalHeader>
           <ModalBody>
@@ -497,7 +574,7 @@ export default function Attendance() {
                 onClick={handleSubmitContest}
                 disabled={loading}
               >
-                 {loading ? <Spinner size="sm" /> : "Yes"}
+                {loading ? <Spinner size="sm" /> : "Yes"}
               </Button>
               <Button className="bg-danger w-25" onClick={confirmtoggle}>
                 No

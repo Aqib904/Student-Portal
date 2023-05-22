@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNoticeboard } from "../../store/actions/noticeboardAction";
+import emptyFolder from "../../assets/img/emptyFolder.jpg";
 import {
   Card,
   CardBody,
@@ -11,6 +12,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import { Image } from "react-bootstrap";
 
 export default function ViewNoticeBoard() {
   const dispatch = useDispatch();
@@ -23,10 +25,30 @@ export default function ViewNoticeBoard() {
   return (
     <Container fluid>
       <Row>
+      {noticeboard.length == 0 ? (
+          <Col lg={12} >
+            <Card className="shadow">
+              {/* <CardHeader>Fine Details</CardHeader> */}
+              <CardBody>
+                <div className=" d-flex justify-content-center align-items-center">
+                <Image
+                  src={emptyFolder}
+                  alt="Batch"
+                  height={140}
+                  width={140}
+                  className="mx-1 cursor-pointer rounded-circle"
+                />
+                </div>
+                <h5 className="text-center my-3">Yet noticeboard folder empty</h5>
+              </CardBody>
+            </Card>
+          </Col>
+        ) : (
+          <>
         {noticeboard.map((item) => {
           return (
             <Col md={4} sm={12}>
-              <Card>
+              <Card className="shadow">
                 <CardHeader>Date:&nbsp;{item.date}</CardHeader>
                 <CardBody>
                   <Label>Notice from:</Label>
@@ -45,6 +67,7 @@ export default function ViewNoticeBoard() {
             </Col>
           );
         })}
+        </>)}
       </Row>
     </Container>
   );

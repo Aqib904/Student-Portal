@@ -148,7 +148,7 @@ const Sidebar = (props) => {
         //   </UncontrolledDropdown>
         // ):(
           //
-        (route.path != "/student/attendance/:id"&&route.path != "/student/uploadfine"&&route.path != "/admin/addfine"&&route.path != "/admin/fine_details/:id"&&route.path != "/admin/finelist"&&route.path != "/admin/manage_financial_assistance/:id"&&route.path != "/student/financial_assistance"&&route.path != "/admin/manage_fee/:id"&&route.path != "/student/fee_detail"&&route.path != "/student/fee_status"&&route.path != "/student/generate_challan/:id" && route.path != "/teacher/attendance/:id"&& route.path != "/teacher/evaluation/:id"&& route.path != "/student/evaluation/:id"&&route.path != "/student/assessment/:id"&&route.path != "/admin/evaluationpercentage/:id"&&route.path != "/student/enrollment"? (
+        (route.path != "/student/attendance/:id"&&route.path != "/teacher/manage_advises/:id"&&route.path != "/student/uploadfine"&&route.path != "/teacher/manage_advise_students/:id"&&route.path != "/admin/addfine"&&route.path != "/admin/fine_details/:id"&&route.path != "/admin/finelist"&&route.path != "/admin/manage_financial_assistance/:id"&&route.path != "/student/financial_assistance"&&route.path != "/admin/manage_fee/:id"&&route.path != "/student/fee_detail"&&route.path != "/student/fee_status"&&route.path != "/student/generate_challan/:id" && route.path != "/teacher/attendance/:id"&& route.path != "/teacher/evaluation/:id"&& route.path != "/student/evaluation/:id"&&route.path != "/student/assessment/:id"&&route.path != "/admin/evaluationpercentage/:id"&&route.path != "/student/enrollment"? (
           <NavLink
             to={route.path}
             activeClassName="active"
