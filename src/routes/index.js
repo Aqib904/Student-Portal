@@ -45,6 +45,9 @@ import AdviseStudent from "../views/Teacher Views/AdviseStudent";
 import ManageAdviseStudents from "../views/Teacher Views/ManageAdviseStudents";
 import ManageAdvises from "../views/Teacher Views/ManageAdvises";
 import Advises from "../views/Student Views/Advices"
+import ManageTeacherEvaluation from "../views/Admin Views/ManageTeacherEvaluation";
+import TeacherEvaluation from "../views/Teacher Views/TeacherEvaluation";
+import Evaluate from "../views/Teacher Views/Evaluate";
 let routes = [
   {
     path: "/auth_login",
@@ -293,6 +296,14 @@ let routes = [
     role: "admin",
   },
   {
+    path: "/admin/teacherevaluation",
+    component: ManageTeacherEvaluation,
+    layout: "admin",
+    icon:"fas fa-chalkboard-teacher ",
+    name: "Teacher Evaluation",
+    role: "admin",
+  },
+  {
     path: "/admin/checkevaluation",
     component: CheckEvaluation,
     layout: "admin",
@@ -338,6 +349,22 @@ let routes = [
     layout: "teacher",
     name: "Advise Student",
     icon:"fas fa-user-tie ",
+    role: "teacher",
+  },
+  {
+    path: "/teacher/teacher-evaluation",
+    component: TeacherEvaluation,
+    layout: "teacher",
+    name: "Teacher Evaluation",
+    icon:"fas fa-chalkboard-teacher ",
+    role: "teacher",
+  },
+  {
+    path: "/teacher/evaluate/:id",
+    component: Evaluate,
+    layout: "teacher",
+    name: "Teacher Evaluation",
+    icon:"fas fa-chalkboard-teacher ",
     role: "teacher",
   },
   {

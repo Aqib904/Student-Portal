@@ -44,9 +44,9 @@ export default function CheckEvaluation() {
     to: "",
   });
   console.log(selectedDayRange, "selectDay");
-  const [select, setSelect] = useState("FALL2022");
+  const [select, setSelect] = useState("FALL2019");
   const [date, setDate] = useState({ start_date: "", end_date: "" });
-  let sessionData = ["FALL2021", "SPRING2021", "FALL2022", "SPRING2022"];
+  let sessionData = ["FALL2019","SPRING2020","FALL2020"];
   const [rows, setRows] = useState([]);
   const clearDate = () => {
     setSelectedDayRange({ from: "", to: "" });

@@ -8,6 +8,7 @@ import FinancialAssistanceRepository from "./FinancialAssistanceRepository"
 import FineRepository from "./FineRepository"
 import Noticeboard from "./NoticeboardRepository"
 import CourseAdvisor from "./courseAdvisorRepository"
+import TeacherEvaluationRepository from "./TeacherEvaluationRepository"
 const repositories = {
   auth: AuthRepository,
   assessment:AssessmentRepository,
@@ -18,7 +19,8 @@ const repositories = {
   financialAssistance:FinancialAssistanceRepository,
   fine:FineRepository,
   noticeboard:Noticeboard,
-  courseAdvisor:CourseAdvisor
+  courseAdvisor:CourseAdvisor,
+  teacherEvaluation:TeacherEvaluationRepository,
 };
 export const RepositoryFactory = {
   get: (name) => repositories[name],

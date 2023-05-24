@@ -13,7 +13,8 @@ import feeReducer from "./feeReducer";
 import financialAssistanceReducer from "./financialAssistanceReducer"
 import fineReducer from "./fineReducer"
 import noticeboardReducer from "./noticeboardReducer";
-import courseAdvisorReducer from "./courseAdvisorReducer"
+import courseAdvisorReducer from "./courseAdvisorReducer";
+import teacherEvaluationReducer from "./teacherEvaluationReducer"
 export let rootReducer = combineReducers({
   authUser: authUserReducer,
   userAuth:authReducer,
@@ -29,5 +30,6 @@ export let rootReducer = combineReducers({
   fine:fineReducer,
   noticeboard:noticeboardReducer,
   courseAdvisor:courseAdvisorReducer,
+  teacherevaluation:teacherEvaluationReducer,
 });
 export default rootReducer;

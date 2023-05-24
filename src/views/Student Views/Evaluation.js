@@ -38,7 +38,7 @@ export default function Assessment() {
     {
       field: "courseName",
       headerName: "Course Name",
-      width: 170,
+      width: 300,
     },
     {
       field: "actions",

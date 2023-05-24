@@ -34,6 +34,12 @@ const Teacher = (props) => {
           Manage Timetable
         </h4>
       );
+    } else if (history.location.pathname == "/admin/teacherevaluation") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          Teacher Evaluation
+        </h4>
+      );
     } else if (history.location.pathname == "/admin/checkevaluation") {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">
