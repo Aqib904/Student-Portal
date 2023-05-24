@@ -27,7 +27,7 @@ export default function Enrollment() {
   const [failed, setFailed] = useState([]);
   console.log(failed,'failed')
   const [passCheck, setPassCheck] = useState(true);
-  const [totalCrHour,setTotalCrHour] = useState({totalCredit:"",ids:[]})
+  const [totalCrHour,setTotalCrHour] = useState({totalCredit:"",course_code:[]})
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -141,6 +141,7 @@ export default function Enrollment() {
     const matchedCourse = enrollmentCourses.failedCourses1.find(
       (course) => course.course_code === courseCode
     );
+    console.log(matchedCourse,'matchedCourse')
     if (matchedCourse) {
       const sections = matchedCourse.sections.map((section) => ({
         sectionId: section.id,
@@ -163,6 +164,12 @@ export default function Enrollment() {
         if (event.target.checked) {
           return [...prevFinal, finalData];
         } else {
+          const updatedTotalCrHour = totalCrHour.course_code.filter((code) => code !== courseCode);
+        const updatedTotalCredit = totalCrHour.totalCredit - matchedCourse.credit_hours;
+        setTotalCrHour({
+          course_code: updatedTotalCrHour,
+          totalCredit: updatedTotalCredit,
+        });
           setSelectedSection(selectedSection.filter((section) => section.courseCode !== courseCode));
           return prevFinal.filter((data) => data.courseCode !== courseCode);
         }
@@ -268,7 +275,7 @@ export default function Enrollment() {
                   <em>None</em>
                 </MenuItem>
                 {sections.map((data) => (
-                  <MenuItem key={data.sectionId} value={data.sectionName} name={data.sectionName}>
+                  <MenuItem  value={data.sectionName} name={data.sectionName}>
                     {data.discipline}
                   </MenuItem>
                 ))}
@@ -281,11 +288,11 @@ export default function Enrollment() {
   ];
   useEffect(() => {
     let tempdata = [];
-    let creditHour = {totalCredit:"",ids:[]};
+    let creditHour = {totalCredit:"",course_code:[]};
     let totalCrHour = 0;
     enrollmentCourses?.enrollmentCourses?.map((item) => {
       totalCrHour += item.credit_hours;
-      creditHour.ids.push(item.id);
+      creditHour.course_code.push(item.course_code);
       creditHour.totalCredit = totalCrHour;
       return tempdata.push({
         id: item.id,
@@ -328,7 +335,7 @@ export default function Enrollment() {
         });
       }
     });
-    console.log(tempdata,'tempdata')
+    
     let uniqueProgram = [...new Map(tempdata.map((m) => [m.course_code, m])).values()];
     setFailed(uniqueProgram);
   }, [enrollmentCourses]);
@@ -359,11 +366,12 @@ export default function Enrollment() {
       history.push("/student/dashboard")
     }
   },[status])
+  console.log(totalCrHour,'totalCrHour')
   useEffect(() => {
     let creditHour = { ...totalCrHour };
     selectedSection.map((item) => {
-      if (!creditHour.ids.includes(item.id)) {
-        creditHour.ids.push(item.id);
+      if (!creditHour.course_code.includes(item.courseCode)) {
+        creditHour.course_code.push(item.courseCode);
         creditHour.totalCredit += item.credit_hours;
       }
     });

@@ -175,7 +175,6 @@ function Timetable() {
         detail: detailArray,
       });
     });
-    console.log(tempdata,'tempdata')
     setWeeklyTime(tempdata);
   }, [timetable]);
   console.log(timetable,'timetable')

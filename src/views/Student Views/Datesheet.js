@@ -28,7 +28,7 @@ export default function Datesheet() {
     {
       field: "courseName",
       headerName: " Course Name",
-      width: 240,
+      width: 290,
     },
     {
       field: "day",

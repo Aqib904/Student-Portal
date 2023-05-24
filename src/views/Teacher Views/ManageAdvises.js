@@ -7,6 +7,7 @@ import {
   CardHeader,
   Col,
   Container,
+  Form,
   Input,
   Label,
   Modal,
@@ -14,20 +15,28 @@ import {
   ModalFooter,
   ModalHeader,
   Row,
+  Spinner,
 } from "reactstrap";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { addAdvisorDetailAction } from "../../store/actions/courseAdvisorAction";
 export default function ManageAdvises() {
   const location = useLocation();
   const data = location.state;
+  const dispatch = useDispatch();
   const history = useHistory();
+  const { loading} = useSelector(
+    (state) => state.courseAdvisor
+  );
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
     },
   }));
+  const [advise, setAdvise] = useState("");
   const [regularCourses, setRegularCourses] = useState([]);
   const [failedCourses, setFailedCourses] = useState([]);
   const [remainingCourses, setRemainingCourses] = useState([]);
@@ -178,13 +187,36 @@ export default function ManageAdvises() {
       </Container>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Advise Box</ModalHeader>
-        <ModalBody>
-          {/* <Label>Enter your advise:</Label> */}
-          <Input type="textarea" placeholder="Enter the advise..."></Input>
-        </ModalBody>
-        <ModalFooter>
-          <Button className="bg-site-primary w-25 mx-2">Submit</Button>
-        </ModalFooter>
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            let obj = {
+              advise:advise,
+              reg_no:data.reg_no,
+              course_advisor_id:data.ids
+            }
+            dispatch(addAdvisorDetailAction(obj,()=>{
+              toggle()
+            }))
+          }}
+        >
+          <ModalBody>
+            <Input
+              type="textarea"
+              required={true}
+              placeholder="Enter the advise..."
+              value={advise}
+              onChange={(e) => {
+                setAdvise(e.target.value);
+              }}
+            ></Input>
+          </ModalBody>
+          <ModalFooter>
+            <Button className="bg-site-primary w-25 mx-2" type="submit" disabled={loading}>
+            {loading ? <Spinner size="sm" /> : "Submit"}
+            </Button>
+          </ModalFooter>
+        </Form>
       </Modal>
     </>
   );

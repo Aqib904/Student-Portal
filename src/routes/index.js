@@ -44,6 +44,7 @@ import CourseAdvisor from "../views/Admin Views/CourseAdvisor";
 import AdviseStudent from "../views/Teacher Views/AdviseStudent";
 import ManageAdviseStudents from "../views/Teacher Views/ManageAdviseStudents";
 import ManageAdvises from "../views/Teacher Views/ManageAdvises";
+import Advises from "../views/Student Views/Advices"
 let routes = [
   {
     path: "/auth_login",
@@ -201,6 +202,14 @@ let routes = [
     layout: "student",
     icon:"fas fa-envelope ",
     name: "Noticeboard",
+    role: "student",
+  },
+  {
+    path: "/student/advices",
+    component: Advises,
+    layout: "student",
+    icon:"fas fa-comments ",
+    name: "Advices",
     role: "student",
   },
   // {

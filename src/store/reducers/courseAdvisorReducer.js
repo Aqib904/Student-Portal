@@ -1,7 +1,8 @@
-import { COURSE_ADVISOR__LOADING ,STUDENTCOURSEADVISOR} from "../types";
+import { COURSE_ADVISOR__LOADING ,STUDENTCOURSEADVISOR,ADVICES} from "../types";
 const initialState = {
     loading:false,
-    courseAdvisorList:[]
+    courseAdvisorList:[],
+    advicesList:[]
   };
   const courseAdvisorReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -15,6 +16,11 @@ const initialState = {
             ...state,
             courseAdvisorList: action.payload.courseAdvisorList,
           };
+          case ADVICES:
+            return {
+              ...state,
+              advicesList: action.payload.advicesList,
+            };
       default:
         return state;
     }

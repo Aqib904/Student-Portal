@@ -43,12 +43,12 @@ function TodayTimetable() {
     {
       field: "time",
       headerName: "Time",
-      width: 100,
+      width: 150,
     },
     {
       field: "venue",
       headerName: "Venue",
-      width: 100,
+      width: 70,
     },
   ];
   useEffect(() => {
@@ -71,6 +71,27 @@ function TodayTimetable() {
         });
       }
     }
+    data.sort((a, b) => {
+      const timeA = a.time.split('-')[0].trim(); // Assuming time is in the format "08:30am"
+      const timeB = b.time.split('-')[0].trim();
+  
+      const [hoursA, minutesA, periodA] = timeA.split(/:|(?=[ap]m)/i);
+      const [hoursB, minutesB, periodB] = timeB.split(/:|(?=[ap]m)/i);
+  
+      if (periodA.toLowerCase() === 'pm' && periodB.toLowerCase() === 'am') {
+        return 1; // Sort 'pm' after 'am'
+      } else if (periodA.toLowerCase() === 'am' && periodB.toLowerCase() === 'pm') {
+        return -1; // Sort 'am' before 'pm'
+      } else if (hoursA === '12' && hoursB !== '12') {
+        return 1; // Sort '12:00am' after '12:00pm'
+      } else if (hoursA !== '12' && hoursB === '12') {
+        return -1; // Sort '12:00pm' before '12:00am'
+      } else {
+        const timeValueA = parseInt(hoursA) * 60 + parseInt(minutesA);
+        const timeValueB = parseInt(hoursB) * 60 + parseInt(minutesB);
+        return timeValueA - timeValueB;
+      }
+    });
     setTodayTimetable(data);
   }, [timetable]);
   useEffect(() => {

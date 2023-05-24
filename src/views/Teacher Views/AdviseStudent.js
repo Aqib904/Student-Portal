@@ -14,7 +14,7 @@ export default function AdviseStudent() {
   console.log(disciplineData,'disciplineData')
   useEffect(() => {
     dispatch(getStudentCourseAdvisor(token?.username));
-  }, [token?.username]);
+  }, [token]);
   useEffect(() => {
     const newData = courseAdvisorList.map((item) => ({
       id: item.id,
