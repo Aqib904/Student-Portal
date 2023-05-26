@@ -48,6 +48,8 @@ import Advises from "../views/Student Views/Advices"
 import ManageTeacherEvaluation from "../views/Admin Views/ManageTeacherEvaluation";
 import TeacherEvaluation from "../views/Teacher Views/TeacherEvaluation";
 import Evaluate from "../views/Teacher Views/Evaluate";
+import TeacherRating from "../views/Student Views/TeacherRating";
+import RatingCourses from "../views/Student Views/RatingCourses";
 let routes = [
   {
     path: "/auth_login",
@@ -213,6 +215,22 @@ let routes = [
     layout: "student",
     icon:"fas fa-comments ",
     name: "Advices",
+    role: "student",
+  },
+  {
+    path: "/student/rating-courses",
+    component: RatingCourses,
+    layout: "student",
+    icon:"fas fa-star ",
+    name: "Teacher Rating",
+    role: "student",
+  },
+  {
+    path: "/student/teacher-rating/:id",
+    component: TeacherRating,
+    layout: "student",
+    icon:"fas fa-star ",
+    name: "Teacher Rating",
     role: "student",
   },
   // {

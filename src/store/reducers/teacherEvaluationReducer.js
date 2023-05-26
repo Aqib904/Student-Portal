@@ -1,8 +1,9 @@
-import { TEACHER_EVALUATION_LOADING,EVALUATINGTEACHER,EVALUATINGQUESTIONS} from "../types";
+import { TEACHER_EVALUATION_LOADING,EVALUATINGTEACHER,EVALUATINGQUESTIONS,PEEREVALUATION} from "../types";
 const initialState = {
     loading:false,
     teacherList:[],
     questions:[],
+    teacherEvaluation:[],
   };
   const teacherEvaluationReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -20,6 +21,11 @@ const initialState = {
           return {
             ...state,
             questions: action.payload.evaluatingQuestions,
+          };
+          case PEEREVALUATION:
+          return {
+            ...state,
+            teacherEvaluation: action.payload.teacherEvaluation,
           };
       default:
         return state;

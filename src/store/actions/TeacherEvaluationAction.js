@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { TEACHER_EVALUATION_LOADING,EVALUATINGTEACHER,EVALUATINGQUESTIONS} from "../types";
+import { TEACHER_EVALUATION_LOADING,EVALUATINGTEACHER,EVALUATINGQUESTIONS,PEEREVALUATION} from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 var teacherEvaluation = RepositoryFactory.get("teacherEvaluation");
 export const addTecaherEvaluation= (file,onSuccess) => async (dispatch) => {
@@ -70,6 +70,22 @@ export const addTecaherEvaluation= (file,onSuccess) => async (dispatch) => {
       } else {
         alert("Evaluation failed")
         dispatch(teacherEvaluationLoading(false))
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const getPeerTeacherEvaluation= (reg_no) => async (dispatch) => {
+    try {
+      dispatch(teacherEvaluationLoading(true))
+      const { data } = await teacherEvaluation.getPeerEvaluation(reg_no)
+      if (data) {
+        dispatch({ type: PEEREVALUATION, payload: { teacherEvaluation: data } });
+        dispatch(teacherEvaluationLoading(false))
+      } else {
+        toast.error("Evaluating questions loaded failed")
+        dispatch(teacherEvaluationLoading(false))
+        throw new Error(data.error); 
       }
     } catch (error) {
       alert(error.message);

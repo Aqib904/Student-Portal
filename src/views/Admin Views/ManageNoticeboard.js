@@ -115,6 +115,8 @@ export default function ManageNoticeboard() {
                   toast.error("Must select the discipline");
                 } else {
                   dispatch(addNoticeBoard(obj));
+                  setNoticeData({ title: "", description: "" })
+                  setSelectedData([])
                 }
               }}
             >

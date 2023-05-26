@@ -59,6 +59,7 @@ export default function Financial() {
                 <FinancialWall fileList={fileList} setFileList={setFileList} />
               </Stack>
               <Input
+              className="my-3"
                 type="textarea"
                 required
                 placeholder="Add reason..."

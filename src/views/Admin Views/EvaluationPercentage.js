@@ -216,7 +216,6 @@ export default function EvaluationPercentage() {
         </Col>
       </Row>
       {rows.length == 0 ? (
-       
           <Row>
             <Col>
               <Card className="shadow my-4">
@@ -230,9 +229,7 @@ export default function EvaluationPercentage() {
               </Card>
             </Col>
           </Row>
-
-      ) : (
-        
+      ) : (       
           <Row>
             <Col>
               <Card className="shadow my-4">

@@ -39,7 +39,7 @@ export default function StudentSetting() {
                 <Label>Reg no</Label>
                 <Input value={user?.username} type="text" disabled={true}></Input>
                 <Label>First name</Label>
-                <Input value={user?.first_name} type="text"></Input>
+                <Input value={user?.first_name} type="text" ></Input>
                 <Label>Last name</Label>
                 <Input value={user?.last_name} type="text"></Input>
               </Card>

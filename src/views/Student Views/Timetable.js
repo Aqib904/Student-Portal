@@ -222,13 +222,13 @@ function Timetable() {
   // }, [timetable]);
   return (
     <Container>
-  <Row>
+  <Row className="d-flex justify-content-center align-items-center">
     {weeklytime.map((dayData, index) => {
       const dayname = dayData.day;
       const dayIndex = weekday.findIndex((day) => day === dayname);
 
       return (
-        <Col sm={12} md={8} lg={6} key={dayname}>
+        <Col sm={12} md={8} lg={8} key={dayname}>
           <LoadingOverlay active={loading} spinner text="Timetable Loading....">
             <Card
               className={`shadow my-3 w-100  z-index-n1 my-2 ${

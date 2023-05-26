@@ -52,14 +52,15 @@ export default function ViewNoticeBoard() {
                 <CardHeader>Date:&nbsp;{item.date}</CardHeader>
                 <CardBody>
                   <Label>Notice from:</Label>
-                  <Input value={item.author} disabled={true}></Input>
+                  <Input value={item.author} disabled={true} className="bg-light"></Input>
                   <Label className="my-1">Title:</Label>
-                  <Input value={item.title} disabled={true}></Input>
+                  <Input value={item.title} disabled={true} className="bg-light"></Input>
                   <Label className="my-1">Description:</Label>
                   <Input
                     value={item.description}
                     type="textarea"
                     disabled={true}
+                    className="bg-light"
                     rows={Math.ceil(item?.description.length / 30)}
                   ></Input>
                 </CardBody>

@@ -66,7 +66,7 @@ export default function ExamResult() {
     }
     console.log(tempdata,'tempdata')
     setRows(tempdata);
-  }, [select, type]);
+  }, [select, type,exam]);
   useEffect(() => {
     dispatch(getSession(token?.username));
   }, []);

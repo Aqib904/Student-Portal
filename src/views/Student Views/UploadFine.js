@@ -97,15 +97,17 @@ export default function UploadFine() {
                               ? "Rejected"
                               : "Approved"
                           }
+                          className="bg-light"
                           disabled={true}
                         ></Input>
                         <Label>Amount:</Label>
-                        <Input value={item?.amount} disabled={true}></Input>
+                        <Input value={item?.amount} disabled={true} className="bg-light"></Input>
                         <Label>Reason:</Label>
                         <Input
                           value={item?.description}
                           type="textarea"
                           disabled={true}
+                          className="bg-light"
                           rows={Math.ceil(item?.description.length / 50)}
                         ></Input>
                       </CardBody>

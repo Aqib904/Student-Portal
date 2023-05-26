@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Radio, Upload } from "antd";
-import {  Col, Container, Row } from "reactstrap";
+import { Col, Container, Input, Row } from "reactstrap";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -33,10 +33,10 @@ const PictureWall = ({ fileList, setFileList }) => {
     }
   };
   const handleChange = ({ fileList: newFileList }) => {
-    const filteredList = newFileList.filter(file => checkFileType(file));
+    const filteredList = newFileList.filter((file) => checkFileType(file));
     setFileList(filteredList);
   };
-  console.log(fileList)
+  console.log(fileList);
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -54,7 +54,7 @@ const PictureWall = ({ fileList, setFileList }) => {
     <>
       <Container>
         <Row>
-          <Col>
+          <Col xs={24} sm={12} md={9}>
             <Upload
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               listType="picture-card"
@@ -64,8 +64,19 @@ const PictureWall = ({ fileList, setFileList }) => {
               onChange={handleChange}
               accept="image/PNG, image/jpeg, image/jpg, image/svg"
             >
-               {fileList.length >= 3 ? null : uploadButton}
+              {fileList.length >= 3 ? null : uploadButton}
             </Upload>
+            <Row>
+            {fileList.slice(0, 3).map((file, index) => (
+              <Col key={file.uid} xs={24} sm={12} md={2}>
+                <Input
+                  type="text"
+                  style={{ width: "100px", marginTop: "8px" }}
+                  placeholder="Title"
+                />
+              </Col>
+            ))}
+          </Row>
           </Col>
         </Row>
       </Container>

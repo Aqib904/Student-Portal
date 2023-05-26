@@ -490,3 +490,21 @@ body {
   background-color: #28a745;
   border-color: #28a745;
 }
+.upload-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+}
+
+@media (max-width: 576px) {
+  .input-block {
+    margin-top: 16px;
+  }
+}

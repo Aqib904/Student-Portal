@@ -97,6 +97,7 @@ export default function ManageAdvises() {
   }, [data]);
   return (
     <>
+    <div>
       <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
         <Link
           className="text-dark"
@@ -111,10 +112,7 @@ export default function ManageAdvises() {
         </Link>
         &nbsp;Manage Advise
       </h4>
-      <Container fluid>
-        <Row>
-          <Col>
-            <div className="my-3 mx-4">
+      <div className="my-3 mx-4">
               <h6 className="d-inline-block ">&nbsp;&nbsp;Student:</h6>
               <span>&nbsp;{data.student_name}</span>
               <Button
@@ -126,6 +124,11 @@ export default function ManageAdvises() {
                 Add Advise
               </Button>
             </div>
+            </div>
+      <Container fluid>
+        <Row >
+          <Col>
+            
             <Card className="shadow my-4">
               <CardHeader>Regular Courses</CardHeader>
               <CardBody>

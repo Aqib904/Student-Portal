@@ -42,12 +42,13 @@ export default function Advices() {
                     <CardHeader>Advices from Course advisor</CardHeader>
                     <CardBody>
                       <Label>Advisor</Label>
-                      <Input value={item.name} disabled={true}></Input>
+                      <Input value={item.name} disabled={true} className="bg-light"></Input>
                       <Label className="my-1">Advise</Label>
                       <Input
                         value={item.advise}
                         type="textarea"
                         disabled={true}
+                        className="bg-light"
                         rows={Math.ceil(item?.advise.length / 30)}
                       ></Input>
                     </CardBody>
