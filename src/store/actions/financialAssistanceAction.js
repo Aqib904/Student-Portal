@@ -78,11 +78,11 @@ export const requestFinancialAssistance =
       alert(error.message);
     }
   };
-  export const requestRejectAction = (id,history) => async (dispatch) => {
+  export const requestRejectAction = (id,reason,history) => async (dispatch) => {
     try {
       dispatch(rejectRequestLoading(true))
-      const { data } = await financialAssistance.requestReject(id)
-      if (data =="success") {
+      const { data } = await financialAssistance.requestReject(id,reason)
+      if (data =="Request Rejected") {
         toast.success("You Rejected the student Request");
         history.push("/admin/assistantrequest")
         dispatch(rejectRequestLoading(false))

@@ -12,7 +12,7 @@ import { Link, useHistory } from "react-router-dom";
 export default function Fee() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { feeDetail,loading } = useSelector((state) => state.fee);
+  const { feeDetail, loading } = useSelector((state) => state.fee);
   const { token } = useSelector((state) => state.authUser);
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
@@ -20,17 +20,21 @@ export default function Fee() {
     },
   }));
   const [rows, setRows] = useState([]);
-  const handletransferData = (data)=>{
-    const totalAmount = data.semesterFee + data.otherFee + data.extraCourseFee + data.addmissionFee;
-    console.log(totalAmount, 'totalAmount');
+  const handletransferData = (data) => {
+    const totalAmount =
+      data.semesterFee +
+      data.otherFee +
+      data.extraCourseFee +
+      data.addmissionFee;
+    console.log(totalAmount, "totalAmount");
     history.push({
       pathname: `/student/generate_challan/${data.id}`,
       state: {
         ...data,
-        totalAmount: totalAmount
+        totalAmount: totalAmount,
       },
-    })
-  }
+    });
+  };
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
@@ -51,7 +55,7 @@ export default function Fee() {
     {
       field: "extraCourseFee",
       headerName: "Extra Courses Fee",
-      width: 170,
+      width: 140,
     },
     {
       field: "enrolledCoursesCount",
@@ -61,7 +65,12 @@ export default function Fee() {
     {
       field: "totalFee",
       headerName: "Total Fee",
-      width: 150,
+      width: 100,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 110,
     },
     {
       field: "isChallanGenerated",
@@ -71,32 +80,28 @@ export default function Fee() {
       renderCell: (params) => {
         return (
           <>
-            {params.row.isChallanGenerated ? (
+            {params.row.status == "generated" ? (
               <Button
                 className="bg-site-success text-white border-0"
-                onClick={()=>
-                  dispatch(getChallan(token?.username))
-                }
+                onClick={() => dispatch(getChallan(token?.username))}
               >
                 <i className="fas fa-print"></i>
               </Button>
-            ) : (
+            ) : params.row.status == "pending" ? (
               <Button
-              className="bg-site-success text-white border-0"
-              onClick={() =>
-               handletransferData(params.row)
-              }
-            >
-              <i className="fas fa-folder-plus"></i>
-            </Button>
-            )}
-             <Link to="/student/fee_status">
-             <Button
-                className="bg-site-success text-white border-0 mx-2"
+                className="bg-site-success text-white border-0"
+                onClick={() => handletransferData(params.row)}
               >
+                <i className="fas fa-folder-plus"></i>
+              </Button>
+            ) : (
+              ""
+            )}
+            <Link to="/student/fee_status">
+              <Button className="bg-site-success text-white border-0 mx-2">
                 <i className="fas fa-eye"></i>
               </Button>
-              </Link>
+            </Link>
           </>
         );
       },
@@ -118,14 +123,14 @@ export default function Fee() {
       totalFee += feeDetail.admissionFee;
     }
     tempdata.push({
-      id:1,
-      addmissionFee:feeDetail.admissionFee,
+      id: 1,
+      addmissionFee: feeDetail.admissionFee,
       enrolledCoursesCount: feeDetail.enrolledCoursesCount,
       extraCourseFee: feeDetail.extraCourseFee,
       otherFee: feeDetail.otherFee,
       semesterFee: feeDetail.semesterFee,
-      isChallanGenerated: feeDetail.isChallanGenerated,
-      totalFee: totalFee
+      status: feeDetail.status,
+      totalFee: totalFee,
     });
     setRows(tempdata);
   }, [feeDetail]);
@@ -135,7 +140,7 @@ export default function Fee() {
   return (
     <>
       <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
-      <Link className="text-dark" to="/student/finance">
+        <Link className="text-dark" to="/student/finance">
           <i class="fas fa-arrow-alt-circle-left"></i>
         </Link>
         &nbsp;Fee Detail
@@ -144,18 +149,22 @@ export default function Fee() {
         <Row>
           <Col>
             <Card className="shadow my-3 w-100 z-index-n1 my-5">
-            <LoadingOverlay active={loading} spinner text="Fee Detail Loading....">
-              <StripedDataGrid
-                autoHeight
-                autoWidth
-                columns={columns}
-                rows={rows}
-                disableSelectionOnClick={false}
-                getRowClassName={(params) =>
-                  params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
-                }
-                hideFooterPagination={true}
-              />
+              <LoadingOverlay
+                active={loading}
+                spinner
+                text="Fee Detail Loading...."
+              >
+                <StripedDataGrid
+                  autoHeight
+                  autoWidth
+                  columns={columns}
+                  rows={rows}
+                  disableSelectionOnClick={false}
+                  getRowClassName={(params) =>
+                    params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
+                  }
+                  hideFooterPagination={true}
+                />
               </LoadingOverlay>
             </Card>
           </Col>

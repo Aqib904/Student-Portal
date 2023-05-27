@@ -23,7 +23,7 @@ import {
   Spinner,
 } from "reactstrap";
 import { Image } from "react-bootstrap";
-
+import { toast } from "react-toastify";
 export default function ManageFinancialAssistance() {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ export default function ManageFinancialAssistance() {
   const [selectedImage, setSelectedImage] = useState("");
   const [confirmModal, setConfirmModal] = useState(false);
   const [request, setRequest] = useState("");
+  const [reason, setReason] = useState("");
   const confirmtoggle = () => setConfirmModal(!confirmModal);
   const toggleModal = (imageSrc) => {
     setSelectedImage(imageSrc);
@@ -48,7 +49,10 @@ export default function ManageFinancialAssistance() {
   return (
     <>
       <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
-      <Link className="text-dark" to="/admin/assistantrequest"><i class="fas fa-arrow-alt-circle-left"></i></Link>&nbsp;Manage Financial Assistance
+        <Link className="text-dark" to="/admin/assistantrequest">
+          <i class="fas fa-arrow-alt-circle-left"></i>
+        </Link>
+        &nbsp;Manage Financial Assistance
       </h4>
       <Container>
         <Row>
@@ -60,7 +64,17 @@ export default function ManageFinancialAssistance() {
                 <Row>
                   {requestImages.map((item) => {
                     return (
-                      <Col md={`${requestImages.length==1?"12":requestImages.length==2?"6":"4"}`} sm="12" className="my-1 h-50">
+                      <Col
+                        md={`${
+                          requestImages.length == 1
+                            ? "12"
+                            : requestImages.length == 2
+                            ? "6"
+                            : "4"
+                        }`}
+                        sm="12"
+                        className="my-1 h-50"
+                      >
                         <Image
                           src={`https://localhost:44374/FinancialAssistanceImages/${item}`}
                           alt="Batch"
@@ -102,27 +116,27 @@ export default function ManageFinancialAssistance() {
               </CardBody>
               <CardFooter>
                 <Row className=" float-right">
-                  {data?.status != true  ? (
+                  {data?.status != true ? (
                     <>
-                    <Button
-                      className="bg-site-success mx-1"
-                      onClick={() => {
-                        setRequest("Accept");
-                        confirmtoggle();
-                      }}
-                    >
-                      Accept Request
-                    </Button>
-                    <Button
-                      className="bg-danger"
-                      onClick={() => {
-                        setRequest("Reject");
-                        confirmtoggle();
-                      }}
-                    >
-                      Reject Request
-                    </Button>
-                  </>
+                      <Button
+                        className="bg-site-success mx-1"
+                        onClick={() => {
+                          setRequest("Accept");
+                          confirmtoggle();
+                        }}
+                      >
+                        Accept Request
+                      </Button>
+                      <Button
+                        className="bg-danger"
+                        onClick={() => {
+                          setRequest("Reject");
+                          confirmtoggle();
+                        }}
+                      >
+                        Reject Request
+                      </Button>
+                    </>
                   ) : (
                     ""
                   )}
@@ -135,16 +149,31 @@ export default function ManageFinancialAssistance() {
       <Modal isOpen={confirmModal} toggle={confirmtoggle}>
         <ModalHeader toggle={confirmtoggle}>Confirmation Box</ModalHeader>
         <ModalBody>
-          <h5 className="text-center ">
-            Are you Sure for {request} the Student Request?
-          </h5>
+          <div>
+            <h5 className="text-center ">
+              Are you Sure for {request} the Student Request?
+            </h5>
+            {request == "Reject" ? (
+              <Input
+                className="my-3"
+                type="textarea"
+                placeholder="Reject reason..."
+                value={reason}
+                onChange={(e) => {
+                  setReason(e.target.value);
+                }}
+              ></Input>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="d-flex justify-content-center align-items-center my-3">
             {request == "Accept" ? (
               <Button
                 className="bg-site-primary w-25 mx-2"
                 onClick={() => {
                   dispatch(requestAcceptAction(data?.id, history));
-                  confirmtoggle()
+                  confirmtoggle();
                 }}
                 disabled={acceptloading}
               >
@@ -154,8 +183,12 @@ export default function ManageFinancialAssistance() {
               <Button
                 className="bg-site-primary w-25 mx-2"
                 onClick={() => {
-                  dispatch(requestRejectAction(data?.id, history));
-                  confirmtoggle()
+                  if (reason == "") {
+                    toast.error("Please must add reject reason");
+                  } else {
+                    dispatch(requestRejectAction(data?.id, reason, history));
+                    confirmtoggle();
+                  }
                 }}
               >
                 {rejectloading ? <Spinner size="sm" /> : "Yes"}

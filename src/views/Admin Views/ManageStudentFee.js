@@ -9,6 +9,7 @@ import {
   CardHeader,
   Col,
   Container,
+  Input,
   Modal,
   ModalBody,
   ModalFooter,
@@ -29,6 +30,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
 import emptyFolder from "../../assets/img/emptyFolder.jpg";
+import { toast } from "react-toastify";
 export default function ManageStudentFee() {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -42,6 +44,9 @@ export default function ManageStudentFee() {
   const [modal, setModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [status, setStatus] = useState(null);
+  const [reason,setReason] = useState("")
+  const [confirmModal, setConfirmModal] = useState(false);
+  const confirmtoggle = () => setConfirmModal(!confirmModal);
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -258,18 +263,47 @@ export default function ManageStudentFee() {
                 size="sm"
                 color="danger"
                 className="mx-2"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  await dispatch(rejectFeeStatus(selectedId));
-                  dispatch(getFeeStatus(data?.regNo));
-                  toggle();
-                }}
+                onClick={()=>{confirmtoggle()}}
               >
                 {rejectLoading ? <Spinner size="sm" /> : "X"}
               </Button>
             </>
           )}
         </ModalFooter>
+      </Modal>
+      <Modal isOpen={confirmModal} toggle={confirmtoggle}>
+        <ModalHeader toggle={confirmtoggle}>Confirmation Box</ModalHeader>
+        <ModalBody>
+          <h5 className="text-center ">
+            Are you Sure for Reject the Student Receipt?
+          </h5>
+        <Input className="my-3" type="textarea" placeholder="Reject reason..." value={reason} onChange={(e)=>{setReason(e.target.value)}}></Input>
+          <div className="d-flex justify-content-center align-items-center my-3">
+              <Button
+                className="bg-site-primary w-25 mx-2"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  if(reason==""){
+                    toast.error("Please must add reject reason")
+                  }else{
+                    await dispatch(rejectFeeStatus(selectedId,reason));
+                    dispatch(getFeeStatus(data?.regNo));
+                    toggle();
+                    confirmtoggle();
+                  }
+                 
+                }}
+                disabled={rejectLoading}
+              >
+               {rejectLoading ? <Spinner size="sm" /> : "Yes"}
+              </Button>
+        
+
+            <Button className="bg-danger w-25" onClick={confirmtoggle}>
+              No
+            </Button>
+          </div>
+        </ModalBody>
       </Modal>
     </>
   );

@@ -50,6 +50,8 @@ import TeacherEvaluation from "../views/Teacher Views/TeacherEvaluation";
 import Evaluate from "../views/Teacher Views/Evaluate";
 import TeacherRating from "../views/Student Views/TeacherRating";
 import RatingCourses from "../views/Student Views/RatingCourses";
+import ParentDashboard from "../views/Parent Views/Dashboard";
+import ParentSetting from "../views/Parent Views/ParentSetting";
 let routes = [
   {
     path: "/auth_login",
@@ -464,6 +466,22 @@ let routes = [
     name: "Setting",
     icon:"fas fa-user-cog ",
     role: "admin",
+  },
+  {
+    path: "/parent/dashboard",
+    component: ParentDashboard,
+    layout: "parent",
+    name: "Dashboard",
+    icon:"fas fa-home ",
+    role: "parent",
+  },
+  {
+    path: "/parent/setting",
+    component: ParentSetting,
+    layout: "parent",
+    name: "Setting",
+    icon:"fas fa-user-cog ",
+    role: "parent",
   },
 ];
 export default routes;

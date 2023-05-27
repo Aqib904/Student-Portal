@@ -80,10 +80,10 @@ export const getFineList= () => async (dispatch) => {
       alert(error.message);
     }
   };
-  export const fineRejectAction = (id,history) => async (dispatch) => {
+  export const fineRejectAction = (id,reason,history) => async (dispatch) => {
     try {
       dispatch(rejectFineLoading(true))
-      const { data } = await fine.fineReject(id)
+      const { data } = await fine.fineReject(id,reason)
       if (data =="success") {
         toast.success("You Rejected the student Fine Request");
         history.push("/admin/finelist")

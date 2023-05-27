@@ -18,8 +18,8 @@ export default {
     fineAccept(id) {
         return Repository.post(`${FINEACCEPT}?id=${id}`);
     },
-    fineReject(id) {
-        return Repository.post(`${FINEREJECT}?id=${id}`);
+    fineReject(id,reason) {
+        return Repository.post(`${FINEREJECT}?id=${id}&remarks=${reason}`);
     },
     getStudentFine(reg_no) {
         return Repository.get(`${STUDENTFINE}?reg_no=${reg_no}`);

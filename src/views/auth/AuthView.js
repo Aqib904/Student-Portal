@@ -16,7 +16,7 @@ import { ToastContainer } from "react-toastify";
 const AuthView = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAuthenticated, token ,loading,status} = useSelector(
+  const { isAuthenticated, token, loading, status } = useSelector(
     (state) => state.authUser
   );
   const [username, setUsername] = useState("");
@@ -34,11 +34,12 @@ const AuthView = () => {
   useEffect(() => {
     if (isAuthenticated) {
       if (token?.role == "student") {
-        dispatch(getEnrollmentStatus(token?.username))
-          history.push("/student/dashboard");
-      }
-       else if (token?.role == "teacher") {
+        dispatch(getEnrollmentStatus(token?.username));
+        history.push("/student/dashboard");
+      } else if (token?.role == "teacher") {
         history.push("/teacher/dashboard");
+      } else if (token?.role == "parent") {
+        history.push("/parent/dashboard");
       } else {
         history.push("/admin/assistantrequest");
       }

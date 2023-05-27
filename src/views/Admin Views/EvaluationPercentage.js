@@ -21,7 +21,7 @@ export default function EvaluationPercentage() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { feedback } = useSelector((state) => state.assessment);
-  console.log(feedback,'feedback')
+  console.log(feedback, "feedback");
   const data = location.state;
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
@@ -29,9 +29,9 @@ export default function EvaluationPercentage() {
     },
   }));
   const [rows, setRows] = useState([]);
-  let [seriesMerge,setSeriesMerge] = useState([]);
-  console.log(seriesMerge,'length')
-  let [seriesIndividual,setSeriesIndividual] = useState([0,0,0,0])
+  let [seriesMerge, setSeriesMerge] = useState([]);
+  console.log(seriesMerge, "length");
+  let [seriesIndividual, setSeriesIndividual] = useState([0, 0, 0, 0]);
   let [options, setOptions] = useState({
     labels: ["Excellent", "Good", "Average", "Poor"],
     chart: {
@@ -118,7 +118,6 @@ export default function EvaluationPercentage() {
         }
       },
     },
-    
   ];
   useEffect(() => {
     let tempdata = [];
@@ -138,27 +137,27 @@ export default function EvaluationPercentage() {
       getTeachersFeedback(data?.teacher_id, data?.course_code, data?.session)
     );
   }, []);
- useEffect(() => {
-  if (feedback && feedback.data2) {
-    const { excellent, good, average, poor } = feedback.data2;
-    setSeriesMerge([excellent, good, average, poor]);
-  }
-}, [feedback]);
+  useEffect(() => {
+    if (feedback && feedback.data2) {
+      const { excellent, good, average, poor } = feedback.data2;
+      setSeriesMerge([excellent, good, average, poor]);
+    }
+  }, [feedback]);
   return (
     <>
-    <Container>
-      <Row>
-        <Col>
-          <h4 className="d-block d-md-block m-0 font-weight-bold mx-4">
-          <Link className="text-dark" to="/admin/checkevaluation">
-          <i class="fas fa-arrow-alt-circle-left"></i>
-        </Link>
-        &nbsp;Evaluation Percentage
-          </h4>
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={6} md={6} sm={12} sx={12}>
+      <Container>
+        <Row>
+          <Col>
+            <h4 className="d-block d-md-block m-0 font-weight-bold mx-4">
+              <Link className="text-dark" to="/admin/checkevaluation">
+                <i class="fas fa-arrow-alt-circle-left"></i>
+              </Link>
+              &nbsp;Evaluation Percentage
+            </h4>
+          </Col>
+        </Row>
+        <Row>
+          {/* <Col lg={6} md={6} sm={12} sx={12}>
         {seriesIndividual[0]==0&&seriesIndividual[1]==0&&seriesIndividual[2]==0&&seriesIndividual[3]==0?(
             <Card className="shadow mx-3 my-2">
               <CardHeader>Individual</CardHeader>
@@ -177,7 +176,7 @@ export default function EvaluationPercentage() {
               type="bar"
               width="100%"
               
-            /> */}
+            /> 
             <ReactApexChart
               options={options}
               series={seriesIndividual}
@@ -185,37 +184,48 @@ export default function EvaluationPercentage() {
             />
           </Card>
           )}
-        </Col>
-        <Col lg={6} md={6} sm={12} sx={12}>
-          {seriesMerge[0]==0&&seriesMerge[1]==0&&seriesMerge[2]==0&&seriesMerge[3]==0?(
-            <Card className="shadow mx-3 my-2">
-              <CardHeader>Merged</CardHeader>
-              <CardBody>
-                <div className="d-flex justify-content-center align-items-center">
-                  <p className="text-danger">Graph view empty!</p>
+        </Col> */}
+          <Col>
+            {seriesMerge[0] == 0 &&
+            seriesMerge[1] == 0 &&
+            seriesMerge[2] == 0 &&
+            seriesMerge[3] == 0 ? (
+              <Card className="shadow mx-3 my-2">
+                <div
+                  style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}
+                >
+                  <CardHeader></CardHeader>
+                  <CardBody>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <p className="text-danger">Graph view empty!</p>
+                    </div>
+                  </CardBody>
                 </div>
-              </CardBody>
-            </Card>
-          ):(
-            <Card className="shadow mx-3 my-2">
-            <CardHeader>Merged</CardHeader>
-            {/* <Chart
+              </Card>
+            ) : (
+              <Card className="shadow mx-3 my-4">
+                <CardHeader>Evaluation of&nbsp;{data.teacherName}</CardHeader>
+                <div
+                  style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}
+                >
+                  {/* <Chart
               options={individual.options}
               series={individual.series}
               type="bar"
               width="100%"
               
             /> */}
-            <ReactApexChart
-              options={options}
-              series={seriesMerge}
-              type="donut"
-            />
-          </Card>
-          )}
-        </Col>
-      </Row>
-      {rows.length == 0 ? (
+                  <ReactApexChart
+                    options={options}
+                    series={seriesMerge}
+                    type="donut"
+                  />
+                </div>
+              </Card>
+            )}
+          </Col>
+        </Row>
+        {rows.length == 0 ? (
           <Row>
             <Col>
               <Card className="shadow my-4">
@@ -229,33 +239,24 @@ export default function EvaluationPercentage() {
               </Card>
             </Col>
           </Row>
-      ) : (       
+        ) : (
           <Row>
             <Col>
-              <Card className="shadow my-4">
-                <CardHeader>Evaluation of&nbsp;{data.teacherName}</CardHeader>
-                <CardBody>
-                  <StripedDataGrid
-                    autoHeight
-                    autoWidth
-                    columns={columns}
-                    rows={rows}
-                    disableSelectionOnClick={false}
-                    getRowClassName={(params) =>
-                      params.indexRelativeToCurrentPage % 2 === 0
-                        ? "odd"
-                        : "even"
-                    }
-                    hideFooterPagination={true}
-                  />
-                </CardBody>
-                <CardFooter></CardFooter>
-              </Card>
+              <StripedDataGrid
+                autoHeight
+                autoWidth
+                columns={columns}
+                rows={rows}
+                disableSelectionOnClick={false}
+                getRowClassName={(params) =>
+                  params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
+                }
+                hideFooterPagination={true}
+              />
             </Col>
           </Row>
-             )}
-        </Container>
-   
+        )}
+      </Container>
     </>
   );
 }

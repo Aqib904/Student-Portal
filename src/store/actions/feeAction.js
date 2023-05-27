@@ -35,6 +35,22 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       alert(error.message);
     }
   };
+  export const requestInstallments = (list,history) => async (dispatch) => {
+    try {
+      dispatch(challanLoading(true))
+      const {data} = await fee.requestInstallments(list)
+      if (data == "success") {
+        history.push({
+          pathname: `/student/fee_detail`
+        })
+        dispatch(challanLoading(false))
+      } else {
+        toast.error("Installments failed");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   export const getChallan = (regno) => async (dispatch) => {
     console.log(regno)
     try {
@@ -114,10 +130,10 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       alert(error.message);
     }
   };
-  export const rejectFeeStatus = (challanId) => async (dispatch) => {
+  export const rejectFeeStatus = (challanId,reason) => async (dispatch) => {
     try {
       dispatch(rejectLoading(true))
-      const {data} = await fee.rejectFeeStatus(challanId)
+      const {data} = await fee.rejectFeeStatus(challanId,reason)
       if (data=="success") {
         toast.success("Status reject successfully")
         dispatch(rejectLoading(false))

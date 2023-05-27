@@ -87,7 +87,7 @@ export default function AssistantRequest() {
         width: 130,
       },
       {
-        field: "selectedDiscipline",
+        field: "discipline",
         headerName: "Discipline",
         width: 130,
       },
@@ -165,31 +165,23 @@ export default function AssistantRequest() {
         setSelectedDiscipline("")
       }
     },[discipline])
-  useEffect(() => {
-    let index = 0;
-    if (selectedDiscipline !== "") {
-      const matchingStudents = requestList
-        .filter(
-          (student) =>
-            student.program === selectedDiscipline.slice(2, 4) &&
-            student.semester === parseInt(selectedDiscipline.slice(4, 5)) &&
-            student.section === selectedDiscipline.slice(5)
-        )
-        .map((student) => {
-          index++;
-          return { ...student, selectedDiscipline };
+    useEffect(() => {
+      if (selectedDiscipline !== "") {
+        const updatedRows = requestList.map((student) => {
+          const discipline = "BS"+student.program + student.semester + student.section;
+          return { ...student, discipline };
         });
-      setRows(matchingStudents);
-    } else {
-      setRows([]);
-    }
-  }, [selectedDiscipline, requestList]);
+        setRows(updatedRows);
+      } else {
+        setRows([]);
+      }
+    }, [ requestList]);
   useEffect(() => {
     dispatch(getFinancialAssistanceRequests());
   }, []);
   return (
     <Container fluid>
-      <Row>
+      {/* <Row>
         <Col>
           <FormControl
             sx={{ m: 1, minWidth: 150, display: "block" }}
@@ -213,7 +205,7 @@ export default function AssistantRequest() {
             </Select>
           </FormControl>
         </Col>
-      </Row>
+      </Row> */}
       <Row>
         <Col>
         <Card className="shadow my-3 w-100 z-index-n1">

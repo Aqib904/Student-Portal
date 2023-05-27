@@ -20,6 +20,7 @@ import {
 import nullImage from "../../assets/img/no_uploaded.png";
 import { fineAcceptAction, fineRejectAction } from "../../store/actions/fineAction";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 export default function FineDetails() {
   const location = useLocation();
   const history = useHistory();
@@ -27,6 +28,7 @@ export default function FineDetails() {
   const { acceptFineloading,rejectFineloading } = useSelector((state) => state.fine);
   const data = location.state;
   const [request, setRequest] = useState("");
+  const [reason,setReason]  =useState("");
   const [confirmModal, setConfirmModal] = useState(false);
   const confirmtoggle = () => setConfirmModal(!confirmModal);
   console.log(data, "data");
@@ -121,6 +123,8 @@ export default function FineDetails() {
           <h5 className="text-center ">
             Are you Sure for {request} the Student Fine Details?
           </h5>
+          {request =="Reject" ?(<Input className="my-3" type="textarea" placeholder="Reject reason..." value={reason} onChange={(e)=>{setReason(e.target.value)}}></Input>):("")}
+          
           <div className="d-flex justify-content-center align-items-center my-3">
             {request == "Accept" ? (
               <Button
@@ -137,8 +141,12 @@ export default function FineDetails() {
               <Button
                 className="bg-site-primary w-25 mx-2"
                 onClick={() => {
-                  dispatch(fineRejectAction(data?.id, history));
-                  confirmtoggle()
+                  if(reason==""){
+                    toast.error("Please must add reject reason")
+                  }else{
+                    dispatch(fineRejectAction(data?.id,reason, history));
+                    confirmtoggle()
+                  }
                 }}
                 disabled={rejectFineloading}
               >

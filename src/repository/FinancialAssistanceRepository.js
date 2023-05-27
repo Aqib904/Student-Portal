@@ -13,7 +13,7 @@ export default {
   requestAccept(id) {
     return Repository.post(`${ACCEPTREQUEST}?id=${id}`);
   },
-  requestReject(id) {
-    return Repository.post(`${REJECTREQUEST}?id=${id}`);
+  requestReject(id,remarks) {
+    return Repository.post(`${REJECTREQUEST}?id=${id}&remarks=${remarks}`);
   },
 };
