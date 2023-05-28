@@ -35,7 +35,7 @@ export default function ManageStudentFee() {
   const location = useLocation();
   const dispatch = useDispatch();
   const data = location?.state;
-  const { feeStatus, feeStatusloading, approveLoading, rejectLoading } =
+  const { feeStatus, feeStatusloading, approveloading, rejectloading } =
     useSelector((state) => state.fee);
   console.log(feeStatus, "feeStatus");
   const [rows, setRows] = useState([]);
@@ -257,7 +257,7 @@ export default function ManageStudentFee() {
                   toggle();
                 }}
               >
-                {approveLoading ? <Spinner size="sm" /> : "🗸"}
+                {approveloading ? <Spinner size="sm" /> : "🗸"}
               </Button>
               <Button
                 size="sm"
@@ -265,7 +265,7 @@ export default function ManageStudentFee() {
                 className="mx-2"
                 onClick={()=>{confirmtoggle()}}
               >
-                {rejectLoading ? <Spinner size="sm" /> : "X"}
+                X
               </Button>
             </>
           )}
@@ -293,9 +293,9 @@ export default function ManageStudentFee() {
                   }
                  
                 }}
-                disabled={rejectLoading}
+                disabled={rejectloading}
               >
-               {rejectLoading ? <Spinner size="sm" /> : "Yes"}
+               {rejectloading ? <Spinner size="sm" /> : "Yes"}
               </Button>
         
 

@@ -52,6 +52,7 @@ import TeacherRating from "../views/Student Views/TeacherRating";
 import RatingCourses from "../views/Student Views/RatingCourses";
 import ParentDashboard from "../views/Parent Views/Dashboard";
 import ParentSetting from "../views/Parent Views/ParentSetting";
+import InstallmentRequest from "../views/Admin Views/InstallmentRequest";
 let routes = [
   {
     path: "/auth_login",
@@ -281,6 +282,14 @@ let routes = [
     layout: "admin",
     icon:"fas fa-donate ",
     name: "Financial Assistance",
+    role: "admin",
+  },
+  {
+    path: "/admin/installment-requests",
+    component: InstallmentRequest,
+    layout: "admin",
+    icon:"fas fa-exclamation-circle ",
+    name: "Installment Requests",
     role: "admin",
   },
   {

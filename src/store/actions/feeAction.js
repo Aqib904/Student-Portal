@@ -1,4 +1,4 @@
-import {FEEDETAIL,FEE_LOADING,CHALLAN,CHALLAN_LOADING,FEESTATUS,FEE_STATUS_LOADING,UPLOAD_CHALLAN_LOADING,STUDENTS,APPROVE_LOADING,REJECT_LOADING } from "../types";
+import {FEEDETAIL,FEE_LOADING,CHALLAN,INSTALLMENTSREQUESTS,CHALLAN_LOADING,FEESTATUS,FEE_STATUS_LOADING,UPLOAD_CHALLAN_LOADING,STUDENTS,APPROVE_LOADING,REJECT_LOADING } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 import { toast } from "react-toastify";
 var fee = RepositoryFactory.get("fee")
@@ -9,6 +9,21 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       if (data) {
         dispatch(feeLoading(false))
         dispatch({ type: FEEDETAIL, payload: { feeDetail: data } });
+      } else {
+        toast.error("Fee Detail loaded failed");
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const getInstallmentRequests = () => async (dispatch) => {
+    try {
+        dispatch(feeLoading(true))
+      const {data} = await fee.getInstallmentRequests()
+      if (data) {
+        dispatch(feeLoading(false))
+        dispatch({ type: INSTALLMENTSREQUESTS, payload: { installmentRequests: data } });
       } else {
         toast.error("Fee Detail loaded failed");
         throw new Error(data.error);
@@ -46,6 +61,34 @@ export const getFeeDetail = (regno) => async (dispatch) => {
         dispatch(challanLoading(false))
       } else {
         toast.error("Installments failed");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const approveInstallment = (Id) => async (dispatch) => {
+    try {
+      dispatch(approveLoading(true))
+      const {data} = await fee.approveInstallment(Id)
+      if (data=="success") {
+        toast.success("Installment approved successfully")
+        dispatch(approveLoading(false))
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  export const rejectInstallment = (Id) => async (dispatch) => {
+    try {
+      dispatch(rejectLoading(true))
+      const {data} = await fee.rejectInstallment(Id)
+      if (data=="success") {
+        toast.success("Installment reject successfully")
+        dispatch(rejectLoading(false))
+      } else {
+        throw new Error(data.error);
       }
     } catch (error) {
       alert(error.message);

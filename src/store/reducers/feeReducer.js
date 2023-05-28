@@ -8,10 +8,12 @@ import {
   UPLOAD_CHALLAN_LOADING,
   STUDENTS,
   APPROVE_LOADING,
-  REJECT_LOADING
+  REJECT_LOADING,
+  INSTALLMENTSREQUESTS
 } from "../types";
 const initialState = {
   feeDetail: [],
+  installmentRequests:[],
   challan: null,
   students: [],
   loading: false,
@@ -28,6 +30,11 @@ const feeReducer = (state = initialState, action) => {
       return {
         ...state,
         feeDetail: action.payload.feeDetail,
+      };
+      case INSTALLMENTSREQUESTS:
+      return {
+        ...state,
+        installmentRequests: action.payload.installmentRequests,
       };
     case FEE_LOADING:
       return {

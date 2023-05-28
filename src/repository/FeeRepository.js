@@ -7,9 +7,15 @@ const GETSTUDENTS = "/Admin/GetFeeStudents"
 const APPROVESTATUS = "/Admin/ApproveFee"
 const REJECTSTATUS = "/Admin/RejectFee"
 const REQUESTINSTALLMENTS = "/Student/InstallmentRequest"
+const ALLINSTALLMENTSREQUESTS = "/Admin/GetInstallmentRequests"
+const REJECTINSTALLMENT = "/Student/RejectInstallmentRequest"
+const APPROVEINSTALLMENT = "/Student/AcceptInstallmentRequest"
 export default {
     getFeeDetail(regno) {
         return Repository.get(`${FEEDETAIL}?reg_no=${regno}`);
+    },
+    getInstallmentRequests() {
+        return Repository.get(`${ALLINSTALLMENTSREQUESTS}`);
     },
     generateChallan(model) {
         return Repository.post(`${GENERATECHALLAN}`,JSON.stringify(model));
@@ -31,5 +37,11 @@ export default {
     },
     rejectFeeStatus(challanId,reason) {
         return Repository.post(`${REJECTSTATUS}?challanId=${challanId}&remarks=${reason}`);
+    },
+    approveInstallment(Id) {
+        return Repository.post(`${APPROVEINSTALLMENT}?id=${Id}`);
+    },
+    rejectInstallment(Id) {
+        return Repository.post(`${REJECTINSTALLMENT}?id=${Id}`);
     },
   };

@@ -71,6 +71,10 @@ const Teacher = (props) => {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">Student Fee</h4>
       );
+    } else if (history.location.pathname == "/admin/installment-requests") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">Installment Requests</h4>
+      );
     } else if (history.location.pathname == "/admin/addfine") {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold">

@@ -19,7 +19,6 @@ export default function AssistantRequest() {
   const [rows,setRows] = useState([])
   const [discipline, setDiscipline] = useState([]);
   const [selectedDiscipline, setSelectedDiscipline] = useState("");
-    console.log(selectedDiscipline,'setRows')
     const StripedDataGrid = styled(DataGrid)(() => ({
       [`& .${gridClasses.row}.even`]: {
         backgroundColor: "#EEEE",
@@ -158,23 +157,12 @@ export default function AssistantRequest() {
         });
       setDiscipline(programSectionSemester);
     }, [requestList]);
-    useEffect(()=>{
-      if(discipline.length > 0){
-        setSelectedDiscipline(discipline[0])
-      }else{
-        setSelectedDiscipline("")
-      }
-    },[discipline])
     useEffect(() => {
-      if (selectedDiscipline !== "") {
         const updatedRows = requestList.map((student) => {
           const discipline = "BS"+student.program + student.semester + student.section;
           return { ...student, discipline };
         });
         setRows(updatedRows);
-      } else {
-        setRows([]);
-      }
     }, [ requestList]);
   useEffect(() => {
     dispatch(getFinancialAssistanceRequests());
