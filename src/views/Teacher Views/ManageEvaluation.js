@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   Button,
   Card,
@@ -27,7 +27,9 @@ import {
   markGeneralExam,
   markMidFinal,
 } from "../../store/actions/evaluationAction";
+import { toast } from "react-toastify";
 export default function ManageEvaluation() {
+  const history = useHistory();
   const { generalloading, examloading } = useSelector(
     (state) => state.evaluation
   );
@@ -40,6 +42,7 @@ export default function ManageEvaluation() {
   const [title, setTitle] = useState("");
   const [general, setGeneral] = useState([]);
   const [finalRecord, setFinalRecord] = useState([]);
+  console.log(finalRecord,'finalRecord')
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -139,6 +142,28 @@ export default function ManageEvaluation() {
   //     },
   //   },
   // ];
+  const handleClick = (e) => {
+    e.preventDefault();
+    const hasObtainedMarksGreaterThanTotalMarks = general.some(
+      (obj) => parseInt(obj.obtained_marks) > parseInt(obj.total_marks)
+    );
+    const hasObtainedMarksOfExam = finalRecord.some(
+      (obj) => parseInt(obj.obtained_marks) > parseInt(obj.total_marks)
+    );
+    if (type === "assignment" || type === "quiz") {
+      if (hasObtainedMarksGreaterThanTotalMarks) {
+        toast.error("Obtained marks are greater than total marks.");
+      } else {
+        dispatch(markGeneralExam(general, history));
+      }
+    } else {
+      if (hasObtainedMarksOfExam) {
+        toast.error("Obtained marks are greater than total marks.");
+      } else {
+      dispatch(markMidFinal(finalRecord, history));
+      }
+    }
+  };
   useEffect(() => {
     let data = "";
     evaluationList?.map((item) => {
@@ -217,14 +242,15 @@ export default function ManageEvaluation() {
                   <Button
                     className="bg-site-primary float-right d-inline-block"
                     disabled={evaluationList.length == 0 ? true : false}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (type === "assignment" || type === "quiz") {
-                        dispatch(markGeneralExam(general));
-                      } else {
-                        dispatch(markMidFinal(finalRecord));
-                      }
-                    }}
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   if (type === "assignment" || type === "quiz") {
+                    //     dispatch(markGeneralExam(general, history));
+                    //   } else {
+                    //     dispatch(markMidFinal(finalRecord, history));
+                    //   }
+                    // }}
+                    onClick={handleClick}
                   >
                     {type === "assignment" || type === "quiz" ? (
                       generalloading ? (

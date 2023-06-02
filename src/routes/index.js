@@ -53,6 +53,9 @@ import RatingCourses from "../views/Student Views/RatingCourses";
 import ParentDashboard from "../views/Parent Views/Dashboard";
 import ParentSetting from "../views/Parent Views/ParentSetting";
 import InstallmentRequest from "../views/Admin Views/InstallmentRequest";
+import ViewInformation from "../views/Parent Views/ViewInformation";
+import AcademicDetail from "../views/Parent Views/AcademicDetail";
+import ViewAttendance from "../views/Parent Views/ViewAttendance";
 let routes = [
   {
     path: "/auth_login",
@@ -482,6 +485,24 @@ let routes = [
     layout: "parent",
     name: "Dashboard",
     icon:"fas fa-home ",
+    role: "parent",
+  },
+  {
+    path: "/parent/view-information/:id",
+    component: ViewInformation,
+    layout: "parent",
+    role: "parent",
+  },
+  {
+    path: "/parent/academic-detail/:id",
+    component: AcademicDetail,
+    layout: "parent",
+    role: "parent",
+  },
+  {
+    path: "/parent/view-attendance/:id",
+    component: ViewAttendance,
+    layout: "parent",
     role: "parent",
   },
   {

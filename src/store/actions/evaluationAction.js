@@ -2,12 +2,13 @@ import { EVALUATIONGENERAL, EVALUATIONEXAM,SESSION,EXAMMARKS,EXAM_RESULT_LOADING
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 import { toast } from "react-toastify";
 var evaluation = RepositoryFactory.get("evaluation")
-export const markGeneralExam = (list) => async (dispatch) => {
+export const markGeneralExam = (list,history) => async (dispatch) => {
     try {
       dispatch(markGeneralLoading(true))
       const {data} = await evaluation.markGeneralExam(list)
       if (data == "success") {
         toast.success(" Marked Successfully")
+        history.push("/teacher/dashboard");
         dispatch(markGeneralLoading(false))
       } else {
         alert(" Marked  failed")
@@ -16,12 +17,13 @@ export const markGeneralExam = (list) => async (dispatch) => {
       alert(error.message);
     }
   };
-  export const markMidFinal = (list) => async (dispatch) => {
+  export const markMidFinal = (list,history) => async (dispatch) => {
     try {
       dispatch(markExamLoading(true))
       const {data} = await evaluation.markMidFinal(list)
       if (data =="success") {
         toast.success("Marked Successfully")
+        history.push("/teacher/dashboard");
         dispatch(markExamLoading(false))
       } else {
         toast.error("Marked failed")
