@@ -73,6 +73,7 @@ export default function Attendance() {
     setContestData([]);
   };
   const handleAddContest = (row) => {
+    console.log(row,'row')
     const { attendance_id, enrollment_id, course_code } = row;
     setContestData([{ attendance_id, enrollment_id, course_code }]);
     confirmtoggle();

@@ -56,6 +56,11 @@ import InstallmentRequest from "../views/Admin Views/InstallmentRequest";
 import ViewInformation from "../views/Parent Views/ViewInformation";
 import AcademicDetail from "../views/Parent Views/AcademicDetail";
 import ViewAttendance from "../views/Parent Views/ViewAttendance";
+import ViewGrading from "../views/Parent Views/ViewGrading";
+import ViewExamResult from "../views/Parent Views/ViewExamResult";
+import ViewFeeDetail from "../views/Parent Views/ViewFeeDetail";
+import GenerateChildChallan from "../views/Parent Views/GenerateChallan";
+import FeeStatus from "../views/Parent Views/FeeStatus";
 let routes = [
   {
     path: "/auth_login",
@@ -502,6 +507,36 @@ let routes = [
   {
     path: "/parent/view-attendance/:id",
     component: ViewAttendance,
+    layout: "parent",
+    role: "parent",
+  },
+  {
+    path: "/parent/view-grading/:id",
+    component: ViewGrading,
+    layout: "parent",
+    role: "parent",
+  },
+  {
+    path: "/parent/view-exam-result/:id",
+    component: ViewExamResult,
+    layout: "parent",
+    role: "parent",
+  },
+  {
+    path: "/parent/view-fee-detail/:id",
+    component: ViewFeeDetail,
+    layout: "parent",
+    role: "parent",
+  },
+  {
+    path: "/parent/generate_challan/:id",
+    component: GenerateChildChallan,
+    layout: "parent",
+    role: "parent",
+  },
+  {
+    path: "/parent/fee-status/:id",
+    component: FeeStatus,
     layout: "parent",
     role: "parent",
   },

@@ -277,8 +277,8 @@ export default function AcademicDetail() {
                   className="bg-site-primary"
                   onClick={() =>
                     history.push({
-                      pathname: `/student/assessment/${courseCodee}`,
-                      state: courseCodee,
+                      pathname: `/parent/view-grading/${courseCodee}`,
+                      state: {courseCodee:courseCodee,username:username}
                     })
                   }
                 >
