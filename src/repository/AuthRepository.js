@@ -2,6 +2,7 @@ import Repository from "./Repository";
 const LOGIN = "/Login/LoginUser";
 const GETENROLLMENTSTATUS = "/Student/GetEnrollmentStatus";
 const GETUSER ="/Login/GetUser"
+const GETCHILDS = "/Parent/GetChildren"
 export default {
   login(username, password) {
     return Repository.get(`${LOGIN}/?username=${username}&password=${password}`);
@@ -11,5 +12,8 @@ export default {
   },
   GetUser(username, role) {
     return Repository.get(`${GETUSER}/?username=${username}&role=${role}`);
+  },
+  GetChilds(username) {
+    return Repository.get(`${GETCHILDS}/?username=${username}`);
   },
 };

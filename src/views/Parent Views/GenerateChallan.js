@@ -124,13 +124,23 @@ export default function GenerateChallan() {
               semesterFee: data.semesterFee,
             };
             if (numInstallments === 1) {
-              dispatch(generateChallan(obj, history));
+              dispatch(generateChallan(obj, ()=>{
+                history.push({
+                  pathname: `/parent/view-fee-detail/${data?.username}`,
+                  state: data?.username,
+                })
+              }));
               setInstallmentValues([]);
             } else {
               if (pendingFee < 1 || pendingFee == 0) {
                 toast.error("Please enter the valid installments");
               } else {
-                dispatch(requestInstallments(obj1, history));
+                dispatch(requestInstallments(obj1,()=>{
+                  history.push({
+                    pathname: `/parent/view-fee-detail/${data?.username}`,
+                    state: data?.username,
+                  })
+                }));
                 setInstallmentValues([]);
               }
             }

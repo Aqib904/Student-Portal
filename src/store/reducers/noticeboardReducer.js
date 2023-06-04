@@ -28,6 +28,11 @@ const noticeboardReducer = (state = initialState, action) => {
         ...state,
         noticeboard: action.payload.noticeboard,
       };
+      case "PIN_NOTICE":
+      return {
+        ...state,
+        noticeboard: action.payload,
+      };
     default:
       return state;
   }

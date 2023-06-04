@@ -32,16 +32,14 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       alert(error.message);
     }
   };
-  export const generateChallan = (list,history) => async (dispatch) => {
+  export const generateChallan = (list,onSuccess) => async (dispatch) => {
     try {
       dispatch(challanLoading(true))
       const {data} = await fee.generateChallan(list)
       if (data) {
         // dispatch({ type: CHALLAN, payload: { challan: data } });
         window.open(`https://localhost:44374/ChallanFiles/${data}`, '_blank');
-        history.push({
-          pathname: `/student/fee_detail`
-        })
+        onSuccess()
         dispatch(challanLoading(false))
       } else {
         toast.error("Challan loaded failed");
@@ -50,14 +48,12 @@ export const getFeeDetail = (regno) => async (dispatch) => {
       alert(error.message);
     }
   };
-  export const requestInstallments = (list,history) => async (dispatch) => {
+  export const requestInstallments = (list,onSuccess) => async (dispatch) => {
     try {
       dispatch(challanLoading(true))
       const {data} = await fee.requestInstallments(list)
       if (data == "success") {
-        history.push({
-          pathname: `/student/fee_detail`
-        })
+       onSuccess()
         dispatch(challanLoading(false))
       } else {
         toast.error("Installments failed");

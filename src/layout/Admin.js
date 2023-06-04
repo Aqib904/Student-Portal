@@ -105,7 +105,7 @@ const Teacher = (props) => {
       <div className="d-lg-flex d-none">
         <Sidebar sidebarToggle={toggle} outsideClose={outsideClose} />
         <div className="w-100 main-section">
-          <Header />
+          <Header/>
           <div className="container">
             <h4 className="my-3">{dashboardText()}</h4>
           </div>

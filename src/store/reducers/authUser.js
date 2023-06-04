@@ -1,11 +1,20 @@
-import { LOGIN, LOGOUT, LOGIN_FAILURE, LOGIN_LOADING ,ENROLLMENTSTATUS,USER} from "../types";
+import {
+  LOGIN,
+  LOGOUT,
+  LOGIN_FAILURE,
+  LOGIN_LOADING,
+  ENROLLMENTSTATUS,
+  USER,
+  CHILD,
+} from "../types";
 const initialState = {
   isAuthenticated: false,
   token: "",
   error: "",
-  loading:false,
-  status:"",
-  user:{}
+  loading: false,
+  status: "",
+  user: {},
+  childs: [],
 };
 const authUser = (state = initialState, action) => {
   switch (action.type) {
@@ -27,17 +36,22 @@ const authUser = (state = initialState, action) => {
         token: "",
         error: "",
       };
-      case USER:
-        return {
-          ...state,
-          user: action.payload.user,
-        };
+    case USER:
+      return {
+        ...state,
+        user: action.payload.user,
+      };
+    case CHILD:
+      return {
+        ...state,
+        childs: action.payload.childs,
+    };
     case LOGIN_LOADING:
       return {
         ...state,
         loading: action.payload,
       };
-      case ENROLLMENTSTATUS:
+    case ENROLLMENTSTATUS:
       return {
         ...state,
         status: action.payload.statuss,

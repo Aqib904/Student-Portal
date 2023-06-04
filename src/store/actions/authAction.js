@@ -1,7 +1,7 @@
 import { toastSuccess, toastWarning } from "../../components/global/Toast";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 import { toast } from "react-toastify";
-import { LOGIN, LOGOUT,LOGIN_FAILURE,LOGIN_LOADING ,ENROLLMENTSTATUS,USER} from "../types";
+import { LOGIN, LOGOUT,LOGIN_FAILURE,LOGIN_LOADING ,ENROLLMENTSTATUS,USER,CHILD} from "../types";
 var auth = RepositoryFactory.get("auth");
 export const login = (username, password) => async (dispatch) => {
   console.log(username,password,'data')
@@ -47,6 +47,22 @@ export const GetUser = (username, role) => async (dispatch) => {
       dispatch({ type: USER, payload: { user: data } });
     } else {
       toastWarning("User Loaded Failed")
+      throw new Error(data.error);
+    }
+  } catch (error) {
+    dispatch({ type: LOGIN_FAILURE, payload: { error: error.message } });
+  }
+};
+export const GetChilds = (username) => async (dispatch) => {
+  try {
+    dispatch(loginLoading(true))
+    const { data } = await auth.GetChilds(username)
+    if (data) {
+      dispatch({ type: CHILD, payload: { childs: data } });
+      dispatch(loginLoading(false))
+    } else {
+      toastWarning("Childs Loaded Failed")
+      dispatch(loginLoading(false))
       throw new Error(data.error);
     }
   } catch (error) {
