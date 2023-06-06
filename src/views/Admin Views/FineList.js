@@ -1,11 +1,21 @@
 import React from "react";
-import { useEffect ,useState} from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, Col, Container, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Row,
+} from "reactstrap";
 import { getFineList } from "../../store/actions/fineAction";
+// import { DataGridPro } from "@mui/x-data-grid-pro";
+// import { GridToolbar, GRID_CHECKBOX_SELECTION_COL_DEF } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
-import { GridToolbar } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import user from "../../assets/img/user.png";
 import LoadingOverlay from "react-loading-overlay";
@@ -13,20 +23,25 @@ import { useHistory } from "react-router-dom";
 export default function FineList() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { fineList ,loading } = useSelector((state) => state.fine);
-  const [rows,setRows] = useState([])
+  const { fineList, loading } = useSelector((state) => state.fine);
+  const [rows, setRows] = useState([]);
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
     },
   }));
+  // const StripedDataGrid = styled(DataGridPro)(() => ({
+  //   [`& .${gridClasses.row}.even`]: {
+  //     backgroundColor: "#EEEE",
+  //   },
+  // }));
   const ImageCell = (props) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleImageClick = () => {
       setShowModal(!showModal);
     };
-   
+
     return (
       <>
         <div onClick={handleImageClick}>
@@ -64,23 +79,23 @@ export default function FineList() {
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
-        field: "profile_photo",
-        headerName: "Profile Photo",
-        width: 100,
-        renderCell: (params) => {
-          return <ImageCell row={params.row} />;
-        },
+      field: "profile_photo",
+      headerName: "Profile Photo",
+      width: 100,
+      renderCell: (params) => {
+        return <ImageCell row={params.row} />;
       },
-      {
-        field: "name",
-        headerName: "Name",
-        width: 240,
-      },
-      {
-        field: "reg_no",
-        headerName: "Reg no",
-        width: 170,
-      },
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      width: 240,
+    },
+    {
+      field: "reg_no",
+      headerName: "Reg no",
+      width: 170,
+    },
     {
       field: "discipline",
       headerName: "Descipline",
@@ -92,66 +107,96 @@ export default function FineList() {
       headerName: "Status",
       width: 150,
       renderCell: (params) => {
-        console.log(params.row,'params')
+        console.log(params.row, "params");
         return (
           <>
-           <span>{params.row.status==null&&params.row.receipt==null?"Pending":params.row.status==null&&params.row.receipt!=null?"Paid":params.row.status==false?"Rejected":"Approved"}</span>
+            <span>
+              {params.row.status == null && params.row.receipt == null
+                ? "Pending"
+                : params.row.status == null && params.row.receipt != null
+                ? "Paid"
+                : params.row.status == false
+                ? "Rejected"
+                : "Approved"}
+            </span>
           </>
         );
       },
     },
     {
-        field: "detail",
-        type: "detail",
-        headerName: "Fine Details",
-        width: 150,
-        renderCell: (params) => {
-          return (
-            <>
-              <Button
-                className="bg-site-success"
-                onClick={() =>
-                    history.push({
-                      pathname: `/admin/fine_details/:${params.row.id}`,
-                      state: params.row,
-                    })
-                  }
-              >    
-                  <i class="fas fa-eye"></i>
-              </Button>
-            </>
-          );
-        },
+      field: "detail",
+      type: "detail",
+      headerName: "Fine Details",
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <>
+            <Button
+              className="bg-site-success"
+              onClick={() =>
+                history.push({
+                  pathname: `/admin/fine_details/:${params.row.id}`,
+                  state: params.row,
+                })
+              }
+            >
+              <i class="fas fa-eye"></i>
+            </Button>
+          </>
+        );
       },
+    },
   ];
-  console.log(fineList,'fineList')
+  console.log(fineList, "fineList");
   useEffect(() => {
     const updatedArray = fineList.map((list) => ({
       ...list,
       discipline: `BS${list.program}${list.semester}${list.section}`,
     }));
-    setRows(updatedArray)
+    setRows(updatedArray);
   }, [fineList]);
   useEffect(() => {
     dispatch(getFineList());
-  },[]);
+  }, []);
   return (
     <Container>
       <Row>
-      <Col sm={12} md={12}>
+        <Col sm={12} md={12}>
           <Card className="shadow my-3 w-100 z-index-n1">
-            <LoadingOverlay active={loading} spinner text="Fine List Loading....">
-            <StripedDataGrid
-              autoHeight
-              autoWidth
-              columns={columns}
-              rows={rows}
-              disableSelectionOnClick={false}
-              getRowClassName={(params) =>
-                params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
-              }
-              hideFooterPagination={true}
-            />
+            <LoadingOverlay
+              active={loading}
+              spinner
+              text="Fine List Loading...."
+            >
+              <StripedDataGrid
+                autoHeight
+                autoWidth
+                columns={columns}
+                rows={rows}
+                disableSelectionOnClick={false}
+                getRowClassName={(params) =>
+                  params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
+                }
+                hideFooterPagination={true}
+              />
+               {/* <StripedDataGrid
+                    autoHeight
+                    autoWidth
+                    columns={columns}
+                    rows={rows}
+                    initialState={{
+                      pinnedColumns: {
+                        left: ['profile_photo'],
+                      },
+                    }}
+                    checkboxSelection
+                    disableSelectionOnClick
+                    getRowClassName={(params) =>
+                      params.indexRelativeToCurrentPage % 2 === 0
+                        ? "odd"
+                        : "even"
+                    }
+                  /> */}
             </LoadingOverlay>
           </Card>
         </Col>

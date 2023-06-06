@@ -1,11 +1,11 @@
 $theme-colors: (
-  "site-primary": rgb(9,157,120),
-  "site-success":#099d78,
-  "site-table":#c1fcbd,
-  "site-grey":#c8c6c6,
-  "site-table-none":#ffffff,
-  "site-brown":#0cc899,
-
+  "site-primary": rgb(9, 157, 120),
+  "site-success": #099d78,
+  "site-table": #e1ffdf,
+  "site-icon": #1572f2,
+  "site-grey": #c8c6c6,
+  "site-table-none": #ffffff,
+  "site-brown": #0cc899,
 );
 @import "node_modules/bootstrap/scss/bootstrap";
 //Splach Screen
@@ -64,7 +64,7 @@ $theme-colors: (
     border-radius: 24px;
   }
 }
-.side-batch{
+.side-batch {
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -91,14 +91,14 @@ $theme-colors: (
   padding: 0px;
 }
 .dropdown-item:hover {
-  background-color: rgb(9,157,120) !important;
+  background-color: rgb(9, 157, 120) !important;
 }
 .side-nav-dropdrown {
   padding: 0px !important;
 }
-.sidebar-texts{
+.sidebar-texts {
   padding: 0px !important;
-   margin: 0px !important;
+  margin: 0px !important;
 }
 .sidebar {
   padding-right: 0px !important;
@@ -134,8 +134,8 @@ $theme-colors: (
       align-items: center !important;
       .sidebar-icon {
         width: 18px;
-        .icon-sty{
-          color:white;
+        .icon-sty {
+          color: white;
         }
         svg {
           path {
@@ -151,7 +151,6 @@ $theme-colors: (
         background-color: theme-color("site-primary");
         border-bottom-left-radius: 15px;
         border-top-left-radius: 15px;
-       
       }
     }
   }
@@ -172,16 +171,20 @@ body {
   padding-bottom: 5px;
 }
 ::-webkit-scrollbar {
-  width: 0.313rem;
-  height: 0.313rem;
+  width:0.111rem;
+  height: 0rem;
 }
 ::-webkit-scrollbar-track {
   background: theme-color("site-secondary1");
 }
 ::-webkit-scrollbar-thumb {
-  background-color: theme-color("site-muted"); /* color of the scroll thumb */
+  background-color: #cecece; /* color of the scroll thumb */
   border-radius: 1.25rem; /* roundness of the scroll thumb */
 }
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
 .lgn-heading {
   font-weight: 700;
 }
@@ -217,7 +220,7 @@ body {
     box-shadow: 0px 6px 50px 4px rgba(132, 132, 132, 0.15);
     border-radius: 12px !important;
     &-header {
-      background: rgb(9,157,120) !important;
+      background: rgb(9, 157, 120) !important;
       border-radius: 12px 12px 0px 0px !important;
       &__title {
         font-family: "DM Sans", sans-serif;
@@ -274,9 +277,9 @@ body {
     height: 410px;
   }
   .headerProfile-box {
-    padding: 0px 30px;
+    padding: 0px 10px;
     height: 50px;
-    background: #f5fdff;
+    // background: #f5fdff;
     border-radius: 30px !important;
     &__name {
       white-space: nowrap;
@@ -356,7 +359,7 @@ body {
     }
   }
   .profile-box {
-    border-radius: 20px; 
+    border-radius: 20px;
     &__img {
       border-radius: 50px !important;
     }
@@ -397,10 +400,10 @@ body {
     right: 43px;
   }
   .headerProfileImg {
-    left: -36px;
-    top: -5px;
-    width: 56px;
-    height: 56px;
+    left: -16px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
     border-radius: 50% !important;
     @media screen and (max-width: 992px) {
       width: 51px;
@@ -418,25 +421,27 @@ body {
   }
 }
 //Dashboard
-.attendance{
-  & .attendance-btn{
-  background-color: #099d78;
-  color:white;
-}
-  & .attendance-btn:hover{
-  color:white;
-}
+.attendance {
+  & .attendance-btn {
+    background-color: #099d78;
+    color: white;
+  }
+  & .attendance-btn:hover {
+    color: white;
+  }
 }
 .css-f3jnds-MuiDataGrid-columnHeaders {
- background-color: #099d78;
- color:white;
+  background-color: #099d78;
+  color: white;
 }
-.css-1lfn3c4-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer {
+.css-1lfn3c4-MuiDataGrid-root
+  .MuiDataGrid-columnHeader--alignCenter
+  .MuiDataGrid-columnHeaderTitleContainer {
   background-color: #099d78;
 }
 .datePicker-Card {
   text-align: center;
-  height:0px;
+  height: 0px;
   .DatePicker__input {
     padding: 15 5px 0 10px;
     width: 100%;
@@ -463,11 +468,11 @@ body {
     color: #fff;
   }
 }
-.form-check-input{
-  color:rgb(9,157,120);
+.form-check-input {
+  color: rgb(9, 157, 120);
 }
 @media screen and (max-width: 768px) {
-  .camera-button{
+  .camera-button {
     display: none;
   }
 }
@@ -508,3 +513,88 @@ body {
     margin-top: 16px;
   }
 }
+
+.notification-item {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  // max-height: 105px;
+  margin-top: 6px;
+}
+.notification-header {
+  border-top-left-radius: 18px;
+  border-top-right-radius: 58px;
+  border-bottom: none;
+  font-size: 16px;
+}
+.custom-modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.custom-modal-body::-webkit-scrollbar {
+  width: "7px";
+}
+.custom-modal-body::-webkit-scrollbar-track {
+  width: "0px";
+}
+.custom-modal-body::-webkit-scrollbar-thumb {
+  background: #cecece;
+  border-radius: "10px";
+}
+.custom-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.status-true {
+  background-color: rgba(243, 243, 243, 0);
+}
+
+.status-false {
+  background-color: rgb(251, 250, 250);
+}
+
+.status-false:hover {
+  background-color: rgba(235, 235, 235, 0.432);
+  box-shadow: 0px 0px 1px 1px #7c7c7c6a;
+}
+.notification-time {
+  color: rgb(154, 153, 153);
+  font-size: 10px;
+  margin-top: 8px;
+}
+.notification-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #1572f2;
+  border-radius: 50%;
+  margin-left: 6px;
+  margin-top: 12px;
+}
+.cursor {
+  cursor: pointer;
+}
+.vibrate {
+  animation: vibrateAnimation 2s infinite;
+}
+
+@keyframes vibrateAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+

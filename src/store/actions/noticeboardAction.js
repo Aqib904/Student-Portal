@@ -3,6 +3,8 @@ import {
   SECTION_LIST_LOADING,
   ADD_NOTICE_LOADING,
   NOTICEBOARD,
+  NOTIFICATION,
+  NOTIFICATION_LOADING
 } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 import { toast } from "react-toastify";
@@ -101,6 +103,26 @@ export const addNoticeBoard = (list) => async (dispatch) => {
     console.log(error.message);
     dispatch(addNoticeLoading(false));
   }
+};
+export const getNotification = (username) => async (dispatch) => {
+  dispatch(notificationLoading(true));
+  try {
+    const { data } = await noticeboard.getNotification(username);
+    if (data) {
+      dispatch({ type: NOTIFICATION, payload: { notification: data } });
+      dispatch(notificationLoading(false));
+    } else {
+      toast.error("Notification loaded failed");
+      dispatch(notificationLoading(false));
+      throw new Error(data.error);
+    }
+  } catch (error) {
+    alert(error.message);
+    dispatch(notificationLoading(false));
+  }
+};
+export const notificationLoading = (val) => async (dispatch) => {
+  dispatch({ type: NOTIFICATION_LOADING, payload: val });
 };
 export const sectionListLoading = (val) => async (dispatch) => {
   dispatch({ type: SECTION_LIST_LOADING, payload: val });
