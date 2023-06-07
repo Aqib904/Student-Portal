@@ -107,7 +107,7 @@ export default function FineList() {
       headerName: "Status",
       width: 150,
       renderCell: (params) => {
-        console.log(params.row, "params");
+        //console.log(params.row, "params");
         return (
           <>
             <span>
@@ -147,7 +147,7 @@ export default function FineList() {
       },
     },
   ];
-  console.log(fineList, "fineList");
+  //console.log(fineList, "fineList");
   useEffect(() => {
     const updatedArray = fineList.map((list) => ({
       ...list,

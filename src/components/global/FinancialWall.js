@@ -36,7 +36,7 @@ const PictureWall = ({ fileList, setFileList }) => {
     const filteredList = newFileList.filter((file) => checkFileType(file));
     setFileList(filteredList);
   };
-  console.log(fileList);
+  //console.log(fileList);
   const uploadButton = (
     <div>
       <PlusOutlined />

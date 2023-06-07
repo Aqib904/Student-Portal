@@ -37,7 +37,7 @@ export default function ManageStudentFee() {
   const data = location?.state;
   const { feeStatus, feeStatusloading, approveloading, rejectloading } =
     useSelector((state) => state.fee);
-  console.log(feeStatus, "feeStatus");
+  //console.log(feeStatus, "feeStatus");
   const [rows, setRows] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [challanImage, setChallanImage] = useState(null);
@@ -58,7 +58,7 @@ export default function ManageStudentFee() {
   const toggle = () => {
     setModal(!modal);
   };
-  console.log(rows, "rows");
+  //console.log(rows, "rows");
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {

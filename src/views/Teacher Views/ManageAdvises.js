@@ -42,7 +42,7 @@ export default function ManageAdvises() {
   const [remainingCourses, setRemainingCourses] = useState([]);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  console.log(regularCourses, failedCourses, remainingCourses, data, "data");
+  //console.log(regularCourses, failedCourses, remainingCourses, data, "data");
   const Columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {

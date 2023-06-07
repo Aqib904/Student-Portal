@@ -42,7 +42,7 @@ export default function ManageFinancialAssistance() {
     setIsModalOpen(!isModalOpen);
   };
   let data = location?.state;
-  console.log(requestImages, "data");
+  //console.log(requestImages, "data");
   useEffect(() => {
     dispatch(getFinancialAssistanceImages(data?.id));
   }, [data?.id]);

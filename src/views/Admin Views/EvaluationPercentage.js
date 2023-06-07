@@ -21,7 +21,7 @@ export default function EvaluationPercentage() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { feedback } = useSelector((state) => state.assessment);
-  console.log(feedback, "feedback");
+  //console.log(feedback, "feedback");
   const data = location.state;
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
@@ -30,7 +30,7 @@ export default function EvaluationPercentage() {
   }));
   const [rows, setRows] = useState([]);
   let [seriesMerge, setSeriesMerge] = useState([]);
-  console.log(seriesMerge, "length");
+  //console.log(seriesMerge, "length");
   let [seriesIndividual, setSeriesIndividual] = useState([0, 0, 0, 0]);
   let [options, setOptions] = useState({
     labels: ["Excellent", "Good", "Average", "Poor"],

@@ -300,7 +300,7 @@ export default function TeacherDashboard() {
     let tempdata = [];
     let index = 0;
     contestList.map((item) => {
-      console.log(item,'item')
+      //console.log(item,'item')
       index++;
       return tempdata.push({
         attendance_id: item.attendance_id,

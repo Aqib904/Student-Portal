@@ -39,7 +39,7 @@ export const requestFinancialAssistance =
         dispatch({ type: ASSISTANCEREQUESTS, payload: { assistanceRequestList: data } });
         dispatch(getRequestLoading(false))
       } else {
-        console.log("Request load failed")
+        //console.log("Request load failed")
         dispatch(getRequestLoading(false))
         throw new Error(data.error);
       }
@@ -51,10 +51,10 @@ export const requestFinancialAssistance =
     try {
       const { data } = await financialAssistance.getFinancialAssistanceImages(id)
       if (data) {
-        console.log(data,'images')
+        //console.log(data,'images')
         dispatch({ type: ASSISTANCEREQUESTSIMAGES, payload: { assistanceRequestImages: data } });
       } else {
-        console.log("Images loaded failed")
+        //console.log("Images loaded failed")
         throw new Error(data.error);
       }
     } catch (error) {

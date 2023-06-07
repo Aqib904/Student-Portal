@@ -9,9 +9,9 @@ import { Link, useLocation } from "react-router-dom";
 export default function TeacherRating() {
   const location = useLocation();
   const data = location?.state;
-  console.log(data, "data");
+  //console.log(data, "data");
   const [rows, setRows] = useState([]);
-  console.log(rows, "<rows>");
+  //console.log(rows, "<rows>");
   const [individualOptions, setIndividualOptions] = useState({});
   const [individualSeries, setIndividualSeries] = useState([]);
   const [columns, setColumns] = useState([]);
@@ -65,7 +65,7 @@ export default function TeacherRating() {
   //     },
   //   },
   // ];
-  console.log(data, "data>>>>");
+  //console.log(data, "data>>>>");
   useEffect(() => {
     if (data) {
       const categories = [];

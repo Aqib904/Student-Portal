@@ -53,7 +53,7 @@ export default function ManageAttendance() {
   const [program, setProgram] = useState([
     { course_code: "", course_name: "" },
   ]);
-  console.log(attendanceList, "location");
+  //console.log(attendanceList, "location");
   // const [decipline, setDecipline] = useState([
   //   { id: "", program: "", semester: "", section: "" },
   // ]);

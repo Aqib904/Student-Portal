@@ -27,7 +27,7 @@ export default function Fee() {
       data.otherFee +
       data.extraCourseFee +
       data.addmissionFee;
-    console.log(totalAmount, "totalAmount");
+    //console.log(totalAmount, "totalAmount");
     history.push({
       pathname: `/parent/generate_challan/${data.id}`,
       state: {

@@ -24,7 +24,7 @@ export default function StudentFee() {
   const [discipline, setDiscipline] = useState([]);
   const [selectedDiscipline, setSelectedDiscipline] = useState("");
   const [rows, setRows] = useState([]);
-  console.log(rows, "rows");
+  //console.log(rows, "rows");
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -90,7 +90,7 @@ export default function StudentFee() {
       headerName: "Status",
       width: 130,
       renderCell: (params) => {
-        console.log(params.row)
+        //console.log(params.row)
         return (
           <>
             <span>

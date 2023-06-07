@@ -172,7 +172,7 @@ export default function AttendancePercentage() {
     <>
       <Col sm={12} md={12} lg={12} className="attendance">
       <LoadingOverlay active={loading} spinner text="Attendance Percentage Loading....">
-        <Card className="shadow my-4 w-100 d-inline-block">
+        <Card className=" attendance-card shadow my-4 w-100 d-inline-block">
           <CardHeader>Attendance & Grading</CardHeader>
           {finalattendance?.map((item) => {
             return (

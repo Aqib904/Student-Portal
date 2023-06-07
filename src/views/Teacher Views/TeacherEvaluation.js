@@ -20,7 +20,7 @@ export default function TeacherEvaluation() {
       backgroundColor: "#EEEE",
     },
   }));
-  console.log(rows, "rows");
+  //console.log(rows, "rows");
   const columns = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {

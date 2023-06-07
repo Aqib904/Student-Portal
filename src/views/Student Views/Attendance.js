@@ -36,7 +36,7 @@ export default function Attendance() {
   const dispatch = useDispatch();
   const location = useLocation();
   const rowData = location.state;
-  console.log(rowData, "rowData");
+  //console.log(rowData, "rowData");
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -96,7 +96,7 @@ export default function Attendance() {
   //     ]);
   //   }
   // };
-  console.log(contestData, "contestData");
+  //console.log(contestData, "contestData");
   const myoption = {
     labels: ["Percentage"],
     chart: {
@@ -365,7 +365,7 @@ export default function Attendance() {
     setAllData(allData); // Set the allData state variable
   }, [rowData.detail]);
 
-  console.log(absentslist, "absentsList");
+  //console.log(absentslist, "absentsList");
   // useEffect(() => {
   //   let tempclass = [];
   //   let templab = [];

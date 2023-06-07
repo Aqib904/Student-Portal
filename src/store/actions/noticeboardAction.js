@@ -54,10 +54,10 @@ export const getNoticeboard = (username) => {
       }
       const { data } = await noticeboard.getNoticeboard(username);
       const storedIds = new Set(storedData.map((item) => item.id));
-      console.log(storedData, "storedData");
+      //console.log(storedData, "storedData");
       const updatedData = [...storedData];
-      console.log(updatedData, "updateData");
-      console.log(storedIds, "storedIds");
+      //console.log(updatedData, "updateData");
+      //console.log(storedIds, "storedIds");
       data.forEach((item) => {
         if (!storedIds.has(item.id)) {
           updatedData.push(item);
@@ -73,14 +73,14 @@ export const getNoticeboard = (username) => {
       dispatch({ type: NOTICEBOARD, payload: { noticeboard: finalData } });
       dispatch(sectionListLoading(false));
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 };
 
 export const pinNotice = (username, index, noticeboard) => async (dispatch) => {
   const pinnedNotice = noticeboard[index];
-  console.log(pinnedNotice,'notice>')
+  //console.log(pinnedNotice,'notice>')
   const updatedNoticeboard = [
     pinnedNotice,
     ...noticeboard.filter((_, idx) => idx !== index),
@@ -96,11 +96,11 @@ export const addNoticeBoard = (list) => async (dispatch) => {
       toast.success("Notice added Successfully");
       dispatch(addNoticeLoading(false));
     } else {
-      console.log("Notice added  failed");
+      //console.log("Notice added  failed");
       dispatch(addNoticeLoading(false));
     }
   } catch (error) {
-    console.log(error.message);
+    //console.log(error.message);
     dispatch(addNoticeLoading(false));
   }
 };
@@ -119,6 +119,19 @@ export const getNotification = (username) => async (dispatch) => {
   } catch (error) {
     alert(error.message);
     dispatch(notificationLoading(false));
+  }
+};
+export const seenNotification = (id) => async (dispatch) => {
+  try {
+    dispatch(addNoticeLoading(true));
+    const { data } = await noticeboard.seenNotification(id);
+    if (data == "Seen") {
+      console.log("Seen");
+    } else {
+      console.log("Seen failed");
+    }
+  } catch (error) {
+    console.log(error.message);
   }
 };
 export const notificationLoading = (val) => async (dispatch) => {

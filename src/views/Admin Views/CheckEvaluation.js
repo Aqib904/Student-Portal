@@ -43,7 +43,7 @@ export default function CheckEvaluation() {
     from: "",
     to: "",
   });
-  console.log(selectedDayRange, "selectDay");
+  //console.log(selectedDayRange, "selectDay");
   const [select, setSelect] = useState("FALL2019");
   const [date, setDate] = useState({ start_date: "", end_date: "" });
   let sessionData = ["FALL2019","SPRING2020","FALL2020"];

@@ -7,7 +7,7 @@ import { Image } from "react-bootstrap";
 export default function Advices() {
   const dispatch = useDispatch();
   const { loading, advicesList } = useSelector((state) => state.courseAdvisor);
-  console.log(advicesList, "advicesList");
+  //console.log(advicesList, "advicesList");
   const { token } = useSelector((state) => state.authUser);
   useEffect(() => {
     dispatch(getAdvices(token?.username));

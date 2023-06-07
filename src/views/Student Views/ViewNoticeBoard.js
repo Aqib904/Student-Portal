@@ -95,7 +95,7 @@ import unpinIcon from "../../assets/img/gps.png";
 export default function ViewNoticeBoard() {
   const dispatch = useDispatch();
   const { noticeboard, loading } = useSelector((state) => state.noticeboard);
-  console.log(noticeboard, "noticeboard");
+  //console.log(noticeboard, "noticeboard");
   const { token } = useSelector((state) => state.authUser);
   useEffect(() => {
     dispatch(getNoticeboard(token?.username));
@@ -117,7 +117,7 @@ export default function ViewNoticeBoard() {
       tempdata = [...storedData];
     }
     tempdata.push(pinnedNotice);
-    console.log(tempdata, "tempdata");
+    //console.log(tempdata, "tempdata");
     dispatch(pinNotice(token?.username, index, tempdata));
   };
 

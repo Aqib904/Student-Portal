@@ -12,7 +12,7 @@ function Timetable() {
   const { token, status } = useSelector((state) => state.authUser);
   const { timetable,loading } = useSelector((state) => state.timetable);
   const [weeklytime, setWeeklyTime] = useState([]);
-  console.log(weeklytime,'weeklytime');
+  //console.log(weeklytime,'weeklytime');
   const [day, setDay] = useState([]);
   const weekday = [
     "Sunday",
@@ -177,7 +177,7 @@ function Timetable() {
     });
     setWeeklyTime(tempdata);
   }, [timetable]);
-  console.log(timetable,'timetable')
+  //console.log(timetable,'timetable')
   // useEffect(() => {
   //   let tempdata = [];
   //   let index = 0;

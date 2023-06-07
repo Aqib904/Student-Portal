@@ -26,14 +26,14 @@ export default function GenerateChallan() {
   const history = useHistory();
   const location = useLocation();
   let data = location.state;
-  console.log(data,'data>')
+  //console.log(data,'data>')
   const dispatch = useDispatch();
   const { challanloading, feeDetail } = useSelector((state) => state.fee);
   const [numInstallments, setNumInstallments] = useState("");
   const [installments, setInstallments] = useState([]);
   const [installmentValues, setInstallmentValues] = useState([]);
   const [pendingFee, setPendingFee] = useState("");
-  console.log(pendingFee, "pendingFee");
+  //console.log(pendingFee, "pendingFee");
   function generateInstallments(totalFee, numInstallments) {
     let installments = [];
     if (numInstallments === 1) {
@@ -73,7 +73,7 @@ export default function GenerateChallan() {
   function handleInstallmentChange(index, value) {
     const updatedValues = [...installmentValues];
     updatedValues[index] = value;
-    console.log(updatedValues, "updatedValues");
+    //console.log(updatedValues, "updatedValues");
     setInstallmentValues(updatedValues);
     const pending =
       data.totalAmount -

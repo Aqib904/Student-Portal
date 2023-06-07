@@ -28,7 +28,7 @@ export default function InstallmentRequest() {
   const [installmentId, setInstallmentId] = useState("");
   const [confirmModal, setConfirmModal] = useState(false);
   const confirmtoggle = () => setConfirmModal(!confirmModal);
-  console.log(installmentRows, "install");
+  //console.log(installmentRows, "install");
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);

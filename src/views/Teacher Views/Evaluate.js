@@ -12,7 +12,7 @@ export default function Evaluate() {
         (state) => state.teacherevaluation
       );
     const data = location?.state;
-    console.log(data,'data');
+    //console.log(data,'data');
     const [questionss, setQuestionss] = useState([]);
     const options = ["Excellent", "Good", "Average", "Poor"];
     const [currentPage, setCurrentPage] = useState(0);
@@ -24,7 +24,7 @@ export default function Evaluate() {
       if (answers.length != questionss.length) {
         toast.error("Please complete the evaluation");
       } else {
-        console.log(submit,'submit')
+        //console.log(submit,'submit')
         dispatch(evaluatePeerTeacher(submit, ()=>{
             history.push("/teacher/teacher-evaluation")
         }));
@@ -135,7 +135,7 @@ export default function Evaluate() {
           reg_no: data?.teacher_id,
           evaluationAnswers: answers,
         };
-        console.log(answers,'answers')
+        //console.log(answers,'answers')
         setSubmit(tempdata);
       }
     }, [answers]);

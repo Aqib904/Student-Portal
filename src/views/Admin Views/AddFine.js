@@ -43,7 +43,7 @@ export default function AddFine() {
       backgroundColor: "#EEEE",
     },
   }));
-  console.log(studentsList, "studentsLists");
+  //console.log(studentsList, "studentsLists");
   const ImageCell = (props) => {
     const [showModal, setShowModal] = useState(false);
 

@@ -23,7 +23,7 @@ export default function ManageAssessment() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { questions } = useSelector((state) => state.assessment);
-  console.log(questions,'questions')
+  //console.log(questions,'questions')
   const [questionss, setQuestionss] = useState([]);
   const options = ["Excellent", "Good", "Average", "Poor"];
   const [currentPage, setCurrentPage] = useState(0);
@@ -142,7 +142,7 @@ export default function ManageAssessment() {
         reg_no: token?.username,
         evaluationAnswers: answers,
       };
-      console.log(answers,'answers')
+      //console.log(answers,'answers')
       setSubmit(tempdata);
     }
   }, [answers]);

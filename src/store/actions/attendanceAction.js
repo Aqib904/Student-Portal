@@ -37,7 +37,7 @@ export const getStudentsList = (id, section) => async (dispatch) => {
   }
 };
 export const getAbsentsList = (enrollmentId) => async (dispatch) => {
-  console.log(enrollmentId,'enrollmentIdAction');
+  //console.log(enrollmentId,'enrollmentIdAction');
   try {
     const response = await fetch(`https://localhost:44374/api/Student/GetAbsentList?eid=${enrollmentId}`, {
       method: 'GET',
@@ -64,9 +64,9 @@ export const markAttendance =
       fileList.forEach((item) => {       
           formData.append(`${item.name}`, item.originFileObj);
       });
-      console.log("FormData:");
+      //console.log("FormData:");
       for (let [key, value] of formData.entries()) {
-        console.log(key, value);
+        //console.log(key, value);
       }
       const response = await fetch(
         "https://localhost:44374/api/Teacher/MarkAttendance",

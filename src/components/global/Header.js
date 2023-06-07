@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TogglerDark from "../../assets/img/TogglerDark.svg";
 import logo from "../../assets/img/biit.png";
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetUser } from "../../store/actions/authAction";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { getNotification } from "../../store/actions/noticeboardAction";
+import { getNotification, seenNotification } from "../../store/actions/noticeboardAction";
 import { NotificationImportant, Settings } from "@material-ui/icons";
 import Logout from "@mui/icons-material/Logout";
 import {
@@ -28,20 +28,21 @@ import moment from "moment";
 import LoadingOverlay from "react-loading-overlay";
 const Header = (props) => {
   const history = useHistory();
+  const dropdownRef = useRef(null);
   const { token, user } = useSelector((state) => state.authUser);
   const { notification, notificationLoading } = useSelector(
     (state) => state.noticeboard
   );
-  console.log(notificationLoading, "notification");
   const dispatch = useDispatch();
   const [isMobile, setIsMobile] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
   const [sortNotification, setSortNotification] = useState([]);
   const [falseStatusCount, setFalseStatusCount] = useState(0);
-  console.log(sortNotification, "sortNotification");
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  const toggleDropdown = () => setProfileDropdown(!profileDropdown);
+  const toggleDropdown = () => {
+    setProfileDropdown(!profileDropdown);
+  };
   useEffect(() => {
     updatePredicate();
     window.addEventListener("resize", updatePredicate);
@@ -53,6 +54,19 @@ const Header = (props) => {
   const updatePredicate = () => {
     setIsMobile(window.innerWidth < 992);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setProfileDropdown(!profileDropdown);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [profileDropdown]);
   useEffect(() => {
     dispatch(GetUser(token?.username, token?.role));
   }, [token]);
@@ -106,6 +120,8 @@ const Header = (props) => {
         dateTime: formattedTimeDiff,
       };
     });
+    //console.log(updatedNotifications, "updatedNotifications");
+
     const falseCount = updatedNotifications.filter(
       (notification) => !notification.status
     ).length;
@@ -140,10 +156,17 @@ const Header = (props) => {
               <div
                 className=" bg-site-profilebg  profile-box d-flex align-items-center justify-content-center cursor-pointer"
                 onClick={() => {
-                  toggleDropdown()
+                  toggleDropdown();
                 }}
               >
-                <img src={ArrowDown} alt="drop-down" className="ml-3" onClick={()=>{toggleDropdown()}}/>
+                <img
+                  src={ArrowDown}
+                  alt="drop-down"
+                  className="ml-3 cursor"
+                  onClick={() => {
+                    toggleDropdown();
+                  }}
+                />
               </div>
               <img
                 src={
@@ -155,63 +178,68 @@ const Header = (props) => {
                 className="position-absolute headerProfileImg "
               />
             </div>
-            {profileDropdown == true && (
+            {profileDropdown == true&& (
               // <HeaderDropdown
               //   setProfileDropdown={setProfileDropdown}
               //   profileDropdown={profileDropdown}
               // />
-              <div className="top-nav__dropdown position-absolute ">
-              <div className="top-nav__dropdown-header py-3">
-                <p className="mb-0 top-nav__dropdown-header__title">
-                  {user.first_name}
-                </p>
-              </div>
-              <div className="top-nav__dropdown-links pt-2">
-                <p className=" cursor-pointer  d-inline-block">
+              <div ref={dropdownRef} className="top-nav__dropdown position-absolute ">
+                <div className="top-nav__dropdown-header py-3">
+                  <p className="mb-0 top-nav__dropdown-header__title">
+                    {user.first_name}
+                  </p>
+                </div>
+                <div className="top-nav__dropdown-links pt-2">
+                  <p className=" cursor-pointer  d-inline-block">
+                    <MenuItem>
+                      <Avatar
+                        className="d-inline-block "
+                        sx={{ width: 32, height: 32 }}
+                        src={
+                          user?.profile_photo
+                            ? `https://localhost:44374/AttendanceImages/${user?.profile_photo}`
+                            : users
+                        }
+                      ></Avatar>
+                      &nbsp;&nbsp;&nbsp;
+                      <Link
+                        className="top-nav__dropdown-links__item"
+                        to={`/${token?.role}/setting`}
+                      >
+                        Profile Setting
+                      </Link>
+                    </MenuItem>
+                  </p>
+                </div>
+                <Divider />
+                <MenuItem
+                  onClick={() => {
+                    toggle();
+                    toggleDropdown();
+                  }}
+                >
+                  <ListItemIcon>
+                    <NotificationImportant fontSize="small" />
+                  </ListItemIcon>
+                  Notifications
+                </MenuItem>
+
+                <div className="top-nav__dropdown-links ">
                   <MenuItem>
-                    <Avatar
-                      className="d-inline-block "
-                      sx={{ width: 32, height: 32 }}
-                      src={
-                        user?.profile_photo
-                          ? `https://localhost:44374/AttendanceImages/${user?.profile_photo}`
-                          : users
-                      }
-                    ></Avatar>
-                    &nbsp;&nbsp;&nbsp;
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
                     <Link
-                      className="top-nav__dropdown-links__item"
-                      to={`/${token?.role}/setting`}
+                      to="/auth_login/"
+                      activeClassName="active"
+                      className="text-decoration-none text-dark"
+                      onClick={handleLogout}
                     >
-                      Profile Setting
+                      Logout
                     </Link>
                   </MenuItem>
-                </p>
+                </div>
               </div>
-              <Divider />
-              <MenuItem onClick={()=>{toggle()}}>
-                <ListItemIcon>
-                  <NotificationImportant fontSize="small" />
-                </ListItemIcon>
-                Notifications
-              </MenuItem>
-
-              <div className="top-nav__dropdown-links ">
-                <MenuItem>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  <Link
-                    to="/auth_login/"
-                    activeClassName="active"
-                    className="text-decoration-none text-dark"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </Link>
-                </MenuItem>
-              </div>
-            </div>
             )}
           </div>
         </>
@@ -250,10 +278,10 @@ const Header = (props) => {
                 }
                 style={{ height: "30px" }}
                 onClick={() => {
-                  toggleDropdown()
+                  toggleDropdown();
                 }}
                 alt="profile"
-                className="position-absolute headerProfileImg my-1"
+                className="position-absolute headerProfileImg my-1 cursor"
               />
               {/* <h6 className="headerProfile__name mb-0 ">{user?.first_name}</h6> */}
               {/* <h6 className="headerProfile__name mb-0 ">Aqib Siddique</h6> */}
@@ -268,7 +296,7 @@ const Header = (props) => {
               //   setProfileDropdown={setProfileDropdown}
               //   profileDropdown={profileDropdown}
               // />
-              <div className="top-nav__dropdown position-absolute ">
+              <div ref={dropdownRef} className="top-nav__dropdown position-absolute ">
                 <div className="top-nav__dropdown-header py-3">
                   <p className="mb-0 top-nav__dropdown-header__title">
                     {user.first_name}
@@ -333,7 +361,7 @@ const Header = (props) => {
         </ModalHeader>
         <ModalBody className="custom-modal-body">
           {sortNotification.map((item, index) => (
-            <LoadingOverlay
+            item.status ==false?( <LoadingOverlay
               active={notificationLoading}
               spinner
               text="Notification Loading...."
@@ -349,6 +377,7 @@ const Header = (props) => {
                       pathname: `${item.type}`,
                     });
                   }
+                  dispatch(seenNotification(item.id))
                   toggle();
                 }}
               >
@@ -375,7 +404,8 @@ const Header = (props) => {
                 </div>
                 <br />
               </div>
-            </LoadingOverlay>
+            </LoadingOverlay>):('')
+           
           ))}
         </ModalBody>
       </Modal>

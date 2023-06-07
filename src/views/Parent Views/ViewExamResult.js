@@ -67,7 +67,7 @@ export default function ExamResult() {
         }
       });
     }
-    console.log(tempdata,'tempdata')
+    //console.log(tempdata,'tempdata')
     setRows(tempdata);
   }, [select, type,exam]);
   useEffect(() => {

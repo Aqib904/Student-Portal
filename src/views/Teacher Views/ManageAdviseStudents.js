@@ -22,7 +22,7 @@ export default function ManageAdviseStudents() {
   const history = useHistory();
   const courseAdvisorList = location?.state;
   const [rows, setRows] = useState([]);
-  console.log(rows, "courseAdvisorList");
+  //console.log(rows, "courseAdvisorList");
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",

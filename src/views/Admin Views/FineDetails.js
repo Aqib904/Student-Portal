@@ -31,7 +31,7 @@ export default function FineDetails() {
   const [reason,setReason]  =useState("");
   const [confirmModal, setConfirmModal] = useState(false);
   const confirmtoggle = () => setConfirmModal(!confirmModal);
-  console.log(data, "data");
+  //console.log(data, "data");
   return (
     <>
       <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">

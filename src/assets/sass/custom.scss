@@ -596,5 +596,13 @@ body {
     transform: translateX(0);
   }
 }
+.attendance-card{
+  max-height: 100vh;
+  overflow: auto;
+}
+.notification-card{
+  max-height: 22vh;
+  overflow: auto;
+}
 
 

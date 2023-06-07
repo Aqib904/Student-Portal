@@ -9,7 +9,7 @@ export default function Dashboard() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { token, childs, loading } = useSelector((state) => state.authUser);
-  console.log(childs, "childs");
+  //console.log(childs, "childs");
   const student = [
     {
       username: "2019-Arid-2951",

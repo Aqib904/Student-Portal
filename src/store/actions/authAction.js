@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { LOGIN, LOGOUT,LOGIN_FAILURE,LOGIN_LOADING ,ENROLLMENTSTATUS,USER,CHILD} from "../types";
 var auth = RepositoryFactory.get("auth");
 export const login = (username, password) => async (dispatch) => {
-  console.log(username,password,'data')
+  //console.log(username,password,'data')
   try {
     dispatch(loginLoading(true));
     const response = await fetch(`https://localhost:44374/api/Login/LoginUser/?username=${username}&password=${password}`, {

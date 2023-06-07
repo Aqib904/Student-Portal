@@ -22,10 +22,10 @@ export default function Enrollment() {
   const history = useHistory();
   const { token,status } = useSelector((state) => state.authUser);
   const { enrollmentCourses } = useSelector((state) => state.enrollment);
-  console.log(enrollmentCourses ,'enrollmentCourses ')
+  //console.log(enrollmentCourses ,'enrollmentCourses ')
   const [passed, setPassed] = useState([]);
   const [failed, setFailed] = useState([]);
-  console.log(failed,'failed')
+  //console.log(failed,'failed')
   const [passCheck, setPassCheck] = useState(true);
   const [totalCrHour,setTotalCrHour] = useState({totalCredit:"",course_code:[]})
   const StripedDataGrid = styled(DataGrid)(() => ({
@@ -72,7 +72,7 @@ export default function Enrollment() {
   const [checkboxValues, setCheckboxValues] = useState({});
   const [final, setFinal] = useState([]);
   const [selectedSection, setSelectedSection] = useState([]);
-  console.log(selectedSection,'selectedSection')
+  //console.log(selectedSection,'selectedSection')
   const [submit,setSubmit] = useState([])
   const handleSubmit = () => {
     const submitData = passed.map((item) => {
@@ -141,7 +141,7 @@ export default function Enrollment() {
     const matchedCourse = enrollmentCourses.failedCourses1.find(
       (course) => course.course_code === courseCode
     );
-    console.log(matchedCourse,'matchedCourse')
+    //console.log(matchedCourse,'matchedCourse')
     if (matchedCourse) {
       const sections = matchedCourse.sections.map((section) => ({
         sectionId: section.id,
@@ -232,7 +232,7 @@ export default function Enrollment() {
       headerName: "Is Enroll",
       width: 100,
       renderCell: (params) => {
-        console.log(params.row,'params')
+        //console.log(params.row,'params')
         const courseCode = params.row.course_code;
         const isChecked = checkboxValues[courseCode] || false;
 
@@ -366,7 +366,7 @@ export default function Enrollment() {
       history.push("/student/dashboard")
     }
   },[status])
-  console.log(totalCrHour,'totalCrHour')
+  //console.log(totalCrHour,'totalCrHour')
   useEffect(() => {
     let creditHour = { ...totalCrHour };
     selectedSection.map((item) => {

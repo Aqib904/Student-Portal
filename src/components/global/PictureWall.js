@@ -36,7 +36,7 @@ const PictureWall = ({ fileList, setFileList }) => {
   };
   const handleChange = ({ fileList: newFileList }) => {
     if (checkFileType(newFileList[newFileList.length - 1])) {
-        console.log(newFileList[newFileList.length - 1].originFileObj,'newFileList')
+        //console.log(newFileList[newFileList.length - 1].originFileObj,'newFileList')
       setFileList(newFileList);
     }
   };

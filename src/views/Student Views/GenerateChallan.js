@@ -206,7 +206,7 @@ export default function GenerateChallan() {
   const [installments, setInstallments] = useState([]);
   const [installmentValues, setInstallmentValues] = useState([]);
   const [pendingFee, setPendingFee] = useState("");
-  console.log(pendingFee,'pendingFee')
+  //console.log(pendingFee,'pendingFee')
   function generateInstallments(totalFee, numInstallments) {
     let installments = [];
     if (numInstallments === 1) {
@@ -247,7 +247,7 @@ export default function GenerateChallan() {
   function handleInstallmentChange(index, value) {
     const updatedValues = [...installmentValues];
     updatedValues[index] = value;
-    console.log(updatedValues,'updatedValues')
+    //console.log(updatedValues,'updatedValues')
     setInstallmentValues(updatedValues);
     const pending = data.totalAmount - updatedValues.reduce((a, b) => Number(a) + Number(b), 0);
     setPendingFee(pending);

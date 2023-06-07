@@ -3,6 +3,7 @@ const SECTIONLIST ="/Admin/GetSectionList";
 const ADDNOTICE = "/Admin/AddNoticeBoard"
 const VIEWNOTICEBOARD = "/Student/GetNoticeBoardInformation"
 const GETNOTIFICATION = "/Notification/GetNotificatons"
+const SEENNOTIFICATION = "/Notification/SeenNotification"
 export default {
     getSectionList() {
         return Repository.get(`${SECTIONLIST}`);
@@ -15,5 +16,8 @@ export default {
     },
     getNotification(username) {
         return Repository.get(`${GETNOTIFICATION}?username=${username}`);
+    },
+    seenNotification(id) {
+        return Repository.post(`${SEENNOTIFICATION}?id=${id}`);
     },
 };

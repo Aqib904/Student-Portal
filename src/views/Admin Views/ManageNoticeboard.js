@@ -32,8 +32,8 @@ export default function ManageNoticeboard() {
   const [selectedData, setSelectedData] = useState([]);
   const [selectedSections, setSelectedSections] = useState({});
   const [noticeData, setNoticeData] = useState({ title: "", description: "" });
-  console.log(selectedData, "SelectedData");
-  console.log(noticeData, "noticeData");
+  //console.log(selectedData, "SelectedData");
+  //console.log(noticeData, "noticeData");
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);
@@ -89,14 +89,14 @@ export default function ManageNoticeboard() {
     setSelectedData(updatedData);
   };
 
-  console.log(sectionList, "sectionList");
+  //console.log(sectionList, "sectionList");
   useEffect(() => {
     dispatch(getSectionList());
   }, []);
 
   useEffect(() => {
     // You can do something with selectedData here
-    console.log(selectedData);
+    //console.log(selectedData);
   }, [selectedData]);
 
   return (

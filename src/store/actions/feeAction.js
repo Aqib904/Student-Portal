@@ -91,7 +91,7 @@ export const getFeeDetail = (regno) => async (dispatch) => {
     }
   };
   export const getChallan = (regno) => async (dispatch) => {
-    console.log(regno)
+    //console.log(regno)
     try {
       const {data} = await fee.getChallan(regno)
       if (data) {

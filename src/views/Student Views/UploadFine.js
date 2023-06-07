@@ -41,7 +41,7 @@ export default function UploadFine() {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-  console.log(selectedId, "selectedId");
+  //console.log(selectedId, "selectedId");
   const toggle = () => {
     setFileList([]);
     setSelectedId("");

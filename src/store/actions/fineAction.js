@@ -10,7 +10,7 @@ export const getFineList= () => async (dispatch) => {
         dispatch(fineListLoading(false))
         dispatch({ type: FINELIST, payload: { fineList: data } });
       } else {
-        console.log("Fine List loaded failed");
+        //console.log("Fine List loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -25,7 +25,7 @@ export const getFineList= () => async (dispatch) => {
         dispatch(fineListLoading(false))
         dispatch({ type: STUDENTFINE, payload: { studentFine: data } });
       } else {
-        console.log("Fine List loaded failed");
+        //console.log("Fine List loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -40,7 +40,7 @@ export const getFineList= () => async (dispatch) => {
         dispatch(studentsListLoading(false))
         dispatch({ type: STUDENTSLIST, payload: { studentsList: data } });
       } else {
-        console.log("Student List loaded failed");
+        //console.log("Student List loaded failed");
         throw new Error(data.error);
       }
     } catch (error) {
@@ -55,11 +55,11 @@ export const getFineList= () => async (dispatch) => {
         toast.success("Fine added Successfully");
         dispatch(addFineLoading(false))
       } else {
-        console.log("Fine added  failed")
+        //console.log("Fine added  failed")
         dispatch(addFineLoading(false))
       }
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
       dispatch(addFineLoading(false))
     }
   };
@@ -114,7 +114,7 @@ export const getFineList= () => async (dispatch) => {
         toast.success("Receipt Uploaded Successfully");
         dispatch(addFineLoading(false))
       } else {
-        console.log("Receipt uploaded  failed");
+        //console.log("Receipt uploaded  failed");
       }
     } catch (error) {
       alert(error.message);

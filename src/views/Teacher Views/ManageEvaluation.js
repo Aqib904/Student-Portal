@@ -42,7 +42,7 @@ export default function ManageEvaluation() {
   const [title, setTitle] = useState("");
   const [general, setGeneral] = useState([]);
   const [finalRecord, setFinalRecord] = useState([]);
-  console.log(finalRecord,'finalRecord')
+  //console.log(finalRecord,'finalRecord')
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",

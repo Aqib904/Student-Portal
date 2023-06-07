@@ -11,7 +11,7 @@ export default function AdviseStudent() {
   );
   const { token } = useSelector((state) => state.authUser);
   const [disciplineData,setDisciplineData] = useState([])
-  console.log(disciplineData,'disciplineData')
+  //console.log(disciplineData,'disciplineData')
   useEffect(() => {
     dispatch(getStudentCourseAdvisor(token?.username));
   }, [token]);

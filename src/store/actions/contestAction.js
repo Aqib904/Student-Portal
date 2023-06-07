@@ -30,7 +30,7 @@ export const markContest = (list) => async (dispatch) => {
     }
   };
   export const getContestSetting = (username) => async (dispatch) => {
-    console.log(username)
+    //console.log(username)
     try {
       // const { data } = await contest.getContestSetting(username)
       const response = await fetch(
