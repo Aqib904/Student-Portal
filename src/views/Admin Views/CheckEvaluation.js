@@ -44,7 +44,7 @@ export default function CheckEvaluation() {
     to: "",
   });
   //console.log(selectedDayRange, "selectDay");
-  const [select, setSelect] = useState("FALL2019");
+  const [select, setSelect] = useState("FALL2020");
   const [date, setDate] = useState({ start_date: "", end_date: "" });
   let sessionData = ["FALL2019","SPRING2020","FALL2020"];
   const [rows, setRows] = useState([]);
@@ -81,6 +81,7 @@ export default function CheckEvaluation() {
                   teacher_id: params.row.teacher_id,
                   session: select,
                   teacherName: params.row.teacherName,
+                  sections:params.row.sections
                 };
                 history.push({
                   pathname: `/admin/evaluationpercentage/${params.row.course_code}`,
@@ -111,6 +112,7 @@ export default function CheckEvaluation() {
         teacherName: item?.teacherName,
         course_code: item?.course_code,
         course_name: item?.course_name,
+        sections:item?.sections
       });
     });
     setRows(tempdata);

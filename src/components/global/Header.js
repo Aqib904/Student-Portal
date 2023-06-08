@@ -41,7 +41,7 @@ const Header = (props) => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const toggleDropdown = () => {
-    setProfileDropdown(!profileDropdown);
+    setProfileDropdown((prevIsDropdownOpen) => !prevIsDropdownOpen);
   };
   useEffect(() => {
     updatePredicate();
@@ -155,9 +155,6 @@ const Header = (props) => {
             <div className="d-flex position-relative  justify-content-end">
               <div
                 className=" bg-site-profilebg  profile-box d-flex align-items-center justify-content-center cursor-pointer"
-                onClick={() => {
-                  toggleDropdown();
-                }}
               >
                 <img
                   src={ArrowDown}
@@ -178,7 +175,7 @@ const Header = (props) => {
                 className="position-absolute headerProfileImg "
               />
             </div>
-            {profileDropdown == true&& (
+            {profileDropdown == true && (
               // <HeaderDropdown
               //   setProfileDropdown={setProfileDropdown}
               //   profileDropdown={profileDropdown}

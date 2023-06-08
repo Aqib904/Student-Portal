@@ -5,6 +5,7 @@ const MARKEVALUATION ="/Student/FeedbackTeacher";
 const GETTEACHERSCOURSES ="/Admin/GetAllTeachersAndCourses";
 const GETTEACHERSFEEDBACK ="/Admin/GetTeacherFeedback";
 const STARTNEWEVALUATION = "/Admin/AllowAssessment"
+const GETTEACHERINDIVIDUALFEEDBACK = "/Admin/GetTeacherFeedback"
 export default {
     getCourseTeacher(regno) {
       return Repository.get(`${GETCOURSETEACHER}?reg_no=${regno}`);
@@ -20,6 +21,9 @@ export default {
       },
       getTeachersFeedback(teacherId,courseCode,session) {
         return Repository.get(`${GETTEACHERSFEEDBACK}?teacherId=${teacherId}&courseCode=${courseCode}&session=${session}`);
+      },
+      getTeachersIndividualFeedback(id) {
+        return Repository.get(`${GETTEACHERINDIVIDUALFEEDBACK}?id=${id}`);
       },
       startNewEvaluation(list) {
         return Repository.post(`${STARTNEWEVALUATION}`, list);

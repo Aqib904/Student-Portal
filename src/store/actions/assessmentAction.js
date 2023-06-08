@@ -81,6 +81,19 @@ export const getCourseTeacher = (regno) => async (dispatch) => {
       alert(error.message);
     }
   };
+  export const getTeachersIndividualFeedback = (id) => async (dispatch) => {
+    try {
+      const {data} = await assessment.getTeachersIndividualFeedback(id)
+      if (data) {
+        dispatch({ type: FEEDBACKTEACHER, payload: { feedback: data } });
+      } else {
+        toast.error("Feedback load failed");
+        throw new Error(data.error);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   export const teacherLoading = (val) => async (dispatch) => {
     dispatch({ type: TEACHER_LOADING, payload: val });
   };

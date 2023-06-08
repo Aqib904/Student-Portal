@@ -1,6 +1,6 @@
 import { TEACHERCOURSE ,ASSESSMENTQUESTION,ALLTEACHERCOURSES,FEEDBACKTEACHER,TEACHER_LOADING} from "../types";
 const initialState = {
-    teachersData:[],
+    teachersData:{},
     questions:[],
     feedback:[],
     loading:false,

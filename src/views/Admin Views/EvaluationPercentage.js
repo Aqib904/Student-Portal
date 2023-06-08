@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { getTeachersFeedback } from "../../store/actions/assessmentAction";
+import { getTeachersFeedback, getTeachersIndividualFeedback } from "../../store/actions/assessmentAction";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
 import { GridToolbar } from "@mui/x-data-grid";
@@ -17,12 +17,16 @@ import {
   Row,
 } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 export default function EvaluationPercentage() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { feedback } = useSelector((state) => state.assessment);
-  //console.log(feedback, "feedback");
+  const [discipline,setDiscipline] = useState([])
+  const [selectedDiscipline, setSelectedDiscipline] = useState("merge");
+  console.log(discipline, "discipline");
   const data = location.state;
+  console.log(data,'data')
   const StripedDataGrid = styled(DataGrid)(() => ({
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: "#EEEE",
@@ -133,10 +137,32 @@ export default function EvaluationPercentage() {
     setRows(tempdata);
   }, [feedback]);
   useEffect(() => {
-    dispatch(
-      getTeachersFeedback(data?.teacher_id, data?.course_code, data?.session)
-    );
-  }, []);
+    if(selectedDiscipline =="merge"){
+      dispatch(
+        getTeachersFeedback(data?.teacher_id, data?.course_code, data?.session)
+      );
+    }else{
+      dispatch(getTeachersIndividualFeedback(selectedDiscipline))
+    }
+  }, [selectedDiscipline]);
+  useEffect(() => {
+    if (data?.sections) {
+      const modifiedData = data.sections.map(section => {
+        const [label, value] = section.split('-');
+        const modifiedLabel = `BS${label}`; // Concatenate 'BS' with the label
+        return { label: modifiedLabel, value };
+      });
+  
+      // Add the additional object at the last index
+      modifiedData.push({ label: "Merge", value: "merge" });
+  
+      // Set modifiedData in the discipline array object state
+      // Replace 'disciplineArray' with the actual state variable name
+      setDiscipline(modifiedData);
+    }
+  }, [data?.sections]);
+  
+  
   useEffect(() => {
     if (feedback && feedback.data2) {
       const { excellent, good, average, poor } = feedback.data2;
@@ -156,6 +182,31 @@ export default function EvaluationPercentage() {
             </h4>
           </Col>
         </Row>
+        <Row className="mt-3 mx-3">
+        <Col>
+          <FormControl
+            sx={{ m: 1, minWidth: 150, display: "block" }}
+            size="small"
+          >
+            <InputLabel id="demo-select-small">Select</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              style={{ width: "150px" }}
+              label="Select"
+              required
+              value={selectedDiscipline}
+              onChange={(e) => setSelectedDiscipline(e.target.value)}
+            >
+              {discipline.map((item, index) => (
+                <MenuItem key={index} value={item.value}>
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Col>
+      </Row>
         <Row>
           {/* <Col lg={6} md={6} sm={12} sx={12}>
         {seriesIndividual[0]==0&&seriesIndividual[1]==0&&seriesIndividual[2]==0&&seriesIndividual[3]==0?(
