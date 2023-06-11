@@ -11,7 +11,7 @@ export default function Finance() {
   const { status, token } = useSelector((state) => state.authUser);
   const { studentFine } = useSelector((state) => state.fine);
   useEffect(() => {
-    if (status == false) {
+    if (status == "not-enrolled") {
       history.push("/student/enrollment");
     }
   }, [status]);

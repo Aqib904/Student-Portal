@@ -171,7 +171,7 @@ body {
   padding-bottom: 5px;
 }
 ::-webkit-scrollbar {
-  width:0.111rem;
+  width: 0.111rem;
   height: 0rem;
 }
 ::-webkit-scrollbar-track {
@@ -596,17 +596,19 @@ body {
     transform: translateX(0);
   }
 }
-.attendance-card{
+.attendance-card {
   max-height: 100vh;
   overflow: auto;
 }
-.notification-card{
+.notification-card {
   max-height: 22vh;
   overflow: auto;
 }
-.fee-manage-modal{
+.fee-manage-modal {
   max-height: 80vh;
   overflow: auto;
 }
-
-
+.card-heading {
+  text-shadow: 1px 5px 5px #9f9999 !important;
+  text-align: center !important;
+}

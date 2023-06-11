@@ -5,6 +5,7 @@ import Student from "./layout/Student";
 import Teacher from "./layout/Teacher";
 import Admin from "./layout/Admin";
 import Parent from "./layout/Parent";
+import Exit from "./layout/StudentExit"
 import routes from "./routes";
 import store from "./store";
 function App() {
@@ -23,6 +24,14 @@ function App() {
                       </Student>
                     </Route>
                   );
+                  case "exit":
+                    return (
+                      <Route exact path={route.path}>
+                        <Exit>
+                          <route.component />
+                        </Exit>
+                      </Route>
+                    );
                 case "teacher":
                   return (
                     <Route exact path={route.path}>

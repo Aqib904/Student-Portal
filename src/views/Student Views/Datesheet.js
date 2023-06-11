@@ -77,7 +77,7 @@ export default function Datesheet() {
   //console.log(datesheet,'datesheet')
   
   useEffect(()=>{
-    if(status==false){
+    if(status=="not-enrolled"){
       history.push("/student/enrollment")
     }
   },[status])

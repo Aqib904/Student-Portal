@@ -9,7 +9,7 @@ export default function Dasbaord() {
   const history =useHistory();
   const { status} = useSelector((state) => state.authUser);
   useEffect(()=>{
-    if(status==false){
+    if(status=="not-enrolled"){
       history.push("/student/enrollment")
     }
   },[status])

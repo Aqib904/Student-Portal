@@ -82,7 +82,7 @@ export default function ExamResult() {
     dispatch(getExamMarks(token?.username, select));
   }, [select]);
   useEffect(() => {
-    if (status == false) {
+    if (status == "not-enrolled") {
       history.push("/student/enrollment");
     }
   }, [status]);

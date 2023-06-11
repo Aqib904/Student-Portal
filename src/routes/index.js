@@ -61,6 +61,8 @@ import ViewExamResult from "../views/Parent Views/ViewExamResult";
 import ViewFeeDetail from "../views/Parent Views/ViewFeeDetail";
 import GenerateChildChallan from "../views/Parent Views/GenerateChallan";
 import FeeStatus from "../views/Parent Views/FeeStatus";
+import StudentExit from "../views/Student Views/ExitForm"
+import ExitForm from "../views/Student Views/ExitForm";
 let routes = [
   {
     path: "/auth_login",
@@ -547,6 +549,13 @@ let routes = [
     name: "Setting",
     icon:"fas fa-user-cog ",
     role: "parent",
+  },
+  {
+    path: "/student/exit_form",
+    component: ExitForm,
+    layout: "exit",
+    name: "Exit Form",
+    role: "student",
   },
 ];
 export default routes;

@@ -362,7 +362,7 @@ export default function Enrollment() {
     dispatch(getEnrollment(token?.username));
   }, []);
   useEffect(()=>{
-    if(status==true){
+    if(status== "enrolled"){
       history.push("/student/dashboard")
     }
   },[status])

@@ -45,7 +45,7 @@ function Timetable() {
     dispatch(getWeeklyTimetable(token?.username));
   }, []);
   useEffect(() => {
-    if (status == false) {
+    if (status == "not-enrolled") {
       history.push("/student/enrollment");
     }
   }, [status]);
