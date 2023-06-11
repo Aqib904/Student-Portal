@@ -16,6 +16,9 @@ import {
   Input,
   Spinner,
 } from "reactstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+import $ from "jquery";
 import { styled } from "@mui/material/styles";
 import { gridClasses } from "@mui/x-data-grid";
 import InputLabel from "@mui/material/InputLabel";
@@ -34,6 +37,7 @@ import {
   contestRejectAction,
   getContestList,
 } from "../../store/actions/contestAction";
+import gallery from "../../assets/img/image.png";
 import { useHistory } from "react-router-dom";
 export default function TeacherDashboard() {
   const dispatch = useDispatch();
@@ -42,17 +46,22 @@ export default function TeacherDashboard() {
     (state) => state.attendance
   );
   const { token } = useSelector((state) => state.authUser);
-  const { contestList,acceptLoading,rejectLoading } = useSelector((state) => state.contest);
+  const { contestList, acceptLoading, rejectLoading } = useSelector(
+    (state) => state.contest
+  );
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
+  const [imagesModal, setImagesModal] = useState(false);
+  const imagestoggle = () => setImagesModal(!imagesModal);
   const [attendanceModal, setAttendanceModal] = useState(false);
   const attendancetoggle = () => {
     clearSelect();
-    setAttendanceModal(!attendanceModal)};
+    setAttendanceModal(!attendanceModal);
+  };
   const [evaluationModal, setEvaluationModal] = useState(false);
   const evaluationtoggle = () => {
-    setEvaluationModal(!evaluationModal)
-    clearSelect()
+    setEvaluationModal(!evaluationModal);
+    clearSelect();
   };
   const [allocate, setAllocate] = useState([{}]);
   const [program, setProgram] = useState([
@@ -72,27 +81,29 @@ export default function TeacherDashboard() {
   const [contestData, setContestData] = useState([]);
   const [type, setType] = useState("");
   const [totalMarks, setTotalMarks] = useState("");
-  const[allocationId,setAllocationId] = useState("")
+  const [allocationId, setAllocationId] = useState("");
   const [evaluationList, setEvaluationList] = useState([]);
-  const[studentAttendanceList,setStudentAttendanceList] = useState([])
+  const [studentAttendanceList, setStudentAttendanceList] = useState([]);
+  const [images, setImages] = useState([]);
+  console.log(images, "images");
   const manageAttendance = () => {
     if (select.id != "" && select.section != "") {
       history.push({
         pathname: `/teacher/attendance/${id}`,
         state: studentAttendanceList,
-        allocateId:allocationId,
+        allocateId: allocationId,
       });
     } else {
       alert("Please select the required Fields");
     }
   };
-  const clearSelect =()=>{
+  const clearSelect = () => {
     setSelect({
       section: "",
       id: "",
       discipline: "",
-    })
-  }
+    });
+  };
   const manageEvaluations = () => {
     if (
       select.id != "" &&
@@ -112,8 +123,8 @@ export default function TeacherDashboard() {
   const clearFields = () => {
     setDecipline([{ id: "", program: "", semester: "", section: "" }]);
   };
-  const handleProgramChange = (event,allocationIds) => {
-    setAllocationId(allocationIds)
+  const handleProgramChange = (event, allocationIds) => {
+    setAllocationId(allocationIds);
     attendancetoggle();
     const course_code = event;
     const course = program.find((item) => item.course_code === course_code);
@@ -194,6 +205,14 @@ export default function TeacherDashboard() {
       backgroundColor: "#EEEE",
     },
   }));
+  const handleImages = (images) => {
+    let tempimages = [];
+    images.map((item) => {
+      return tempimages.push(item);
+    });
+    setImages(tempimages);
+    imagestoggle();
+  };
   const column = [
     { field: "id", headerName: "Id", hide: true, filterable: false },
     {
@@ -260,7 +279,7 @@ export default function TeacherDashboard() {
       field: "actions",
       type: "actions",
       headerName: "Actions",
-      width: 100,
+      width: 150,
       renderCell: (params) => {
         return (
           <>
@@ -275,7 +294,7 @@ export default function TeacherDashboard() {
                 dispatch(getContestList(token?.username));
               }}
             >
-             {acceptLoading ? <Spinner size="sm" /> : " 🗸"}
+              {acceptLoading ? <Spinner size="sm" /> : " 🗸"}
             </Button>
             <Button
               size="sm"
@@ -291,6 +310,16 @@ export default function TeacherDashboard() {
               {" "}
               {rejectLoading ? <Spinner size="sm" /> : "  X"}
             </Button>
+            <Button
+              size="sm"
+              color="primary"
+              className="mx-2"
+              onClick={() => {
+                handleImages(params.row.images);
+              }}
+            >
+              <img src={gallery} height={20} width={20} />
+            </Button>
           </>
         );
       },
@@ -298,11 +327,12 @@ export default function TeacherDashboard() {
   ];
   useEffect(() => {
     let tempdata = [];
+    let tempimages = [];
     let index = 0;
     contestList.map((item) => {
-      //console.log(item,'item')
+      console.log(item, "item");
       index++;
-      return tempdata.push({
+      tempdata.push({
         attendance_id: item.attendance_id,
         name: item.name,
         reg_no: item.reg_no,
@@ -313,8 +343,9 @@ export default function TeacherDashboard() {
         section: item.section,
         program: item.program,
         semester: item.semester,
-        type:item.type,
+        type: item.type,
         id: index,
+        images: item?.images,
       });
     });
     setContestData(tempdata);
@@ -335,7 +366,7 @@ export default function TeacherDashboard() {
           course_name: item.course_name,
           semester: item.semester,
           section: item.section,
-          allocation_id:item.allocation_id
+          allocation_id: item.allocation_id,
         }),
         programData.push({
           course_name: item.course_name,
@@ -366,7 +397,7 @@ export default function TeacherDashboard() {
         id: item.id,
         name: item.name,
         reg_no: item.reg_no,
-        profile_photo:item.profile_photo,
+        profile_photo: item.profile_photo,
         totalMarks: totalMarks,
         obtained_marks: 0,
         type: type,
@@ -381,14 +412,14 @@ export default function TeacherDashboard() {
         id: item.id,
         name: item.name,
         reg_no: item.reg_no,
-        status:item.status,
-        profile_photo:item.profile_photo,
-        allocateId:allocationId,
-        discipline:select.discipline
+        status: item.status,
+        profile_photo: item.profile_photo,
+        allocateId: allocationId,
+        discipline: select.discipline,
       });
     });
     setStudentAttendanceList(tempdata);
-  }, [attendanceList,allocationId]);
+  }, [attendanceList, allocationId]);
   useEffect(() => {
     let programData = [];
     teacherCourses?.map((item) => {
@@ -443,7 +474,10 @@ export default function TeacherDashboard() {
                       <Button
                         className="bg-site-primary mx-1"
                         onClick={() => {
-                          handleProgramChange(data?.course_code,data?.allocation_id);
+                          handleProgramChange(
+                            data?.course_code,
+                            data?.allocation_id
+                          );
                         }}
                       >
                         Mark Attendance
@@ -467,14 +501,13 @@ export default function TeacherDashboard() {
         <Modal className="w-100" isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Contest Request Box</ModalHeader>
           {contestData.length !== 0 ? (
-            <ModalBody >
+            <ModalBody>
               <StripedDataGrid
                 autoHeight
                 autoWidth
                 columns={column}
                 rows={contestData}
                 disableSelectionOnClick={false}
-                
                 getRowClassName={(params) =>
                   params.indexRelativeToCurrentPage % 2 === 0 ? "odd" : "even"
                 }
@@ -485,7 +518,7 @@ export default function TeacherDashboard() {
             <ModalBody>
               <div>
                 <p className="text-center ">
-                  Requests Box Empty&nbsp;<i class="fas fa-trash"></i>
+                  Requests Box Empty&nbsp;<i className="fas fa-trash"></i>
                 </p>
               </div>
             </ModalBody>
@@ -681,6 +714,68 @@ export default function TeacherDashboard() {
               Start Grading
             </Button>
           </ModalFooter>
+        </Modal>
+        <Modal className="w-100" isOpen={imagesModal} toggle={imagestoggle}>
+          <ModalHeader toggle={imagestoggle}>Attendance Images</ModalHeader>
+          <ModalBody>
+            <div
+              id="carouselExampleIndicators"
+              className="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div className="carousel-indicators">
+                {images.map((image, index) => (
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to={index}
+                    className={index === 0 ? "active" : ""}
+                    aria-current={index === 0 ? "true" : "false"}
+                    aria-label={`Slide ${index + 1}`}
+                    key={index}
+                  ></button>
+                ))}
+              </div>
+              <div className="carousel-inner">
+                {images.map((image, index) => (
+                  <div
+                    className={`carousel-item ${index === 0 ? "active" : ""}`}
+                    key={index}
+                  >
+                    <img
+                      src={`https://localhost:44374/AttendanceImages/${image}`}
+                      className="d-block w-100"
+                      alt={`Slide ${index + 1}`}
+                    />
+                  </div>
+                ))}
+              </div>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev"
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                {/* <span className="visually-hidden">Previous</span> */}
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next"
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                {/* <span className="visually-hidden">Next</span> */}
+              </button>
+            </div>
+          </ModalBody>
         </Modal>
       </Container>
     </>

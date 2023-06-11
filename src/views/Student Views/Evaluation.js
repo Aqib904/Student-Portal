@@ -130,7 +130,7 @@ export default function Assessment() {
       <Row>
         <Col>
         <div className="d-flex">
-        <h5>RemainingTime:</h5>&nbsp;<span>{endDate}</span>
+        <h5>RemainingTime:</h5>&nbsp;<span>{endDate==""?"Evaluation Closed":endDate}</span>
         </div>
         </Col>
       </Row>

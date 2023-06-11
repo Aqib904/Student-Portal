@@ -143,7 +143,7 @@ const PictureWall = ({ fileList, setFileList }) => {
       const modal = Modal.info({
         title: "Preview",
         content: (
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "column",width:"100%" }}>
             <div style={{ flex: 1, position: "relative" }}>
               <video
                 ref={(ref) => (ref ? (ref.srcObject = stream) : null)}

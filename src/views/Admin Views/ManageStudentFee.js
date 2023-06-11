@@ -220,7 +220,7 @@ export default function ManageStudentFee() {
                       onClick={() => setIsModalOpen(true)}
                     />
                     {isModalOpen && (
-                      <Modal isOpen={isModalOpen} toggle={toggleModal}>
+                      <Modal isOpen={isModalOpen} toggle={toggleModal} className="fee-manage-modal">
                         <ModalHeader toggle={toggleModal}>
                           Preview Your Photo
                         </ModalHeader>
