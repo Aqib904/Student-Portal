@@ -36,7 +36,16 @@ const PictureWall = ({ fileList, setFileList }) => {
     const filteredList = newFileList.filter((file) => checkFileType(file));
     setFileList(filteredList);
   };
-  //console.log(fileList);
+  const handleTitleChange = (value, uid) => {
+    const updatedFileList = fileList.map(file => {
+      if (file.uid === uid) {
+        return { ...file, title: value };
+      }
+      return file;
+    });
+    setFileList(updatedFileList);
+  };
+  console.log(fileList);
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -73,6 +82,7 @@ const PictureWall = ({ fileList, setFileList }) => {
                   type="text"
                   style={{ width: "100px", marginTop: "8px" }}
                   placeholder="Title"
+                  onChange={e => handleTitleChange(e.target.value, file.uid)}
                 />
               </Col>
             ))}

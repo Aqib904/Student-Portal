@@ -126,9 +126,8 @@ export default function ManageAdvises() {
             </div>
             </div>
       <Container fluid>
-        <Row >
+        <Row>
           <Col>
-            
             <Card className="shadow my-4">
               <CardHeader>Regular Courses</CardHeader>
               <CardBody>

@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetUser } from "../../store/actions/authAction";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { getNotification, seenNotification } from "../../store/actions/noticeboardAction";
+import {
+  getNotification,
+  seenNotification,
+} from "../../store/actions/noticeboardAction";
 import { NotificationImportant, Settings } from "@material-ui/icons";
 import Logout from "@mui/icons-material/Logout";
 import {
@@ -153,9 +156,7 @@ const Header = (props) => {
               </Link>
             </div>
             <div className="d-flex position-relative  justify-content-end">
-              <div
-                className=" bg-site-profilebg  profile-box d-flex align-items-center justify-content-center cursor-pointer"
-              >
+              <div className=" bg-site-profilebg  profile-box d-flex align-items-center justify-content-center cursor-pointer">
                 <img
                   src={ArrowDown}
                   alt="drop-down"
@@ -180,7 +181,10 @@ const Header = (props) => {
               //   setProfileDropdown={setProfileDropdown}
               //   profileDropdown={profileDropdown}
               // />
-              <div ref={dropdownRef} className="top-nav__dropdown position-absolute ">
+              <div
+                ref={dropdownRef}
+                className="top-nav__dropdown position-absolute "
+              >
                 <div className="top-nav__dropdown-header py-3">
                   <p className="mb-0 top-nav__dropdown-header__title">
                     {user.first_name}
@@ -293,7 +297,10 @@ const Header = (props) => {
               //   setProfileDropdown={setProfileDropdown}
               //   profileDropdown={profileDropdown}
               // />
-              <div ref={dropdownRef} className="top-nav__dropdown position-absolute ">
+              <div
+                ref={dropdownRef}
+                className="top-nav__dropdown position-absolute "
+              >
                 <div className="top-nav__dropdown-header py-3">
                   <p className="mb-0 top-nav__dropdown-header__title">
                     {user.first_name}
@@ -357,53 +364,62 @@ const Header = (props) => {
           </Row>
         </ModalHeader>
         <ModalBody className="custom-modal-body">
-          {sortNotification.map((item, index) => (
-            item.status ==false?( <LoadingOverlay
-              active={notificationLoading}
-              spinner
-              text="Notification Loading...."
-            >
-              <div
-                key={index}
-                className={`notification-item   ${
-                  item.status ? "status-true" : "status-false"
-                }`}
-                onClick={() => {
-                  if (token.role === "student") {
-                    history.push({
-                      pathname: `${item.type}`,
-                    });
-                  }
-                  dispatch(seenNotification(item.id))
-                  toggle();
-                }}
+          {sortNotification.map((item, index) =>
+            item.status == false ? (
+              <LoadingOverlay
+                active={notificationLoading}
+                spinner
+                text="Notification Loading...."
               >
-                {item.status == false ? (
-                  <i class="fas fa-envelope text-site-primary"></i>
-                ) : (
-                  <i class="fas fa-envelope-open text-site-primary"></i>
-                )}
-                &nbsp;
-                <strong style={{ fontSize: "14px", fontWeight: 600 }}>
-                  {item.detail.split("!")[0]}
-                </strong>
-                {item.status == false ? (
-                  <span className="notification-dot float-right"></span>
-                ) : null}
-                <span className="notification-time float-right">
-                  {item.dateTime}
-                </span>
-                <br />
-                <div style={{ marginLeft: "21px", maxWidth: "86%" }}>
-                  <span style={{ fontSize: "13px", letterSpacing: 0.6 }}>
-                    {item.detail.split("!")[1]}
+                <div
+                  key={index}
+                  className={`notification-item   ${
+                    item.status ? "status-true" : "status-false"
+                  }`}
+                  onClick={() => {
+                    const typeParts = item.type.split("/");
+                    if (typeParts[0] === "student") {
+                      history.push({
+                        pathname: `${item.type}`,
+                      });
+                    }else if(typeParts[0] === "teacher"){
+                      history.push({
+                        pathname: `${item.type}`,
+                      });
+                    }
+
+                    dispatch(seenNotification(item.id));
+                    toggle();
+                  }}
+                >
+                  {item.status == false ? (
+                    <i class="fas fa-envelope text-site-primary"></i>
+                  ) : (
+                    <i class="fas fa-envelope-open text-site-primary"></i>
+                  )}
+                  &nbsp;
+                  <strong style={{ fontSize: "14px", fontWeight: 600 }}>
+                    {item.detail.split("!")[0]}
+                  </strong>
+                  {item.status == false ? (
+                    <span className="notification-dot float-right"></span>
+                  ) : null}
+                  <span className="notification-time float-right">
+                    {item.dateTime}
                   </span>
+                  <br />
+                  <div style={{ marginLeft: "21px", maxWidth: "86%" }}>
+                    <span style={{ fontSize: "13px", letterSpacing: 0.6 }}>
+                      {item.detail.split("!")[1]}
+                    </span>
+                  </div>
+                  <br />
                 </div>
-                <br />
-              </div>
-            </LoadingOverlay>):('')
-           
-          ))}
+              </LoadingOverlay>
+            ) : (
+              ""
+            )
+          )}
         </ModalBody>
       </Modal>
     </>

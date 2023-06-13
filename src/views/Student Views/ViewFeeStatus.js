@@ -219,7 +219,7 @@ export default function ViewFeeStatus() {
                               src={`https://localhost:44374/ChallanImages/${challanImage}`}
                               alt="Batch"
                               // height={500}
-                              width={350}
+                              width={320}
                             />
                           </ModalBody>
                         </Modal>

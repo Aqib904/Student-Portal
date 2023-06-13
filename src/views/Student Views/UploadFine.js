@@ -108,7 +108,7 @@ export default function UploadFine() {
                           type="textarea"
                           disabled={true}
                           className="bg-light"
-                          rows={Math.ceil(item?.description.length / 50)}
+                          rows={Math.ceil(item?.description.length / 70)}
                         ></Input>
                       </CardBody>
                       <CardFooter>

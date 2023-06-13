@@ -10,7 +10,7 @@ export const requestFinancialAssistance =
       formData.append("reg_no", reg_no);
       formData.append("description", description);
       fileList.forEach((item) => {       
-          formData.append(`${item.name}`, item.originFileObj);
+          formData.append(`${item?.title}`, item.originFileObj);
       });
       const response = await fetch(
         "https://localhost:44374/api/Student/RequestFinancialAssistance",

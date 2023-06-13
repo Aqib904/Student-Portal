@@ -239,7 +239,7 @@ export default function Attendance() {
     {
       field: "actions",
       type: "actions",
-      headerName: "Actions",
+      headerName: "Contest",
       width: 100,
       renderCell: (params) => {
         const { attendance_id, status } = params.row;

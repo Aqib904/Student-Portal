@@ -6,6 +6,7 @@ import {
   ENROLLMENTSTATUS,
   USER,
   CHILD,
+  QUESTIONS,
 } from "../types";
 const initialState = {
   isAuthenticated: false,
@@ -15,6 +16,7 @@ const initialState = {
   status: "",
   user: {},
   childs: [],
+  questions:{},
 };
 const authUser = (state = initialState, action) => {
   switch (action.type) {
@@ -45,6 +47,12 @@ const authUser = (state = initialState, action) => {
       return {
         ...state,
         childs: action.payload.childs,
+    };
+    
+    case QUESTIONS:
+      return {
+        ...state,
+        questions: action.payload.questions,
     };
     case LOGIN_LOADING:
       return {

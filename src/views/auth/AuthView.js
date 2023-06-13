@@ -34,8 +34,8 @@ const AuthView = () => {
   useEffect(() => {
     if (isAuthenticated) {
       if (token?.role == "student") {
-        dispatch(getEnrollmentStatus(token?.username));
-        history.push("/student/dashboard");
+        dispatch(getEnrollmentStatus(token?.username)); 
+          history.push("/student/dashboard");
       } else if (token?.role == "teacher") {
         history.push("/teacher/dashboard");
       } else if (token?.role == "parent") {

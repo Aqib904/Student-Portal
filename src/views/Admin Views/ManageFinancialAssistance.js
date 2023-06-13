@@ -76,17 +76,20 @@ export default function ManageFinancialAssistance() {
                         className="my-1 h-50"
                       >
                         <Image
-                          src={`https://localhost:44374/FinancialAssistanceImages/${item}`}
+                          src={`https://localhost:44374/FinancialAssistanceImages/${item.image}`}
                           alt="Batch"
                           height={150}
                           width={250}
                           className="img-fluid"
                           onClick={() =>
                             toggleModal(
-                              `https://localhost:44374/FinancialAssistanceImages/${item}`
+                              `https://localhost:44374/FinancialAssistanceImages/${item.image}`
                             )
                           }
                         />
+                        <div className="d-flex justify-content-center align-items-center">
+                        <h6 className=" my-1"  style={{width:"120px"}}>{item?.type}</h6>
+                        </div>
                       </Col>
                     );
                   })}

@@ -155,21 +155,21 @@ $theme-colors: (
     }
   }
 }
-body {
-  height: 100%;
-}
-.main_body {
-  height: 100vh;
-}
-.overflowY-auto {
-  overflow-y: auto;
-}
-.main-content {
-  max-height: calc(100vh - 80px) !important;
-  overflow-y: auto;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
+// body {
+//   height: 100%;
+// }
+// .main_body {
+//   height: 100vh;
+// }
+// .overflowY-auto {
+//   overflow-y: auto;
+// }
+// .main-content {
+//   max-height: calc(100vh - 80px) !important;
+//   overflow-y: auto;
+//   padding-top: 5px;
+//   padding-bottom: 5px;
+// }
 ::-webkit-scrollbar {
   width: 0.111rem;
   height: 0rem;
