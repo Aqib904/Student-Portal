@@ -31,9 +31,9 @@ export default function ManageNoticeboard() {
   );
   const [selectedData, setSelectedData] = useState([]);
   const [selectedSections, setSelectedSections] = useState({});
-  const [noticeData, setNoticeData] = useState({ title: "", description: "" });
+  const [noticeData, setNoticeData] = useState({author:"Admin", title: "", description: "" });
   //console.log(selectedData, "SelectedData");
-  //console.log(noticeData, "noticeData");
+  console.log(noticeData, "noticeData");
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);

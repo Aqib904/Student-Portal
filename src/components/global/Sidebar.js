@@ -21,8 +21,13 @@ import { useEffect, useRef } from "react";
 import routes from "../../routes";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUser, logout } from "../../store/actions/authAction";
+import { Badge } from "@mui/material";
+import { getNoticeboard, seenNoticeboard } from "../../store/actions/noticeboardAction";
 const Sidebar = (props) => {
-  const { token,user } = useSelector((state) => state.authUser);
+  const { token, user } = useSelector((state) => state.authUser);
+  const { noticeboard } = useSelector((state) => state.noticeboard);
+  const [count, setCount] = useState("");
+  console.log(count,'count')
   const history = useHistory();
   const dispatch = useDispatch();
   const contractRef = useRef();
@@ -31,6 +36,17 @@ const Sidebar = (props) => {
       props.outsideClose();
     }
   };
+  console.log(noticeboard,'notice')
+  useEffect(() => {
+    if(token?.role =="student"){
+      dispatch(getNoticeboard(token?.username));
+    }
+    
+  }, []);
+  useEffect(() => {
+    const unseenCount = noticeboard.filter(item => item?.isSeen === false).length;
+    setCount(unseenCount);
+  }, [noticeboard]);
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -47,9 +63,9 @@ const Sidebar = (props) => {
       history.push("/auth_login/");
     }
   }, [token]);
-  useEffect(()=>{
-    dispatch(GetUser(token?.username,token?.role))
-  },[token])
+  useEffect(() => {
+    dispatch(GetUser(token?.username, token?.role));
+  }, [token]);
   const checkSideBarName = (routes) => {
     return routes.map((route, id) => {
       return (
@@ -147,8 +163,39 @@ const Sidebar = (props) => {
         //     </DropdownMenu>
         //   </UncontrolledDropdown>
         // ):(
-          //
-        (route.path != "/student/attendance/:id"&&route.path != "/parent/fee-status/:id"&&route.path != "/parent/generate_challan/:id"&&route.path != "/parent/view-fee-detail/:id"&&route.path != "/parent/view-exam-result/:id"&&route.path != "/parent/view-grading/:id"&&route.path != "/parent/view-attendance/:id"&&route.path != "/parent/academic-detail/:id"&&route.path != "/parent/view-information/:id"&&route.path != "/student/teacher-rating/:id"&&route.path != "/teacher/evaluate/:id"&&route.path != "/teacher/manage_advises/:id"&&route.path != "/student/uploadfine"&&route.path != "/teacher/manage_advise_students/:id"&&route.path != "/admin/addfine"&&route.path != "/admin/fine_details/:id"&&route.path != "/admin/finelist"&&route.path != "/admin/manage_financial_assistance/:id"&&route.path != "/student/financial_assistance"&&route.path != "/admin/manage_fee/:id"&&route.path != "/student/fee_detail"&&route.path != "/student/fee_status"&&route.path != "/student/generate_challan/:id" && route.path != "/teacher/attendance/:id"&& route.path != "/teacher/evaluation/:id"&& route.path != "/student/evaluation/:id"&&route.path != "/student/assessment/:id"&&route.path != "/admin/evaluationpercentage/:id"&&route.path != "/student/enrollment"? (
+        //
+        (route.path != "/student/attendance/:id" &&
+        route.path != "/parent/fee-status/:id" &&
+        route.path != "/teacher/manage_topics/:id" &&
+        route.path != "/teacher/add_topics/:id" &&
+        route.path != "/student/view_course_topics/:id" &&
+        route.path != "/parent/generate_challan/:id" &&
+        route.path != "/parent/view-fee-detail/:id" &&
+        route.path != "/parent/view-exam-result/:id" &&
+        route.path != "/parent/view-grading/:id" &&
+        route.path != "/parent/view-attendance/:id" &&
+        route.path != "/parent/academic-detail/:id" &&
+        route.path != "/parent/view-information/:id" &&
+        route.path != "/student/teacher-rating/:id" &&
+        route.path != "/teacher/evaluate/:id" &&
+        route.path != "/teacher/manage_advises/:id" &&
+        route.path != "/student/uploadfine" &&
+        route.path != "/teacher/manage_advise_students/:id" &&
+        route.path != "/admin/addfine" &&
+        route.path != "/admin/fine_details/:id" &&
+        route.path != "/admin/finelist" &&
+        route.path != "/admin/manage_financial_assistance/:id" &&
+        route.path != "/student/financial_assistance" &&
+        route.path != "/admin/manage_fee/:id" &&
+        route.path != "/student/fee_detail" &&
+        route.path != "/student/fee_status" &&
+        route.path != "/student/generate_challan/:id" &&
+        route.path != "/teacher/attendance/:id" &&
+        route.path != "/teacher/evaluation/:id" &&
+        route.path != "/student/evaluation/:id" &&
+        route.path != "/student/assessment/:id" &&
+        route.path != "/admin/evaluationpercentage/:id" &&
+        route.path != "/student/enrollment" ? (
           <NavLink
             to={route.path}
             activeClassName="active"
@@ -159,7 +206,14 @@ const Sidebar = (props) => {
               <i className={`${route.icon}icon-sty`}></i>
             </div>
             <div className="fs--18 fw--500">
-              <span className="ml-3">{route.name}</span>
+              {route.name === "Noticeboard" ? (
+                <>
+                <span className="ml-3" onClick={()=>{dispatch(seenNoticeboard(token?.username))}}>{route.name}</span>
+                <Badge className="mx-3"  badgeContent={count} color="error"></Badge>
+                </>
+              ) : (
+                <span className="ml-3">{route.name}</span>
+              )}
             </div>
           </NavLink>
         ) : (
@@ -249,7 +303,11 @@ const Sidebar = (props) => {
 
           <div className=" sidebar-logo d-none d-lg-flex justify-content-center align-items-center flex-column mt-3  ">
             <Image
-              src={user?.profile_photo?`https://localhost:44374/AttendanceImages/${user?.profile_photo}`:users}
+              src={
+                user?.profile_photo
+                  ? `https://localhost:44374/AttendanceImages/${user?.profile_photo}`
+                  : users
+              }
               alt="Batch"
               height={80}
               width={80}

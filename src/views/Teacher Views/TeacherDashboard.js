@@ -54,9 +54,13 @@ export default function TeacherDashboard() {
   const [imagesModal, setImagesModal] = useState(false);
   const imagestoggle = () => setImagesModal(!imagesModal);
   const [attendanceModal, setAttendanceModal] = useState(false);
+  const [topicsModal, setTopicsModal] = useState(false);
   const attendancetoggle = () => {
     clearSelect();
     setAttendanceModal(!attendanceModal);
+  };
+  const topicstoggle = () => {
+    setTopicsModal(!topicsModal);
   };
   const [evaluationModal, setEvaluationModal] = useState(false);
   const evaluationtoggle = () => {
@@ -64,6 +68,7 @@ export default function TeacherDashboard() {
     clearSelect();
   };
   const [allocate, setAllocate] = useState([{}]);
+  console.log(allocate,'allocate')
   const [program, setProgram] = useState([
     { course_code: "", course_name: "" },
   ]);
@@ -72,10 +77,19 @@ export default function TeacherDashboard() {
     id: "",
     discipline: "",
   });
+  const [selectTopics, setSelectTopics] = useState({
+    section: "",
+    id: "",
+    allocation_id:"",
+    discipline: "",
+  });
   const [courseTitle, setCourseTitle] = useState([
     { course_code: "", course_name: "" },
   ]);
   const [decipline, setDecipline] = useState([
+    { id: "", program: "", semester: "", section: "" },
+  ]);
+  const [topicsdecipline, setTopicsDecipline] = useState([
     { id: "", program: "", semester: "", section: "" },
   ]);
   const [contestData, setContestData] = useState([]);
@@ -92,6 +106,17 @@ export default function TeacherDashboard() {
         pathname: `/teacher/attendance/${id}`,
         state: studentAttendanceList,
         allocateId: allocationId,
+      });
+    } else {
+      alert("Please select the required Fields");
+    }
+  };
+  console.log(selectTopics,'select')
+  const manageTopics = () => {
+    if (selectTopics.id != "" && selectTopics.section != "") {
+      history.push({
+        pathname: `/teacher/manage_topics/${selectTopics?.allocation_id}`,
+        state: selectTopics,
       });
     } else {
       alert("Please select the required Fields");
@@ -150,6 +175,34 @@ export default function TeacherDashboard() {
     });
     setDecipline(deciplineData);
   };
+  const handleTopicsChange = (event, allocationIds) => {
+    setAllocationId(allocationIds);
+    topicstoggle();
+    const course_code = event;
+    const course = program.find((item) => item.course_code === course_code);
+    setCourseTitle({
+      course_code: course_code,
+      course_name: course ? course?.course_name : "",
+    });
+    let deciplineData = [];
+    const matchingItems = teacherCourses?.filter(
+      (item) => item.course_code === course_code
+    );
+    console.log(matchingItems,'matching')
+    matchingItems.forEach((item) => {
+      const discipline = {
+        course_code: item.course_code,
+        course_name: item.course_name,
+        id: item.id,
+        allocation_id:item.allocation_id,
+        program: item.program,
+        section: item.section,
+        semester: item.semester,
+      };
+      deciplineData.push(discipline);
+    });
+    setTopicsDecipline(deciplineData);
+  };
   const handleEvaluationChange = (event) => {
     evaluationtoggle();
     const course_code = event;
@@ -197,6 +250,23 @@ export default function TeacherDashboard() {
     setSelect({
       id: id,
       section: section,
+      discipline: disciplineCode,
+    });
+  };
+  const handleTopicsDisciplineChange = (event) => {
+    const section = event.target.value;
+    const selectedDiscipline = topicsdecipline.find(
+      (item) => item.section === section
+    );
+    const id = selectedDiscipline ? selectedDiscipline.id : "";
+    const allocation_id = selectedDiscipline ? selectedDiscipline.allocation_id : "";
+    const disciplineCode = selectedDiscipline
+      ? `BS${selectedDiscipline.program}${selectedDiscipline.semester}${selectedDiscipline.section}`
+      : "";
+    setSelectTopics({
+      id: id,
+      section: section,
+      allocation_id:allocation_id,
       discipline: disciplineCode,
     });
   };
@@ -491,6 +561,18 @@ export default function TeacherDashboard() {
                         {" "}
                         Mark Grade
                       </Button>
+                      <Button
+                        className="bg-site-primary mx-1"
+                        onClick={() => {
+                          handleTopicsChange(
+                            data?.course_code,
+                            data?.allocation_id
+                          );
+                        }}
+                      >
+                        {" "}
+                        Manage Topics
+                      </Button>
                     </div>
                   </CardFooter>
                 </Card>
@@ -525,7 +607,7 @@ export default function TeacherDashboard() {
           )}
           <ModalFooter></ModalFooter>
         </Modal>
-        <Modal isOpen={attendanceModal} toggle={attendancetoggle}>
+        <Modal isOpen={attendanceModal} toggle={ attendancetoggle}>
           <ModalHeader
             toggle={() => {
               attendancetoggle();
@@ -598,6 +680,60 @@ export default function TeacherDashboard() {
               }}
             >
               Mark Attendance
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen={topicsModal} toggle={topicstoggle}>
+          <ModalHeader
+            toggle={() => {
+              topicstoggle();
+              // clearFields();
+              // clearSelect();
+            }}
+          >
+            Manage Topics
+          </ModalHeader>
+          <ModalBody>
+            <div>
+              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                <InputLabel id="demo-select-small">Discipline</InputLabel>
+                <Select
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  value={selectTopics.section}
+                  disabled={
+                    courseTitle.course_code === "" &&
+                    courseTitle.course_name === "" &&
+                    true
+                  }
+                  label="Discipline"
+                  onChange={handleTopicsDisciplineChange}
+                  required
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {topicsdecipline.map((item) => {
+                    const disciplineCode = `BS${item.program}${item.semester}${item.section}`;
+                    return (
+                      <MenuItem key={item.id} value={item.section}>
+                        {disciplineCode}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </div>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              className="bg-site-primary"
+              onClick={() => {
+                manageTopics();
+              }}
+            >
+              Manage Topics
             </Button>
           </ModalFooter>
         </Modal>

@@ -63,6 +63,11 @@ import GenerateChildChallan from "../views/Parent Views/GenerateChallan";
 import FeeStatus from "../views/Parent Views/FeeStatus";
 import StudentExit from "../views/Student Views/ExitForm"
 import ExitForm from "../views/Student Views/ExitForm";
+import Noticeboard from "../views/Teacher Views/ManageNoticeboard"
+import ManageTopics from "../views/Teacher Views/ManageTopics";
+import AddTopics from "../views/Teacher Views/AddTopics";
+import ViewTopics from "../views/Student Views/ViewTopics";
+import ViewCourseTopics from "../views/Student Views/ViewCourseTopics";
 let routes = [
   {
     path: "/auth_login",
@@ -132,6 +137,21 @@ let routes = [
     layout: "student",
     icon:"fas fa-table ",
     name: "Datesheet",
+    role: "student",
+  },
+  {
+    path: "/student/view_topics",
+    component: ViewTopics,
+    layout: "student",
+    icon:"fas fa-table ",
+    name: "Enrolled Courses",
+    role: "student",
+  },
+  {
+    path: "/student/view_course_topics/:id",
+    component: ViewCourseTopics,
+    layout: "student",
+    icon:"fas fa-table ",
     role: "student",
   },
   {
@@ -279,11 +299,35 @@ let routes = [
     role: "teacher",
   },
   {
+    path: "/teacher/manage_noticeboard",
+    component: Noticeboard,
+    layout: "teacher",
+    icon:"fas fa-bell ",
+    name: "Manage Noticeboard",
+    role: "teacher",
+  },
+  {
     path: "/teacher/evaluation/:id",
     component: ManageEvaluation,
     layout: "teacher",
     icon:"fas fa-award ",
     name: "Evaluation",
+    role: "teacher",
+  },
+  {
+    path: "/teacher/manage_topics/:id",
+    component: ManageTopics,
+    layout: "teacher",
+    icon:"fas fa-award ",
+    name: "Manage Topics",
+    role: "teacher",
+  },
+  {
+    path: "/teacher/add_topics/:id",
+    component: AddTopics,
+    layout: "teacher",
+    icon:"fas fa-award ",
+    name: "Add Topics",
     role: "teacher",
   },
   {

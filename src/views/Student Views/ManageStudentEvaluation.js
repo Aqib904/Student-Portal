@@ -79,7 +79,8 @@ export default function ManageAssessment() {
                   {answers.length}&nbsp;Out of&nbsp;{questionss.length}
                 </h6>
               </CardHeader>
-              {currentPageQuestions.map((questions) => {
+              {/* {currentPageQuestions.map((questions ,index) => {
+                index++
                 return (
                   <CardBody key={questions.id}>
                     <h6>{questions.question}</h6>
@@ -127,6 +128,39 @@ export default function ManageAssessment() {
                     Next
                   </Button>
                 )}
+              </CardFooter> */}
+              <CardBody className="fee-manage-modal">
+                {questions.map((question, index) => (
+                  <div key={question.id}>
+                    <h6>
+                      Q{index + 1}:{question.question}
+                    </h6>
+                    {options.map((option) => (
+                      <label key={option}>
+                        <input
+                          className="mx-2 my-4 text-success"
+                          type="radio"
+                          required={true}
+                          name={`question${question.id}`}
+                          value={option}
+                          checked={answerss[question.id] === option}
+                          onChange={() =>
+                            handleOptionChange(question.id, option)
+                          }
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
+                ))}
+              </CardBody>
+              <CardFooter>
+                <Button
+                  className="float-right bg-site-primary"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
               </CardFooter>
             </Card>
           </Col>

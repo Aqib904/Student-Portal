@@ -1,11 +1,13 @@
-import { SECTIONLIST,SECTION_LIST_LOADING,ADD_NOTICE_LOADING,NOTICEBOARD,NOTIFICATION,NOTIFICATION_LOADING} from "../types";
+import { SECTIONLIST,SECTION_LIST_LOADING,ADD_NOTICE_LOADING,NOTICEBOARD,NOTIFICATION,NOTIFICATION_LOADING,TOPICS,STUDENTTOPICS} from "../types";
 const initialState = {
    sectionList:[],
    loading:false,
    addloading:false,
    noticeboard:[],
    notification:[],
-   notificationLoading:false
+   notificationLoading:false,
+   topics:[],
+   studentTopics:[],
 };
 const noticeboardReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -43,6 +45,17 @@ const noticeboardReducer = (state = initialState, action) => {
       return {
         ...state,
         noticeboard: action.payload,
+      };
+      case "TOPICS":
+      return {
+        ...state,
+        topics: action.payload.topics,
+      };
+      //STUDENTTOPICS
+      case STUDENTTOPICS:
+      return {
+        ...state,
+        studentTopics: action.payload.studenttopics,
       };
     default:
       return state;

@@ -123,7 +123,16 @@ const Student = (props) => {
           &nbsp;Rating Courses
         </h4>
       );
-    } else if (history.location.pathname == "/student/dashboard") {
+    } else if (history.location.pathname == "/student/view_topics") {
+      return (
+        <h4 className="d-block d-md-block m-0 font-weight-bold">
+          <Link className="text-dark" to="/student/dashboard">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+          </Link>
+          &nbsp;Enroll Courses
+        </h4>
+      );
+    }else if (history.location.pathname == "/student/dashboard") {
       return (
         <h4 className="d-block d-md-block m-0 font-weight-bold mx-3">
           {" "}

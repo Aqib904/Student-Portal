@@ -2,6 +2,7 @@ $theme-colors: (
   "site-primary": rgb(9, 157, 120),
   "site-success": #099d78,
   "site-table": #e1ffdf,
+  "site-today": #abfca5,
   "site-icon": #1572f2,
   "site-grey": #c8c6c6,
   "site-table-none": #ffffff,
@@ -155,21 +156,21 @@ $theme-colors: (
     }
   }
 }
-// body {
-//   height: 100%;
-// }
-// .main_body {
-//   height: 100vh;
-// }
-// .overflowY-auto {
-//   overflow-y: auto;
-// }
-// .main-content {
-//   max-height: calc(100vh - 80px) !important;
-//   overflow-y: auto;
-//   padding-top: 5px;
-//   padding-bottom: 5px;
-// }
+body {
+  height: 100%;
+}
+.main_body {
+  height: 100vh;
+}
+.overflowY-auto {
+  overflow-y: auto;
+}
+.main-content {
+  max-height: calc(100vh - 80px) !important;
+  overflow-y: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 ::-webkit-scrollbar {
   width: 0.111rem;
   height: 0rem;
@@ -568,6 +569,15 @@ $theme-colors: (
   width: 8px;
   height: 8px;
   background-color: #1572f2;
+  border-radius: 50%;
+  margin-left: 6px;
+  margin-top: 12px;
+}
+.topics-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #099d78;
   border-radius: 50%;
   margin-left: 6px;
   margin-top: 12px;

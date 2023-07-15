@@ -4,7 +4,9 @@ import {
   ADD_NOTICE_LOADING,
   NOTICEBOARD,
   NOTIFICATION,
-  NOTIFICATION_LOADING
+  NOTIFICATION_LOADING,
+  TOPICS,
+  STUDENTTOPICS
 } from "../types";
 import { RepositoryFactory } from "../../repository/RepositoryFactory";
 import { toast } from "react-toastify";
@@ -123,7 +125,6 @@ export const getNotification = (username) => async (dispatch) => {
 };
 export const seenNotification = (id) => async (dispatch) => {
   try {
-    dispatch(addNoticeLoading(true));
     const { data } = await noticeboard.seenNotification(id);
     if (data == "Seen") {
       console.log("Seen");
@@ -132,6 +133,61 @@ export const seenNotification = (id) => async (dispatch) => {
     }
   } catch (error) {
     console.log(error.message);
+  }
+};
+export const seenNoticeboard = (reg_no) => async (dispatch) => {
+  try {
+    const { data } = await noticeboard.seenNoticeboard(reg_no);
+    if (data == "Seen") {
+      console.log("Seen");
+    } else {
+      console.log("Seen failed");
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+export const getTopics = (allocationId) => async (dispatch) => {
+  try {
+    const { data } = await noticeboard.getTopics(allocationId);
+    if (data) {
+      dispatch({ type: TOPICS, payload: { topics: data } });
+    } else {
+      toast.error("Topics loaded failed");
+      throw new Error(data.error);
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
+export const getStudentTopics = (courseCode,reg_no) => async (dispatch) => {
+  try {
+    const { data } = await noticeboard.getStudentTopics(courseCode,reg_no);
+    if (data) {
+      dispatch({ type: STUDENTTOPICS, payload: { studenttopics: data } });
+    } else {
+      toast.error("Topics loaded failed");
+      throw new Error(data.error);
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
+export const addTopics = (model,onSuccess) => async (dispatch) => {
+  try {
+    dispatch(addNoticeLoading(true));
+    const { data } = await noticeboard.addTopics(model);
+    if (data == "Added") {
+      toast.success("Topics added Successfully");
+      dispatch(addNoticeLoading(false));
+      onSuccess()
+    } else {
+      //console.log("Notice added  failed");
+      dispatch(addNoticeLoading(false));
+    }
+  } catch (error) {
+    //console.log(error.message);
+    dispatch(addNoticeLoading(false));
   }
 };
 export const notificationLoading = (val) => async (dispatch) => {
